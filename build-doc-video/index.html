@@ -220,40 +220,65 @@
     #live-frame-inner {
       width: 100%;
       height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #live-screenshot {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    #live-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
-
-    #live-hero-text {
-      font-size: 48px;
-      font-weight: 900;
-      text-align: center;
-      line-height: 1.2;
-    }
-
-    #live-hero-text .pink {
-      color: var(--neon-pink);
-      font-style: italic;
+      align-items: flex-start;
     }
 
     #live-badge {
-      margin-top: 40px;
-      padding: 12px 30px;
+      padding: 10px 24px;
       border: 1px solid var(--neon-pink);
       border-radius: 30px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 18px;
+      font-size: 16px;
       color: var(--neon-pink);
+      margin-bottom: 16px;
     }
 
     #live-url {
-      margin-top: 20px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
+      font-size: 14px;
       color: var(--text-dim);
+    }
+
+    /* Screenshot flash in Scene 2 */
+    #build-screenshot-flash {
+      position: absolute;
+      bottom: 40px;
+      right: 80px;
+      width: 280px;
+      height: 180px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(255,16,240,0.2);
+      opacity: 0;
+    }
+
+    #build-screenshot-flash img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
     }
 
     /* ====== SCENE 4: CTA ====== */
@@ -363,6 +388,11 @@
       </div>
     </div>
 
+    <!-- Screenshot flash after production build complete -->
+    <div id="build-screenshot-flash" class="clip" data-start="13.5" data-duration="5.5" data-track-index="29">
+      <img src="assets/screenshot-hero.png" alt="Live site screenshot">
+    </div>
+
     <!-- Build steps -->
     <div id="step-1" class="build-step clip" data-start="17.0" data-duration="1.5" data-track-index="16">
       <div class="step-number">1</div>
@@ -382,11 +412,11 @@
   <div id="scene-live" class="clip" data-start="19.5" data-duration="5" data-track-index="19">
     <div id="live-frame" class="clip" data-start="19.8" data-duration="4.5" data-track-index="20">
       <div id="live-frame-inner">
-        <div id="live-hero-text" class="clip" data-start="20.5" data-duration="3.5" data-track-index="21">
-          Capturing the<br><span class="pink">wild hours.</span>
+        <img id="live-screenshot" src="assets/screenshot-hero.png" alt="Live site — mario-preciado-rebuild.vercel.app">
+        <div id="live-overlay" class="clip" data-start="20.5" data-duration="3.5" data-track-index="21">
+          <div id="live-badge" class="clip" data-start="21.0" data-duration="3" data-track-index="22">LIVE MUSIC · STREET · FASHION</div>
+          <div id="live-url" class="clip" data-start="22.0" data-duration="2" data-track-index="23">mario-preciado-rebuild.vercel.app</div>
         </div>
-        <div id="live-badge" class="clip" data-start="21.5" data-duration="2.5" data-track-index="22">LIVE MUSIC · STREET · FASHION</div>
-        <div id="live-url" class="clip" data-start="22.5" data-duration="1.5" data-track-index="23">mario-preciado-rebuild.vercel.app</div>
       </div>
     </div>
   </div>
@@ -426,12 +456,16 @@
     // Build steps
     tl.to('[id^="step-"]', { opacity: 1, x: 0, duration: 0.4, stagger: 0.3, ease: 'back.out(1.5)' }, 17.0);
 
+    // Screenshot flash in Scene 2 — brief reveal after "✓ Production build complete"
+    tl.to('#build-screenshot-flash', { opacity: 1, duration: 0.3, ease: 'power2.out' }, 13.5);
+    tl.to('#build-screenshot-flash', { opacity: 0, duration: 0.4, ease: 'power2.in' }, 18.8);
+
     // === SCENE 3: LIVE SITE (19.5-24.5s) ===
     tl.to('#scene-live', { opacity: 1, duration: 0.4 }, 19.5);
     tl.to('#live-frame', { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)' }, 19.8);
-    tl.to('#live-hero-text', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 20.5);
-    tl.to('#live-badge', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 21.5);
-    tl.to('#live-url', { opacity: 1, duration: 0.4 }, 22.5);
+    tl.to('#live-overlay', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 20.5);
+    tl.to('#live-badge', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 21.0);
+    tl.to('#live-url', { opacity: 1, duration: 0.4 }, 22.0);
 
     // === SCENE 4: CTA (24.5-30s) ===
     tl.to('#scene-cta', { opacity: 1, duration: 0.4 }, 24.5);

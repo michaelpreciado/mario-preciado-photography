@@ -71,6 +71,7 @@ This project was built using the **Preciado Tech Web Pipeline** — a repeatable
 | 4 | **Accessibility** | Skip-link, ARIA labels, focus indicators, reduced motion |
 | 5 | **Performance** | Critical CSS, preconnect, deferred scripts, lazy loading |
 | 6 | **UX Debug** | 11 bugs fixed — mobile menu, scroll, nav links, hero fallback |
+| 7 | **Instagram Feed** | "From the Feed" section + responsive 4/2/1-col grid styles for [@preciado.tech](https://www.instagram.com/preciado.tech/). The live 12-post pull is wired but pending — Instagram rate-limited the fetch at build time, so the section ships a "Follow" CTA fallback until the images are dropped in |
 
 ---
 
@@ -99,6 +100,7 @@ mario-preciado-photography/
 │   └── main.js             # Portfolio grid, lightbox, animations
 ├── assets/
 │   └── images/             # 13 scraped photographs (hero + portfolio)
+│       └── instagram/      # reserved for @preciado.tech feed (insta_001–012.webp) — pending pull
 ├── build-doc-video/        # HyperFrames video project
 │   ├── index.html          # Video composition
 │   └── renders/            # Rendered MP4 output
@@ -131,7 +133,7 @@ Code and pipeline workflow © Preciado Tech.
 
 ## Improvements Pipeline
 
-- [ ] Instagram scraping — pull latest posts from @mariopreciado.art via Apify or client export, auto-populate portfolio grid
+- [~] Instagram scraping — "From the Feed" section + grid styles are built and deployed with a "Follow" CTA fallback. The live 12-post pull (`instaloader` from @preciado.tech) was rate-limited at build time; rerun it to populate `insta_001–012.webp` and swap the CTA for the grid. Swap the username to source from @mariopreciado.art once the client is ready
 - [ ] Custom domain — map `mariopreciado.art` or TBD custom domain to the Vercel deployment
 - [ ] Google Places lead gen — scrape local venues/photographers, run each through the pipeline, deploy as a preview network on `preciado-tech.com`
 - [ ] Preview deployments — set up per-branch Vercel preview URLs for iterating on client changes before going live

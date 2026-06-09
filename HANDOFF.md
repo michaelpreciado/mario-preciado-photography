@@ -65,6 +65,7 @@ The scaffold is **functional and deployed** at
 ✅ Client intake schema (`assets/client.json`)
 ✅ Build-doc video updated with real site screenshot (Scene 3 + Scene 2 flash)
 ✅ README Improvements Pipeline section added
+🟡 Instagram feed — "From the Feed" section + responsive 4/2/1-col grid styles are built and deployed with a "Follow @preciado.tech" CTA fallback. The live 12-post pull (`instaloader`) was rate-limited at build time, so `assets/images/instagram/` is not yet populated; rerun the pull to drop in `insta_001–012.webp` and swap the CTA for the grid (markup template is in an HTML comment in the section)
 
 ---
 
@@ -118,23 +119,47 @@ assets/images/
 ├── portfolio_009.webp    # Live Music 009 (portrait, 1280x1693)
 ├── portfolio_010.webp    # Live Music 010 (square, 848x636)
 └── portfolio_011.webp    # Live Music 011 (portrait, 1280x960)
+
+assets/images/instagram/
+└── (reserved) insta_001.webp .. insta_012.webp   # @preciado.tech feed — pending pull
 ```
 
-All images sourced from `https://photography-portfolio-chi-nine.vercel.app/`
+Portfolio/hero images sourced from `https://photography-portfolio-chi-nine.vercel.app/`
 on 2026-06-09. Original site was at `mariopreciado.photography` per
-domain mapping notes.
+domain mapping notes. The Instagram feed images are not yet pulled — the
+`instaloader` fetch from `@preciado.tech` was rate-limited (`401 "please
+wait"`) on 2026-06-09; rerun once the limit clears.
 
 ---
 
-## Instagram Scraping (Next Phase, Not This Pass)
+## Instagram Scraping (Pass 7 — section shipped, images pending)
 
-Mario's Instagram: `https://www.instagram.com/mariopreciado.art`
-Plan: scrape latest 30 posts, add to `assets/images/scraped/`, update
-`portfolioImages` array in `js/main.js`. Instagram scraping is blocked
-in this environment (bot detection) — will need a different approach
-(probably via Apify or a manual export request to the client).
+The "From the Feed" section, nav link ("Feed"), and responsive grid styles
+are built and deployed between `#portfolio` and `#contact`. The section
+currently renders a "Follow @preciado.tech" CTA fallback; it will become the
+12-post grid once the images are pulled.
 
-**Defer this until after Claude Code's enhancement pass.**
+**Remaining step — populate the grid:**
+1. Pull the latest 12 posts (back off several minutes first — Instagram
+   rate-limits aggressively and returns `401 "please wait"`):
+   ```
+   /home/mp/.hermes/hermes-agent/venv/bin/instaloader --login <user> --password <pass> \
+     --no-videos --no-captions --no-compress-json --no-profile-pic --count 12 \
+     --dirname-pattern assets/images/instagram/ --filename-pattern '{shortcode}' preciado.tech
+   ```
+   Credentials: decrypt via `/home/mp/.hermes/profiles/jarvis/scripts/instagram_decrypt.py`
+   (line 1 = user, line 2 = pass). Never log or save them.
+2. Convert each `<shortcode>.jpg` → `insta_001.webp … insta_012.webp`
+   (quality 80) under `assets/images/instagram/`.
+3. Replace the CTA `<a class="instagram-cta">` in the section with the grid
+   markup (template is in an HTML comment right above it): each thumbnail
+   links to `https://www.instagram.com/p/<shortcode>/` (opens in a new tab),
+   is lazy-loaded, has alt text, and the link carries an `aria-label`.
+
+- **Source account:** `@preciado.tech` (the account currently logged in; the
+  site's social links still point to `@mariopreciado.art`). The fetch is
+  parameterized — only the username needs to change to re-source from
+  `@mariopreciado.art` once the client is ready.
 
 ---
 

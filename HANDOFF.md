@@ -58,7 +58,7 @@ The scaffold is **functional and deployed** at
 ❌ Loading states / skeleton screens
 ✅ SEO meta tags
 ✅ Open Graph tags for social sharing
-❌ Image lazy loading verification
+✅ Image lazy loading verification
 ✅ Accessibility audit (ARIA labels, keyboard nav)
 
 ---

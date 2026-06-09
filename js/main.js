@@ -103,7 +103,7 @@ function initPortfolioGrid() {
         item.dataset.index = index;
 
         item.innerHTML = `
-            <img src="${img.src}" alt="${img.alt}" loading="lazy"
+            <img src="${img.src}" alt="${img.alt}" loading="lazy" decoding="async"
                  onerror="this.onerror=null;this.src='assets/images/hero-001.webp'">
             <div class="overlay">
                 <span class="text-[10px] tracking-wider text-[#ff10f0] uppercase mb-1">${img.category}</span>

@@ -98,8 +98,8 @@ function initPortfolioGrid() {
         item.className = 'masonry-item animate-fade-in-up';
         item.style.animationDelay = `${index * 0.1}s`;
         item.tabIndex = 0;
-        item.setAttribute('role', 'button');
-        item.setAttribute('aria-label', `View ${img.title} fullscreen`);
+        item.setAttribute('role', 'listitem');
+        item.setAttribute('aria-label', `View ${img.title} fullscreen — ${img.category}`);
         item.dataset.index = index;
 
         item.innerHTML = `
@@ -139,6 +139,7 @@ function buildLightbox() {
     lightboxEl.setAttribute('aria-label', 'Image viewer');
     lightboxEl.innerHTML = `
         <span class="lightbox__counter" aria-hidden="true"></span>
+        <span class="sr-only" aria-live="polite" id="lightbox-announce"></span>
         <button class="lightbox__btn lightbox__close" aria-label="Close (Esc)">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -182,13 +183,26 @@ function buildLightbox() {
         if (e.target === lightboxEl) closeLightbox();
     });
 
-    // Keyboard navigation
+    // Keyboard navigation + focus trap
     document.addEventListener('keydown', (e) => {
         if (!lightboxEl.classList.contains('open')) return;
         switch (e.key) {
             case 'Escape': closeLightbox(); break;
             case 'ArrowLeft': navigateLightbox(-1); break;
             case 'ArrowRight': navigateLightbox(1); break;
+            case 'Tab': {
+                const buttons = Array.from(lightboxEl.querySelectorAll('button'));
+                const first = buttons[0];
+                const last = buttons[buttons.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+                break;
+            }
         }
     });
 
@@ -222,6 +236,8 @@ function renderLightbox() {
     lightboxEl.querySelector('.alt').textContent = img.alt;
     lightboxEl.querySelector('.lightbox__counter').textContent =
         `${lightboxIndex + 1} / ${portfolioImages.length}`;
+    const announce = lightboxEl.querySelector('#lightbox-announce');
+    if (announce) announce.textContent = `${img.title}, image ${lightboxIndex + 1} of ${portfolioImages.length}`;
 }
 
 function openLightbox(index) {
@@ -294,13 +310,18 @@ function initMobileMenu() {
     if (!nav.querySelector('.mobile-menu-btn')) {
         const menuBtn = document.createElement('button');
         menuBtn.className = 'mobile-menu-btn md:hidden text-white';
+        menuBtn.setAttribute('aria-label', 'Open navigation menu');
+        menuBtn.setAttribute('aria-expanded', 'false');
         menuBtn.innerHTML = `
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         `;
         menuBtn.addEventListener('click', () => {
             const navLinks = nav.querySelector('div:last-child');
+            const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
+            menuBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+            menuBtn.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
             navLinks.classList.toggle('hidden');
             navLinks.classList.toggle('flex');
             navLinks.classList.toggle('flex-col');

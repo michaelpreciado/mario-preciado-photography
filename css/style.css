@@ -11,10 +11,41 @@
     --text-muted: #52525b;
 }
 
+/* ====== Skip to Content ====== */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 9999;
+    padding: 10px 20px;
+    background: var(--neon-pink);
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* ====== Focus Indicators ====== */
+:focus-visible {
+    outline: 2px solid var(--neon-pink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 16, 240, 0.2);
+    border-radius: 2px;
 }
 
 body {
@@ -330,8 +361,38 @@ html {
     .lightbox__img { max-height: 72vh; }
 }
 
+/* Focus styles for circular/pill elements */
+.social-icon:focus-visible,
+.lightbox__btn:focus-visible {
+    outline: 2px solid var(--neon-pink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 16, 240, 0.2);
+    border-radius: 50%;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .lightbox { transition: none; }
+    /* Disable neon flicker */
+    .neon-pink { animation: none; }
+
+    /* Disable scroll-triggered fade-in */
+    .animate-fade-in-up { animation: none; }
+
+    /* Disable smooth scroll */
+    html { scroll-behavior: auto; }
+
+    /* Disable all transitions and hover transforms */
+    .lightbox,
+    .masonry-item,
+    .masonry-item img,
+    .featured-capture__img,
+    .social-icon,
+    .lightbox__btn { transition: none; }
+
+    .masonry-item:hover,
+    .social-icon:hover { transform: none; }
+
+    /* Stop pulse dot */
+    .animate-pulse { animation: none; }
 }
 
 /* ====== Featured Capture ====== */

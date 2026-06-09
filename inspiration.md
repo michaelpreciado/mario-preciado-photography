@@ -1,7 +1,7 @@
 # Design Inspiration — Live Music / Concert Photography Portfolios
 
 > Research brief compiled for Claude Code handoff. Mario Preciado's brand is
-> "Capturing the wild hours" — live music, street, fashion, portraiture.
+> "Capturing live moments & visuals" — live music, street, fashion, portraiture.
 > Target aesthetic: dark, immersive, photo-first, with neon-pink accents that
 > echo stage lighting.
 
@@ -57,9 +57,9 @@ Pulled via X API v2 recent search (last 7 days). Three productive queries:
 
 ### Mario's Differentiation Angle
 
-Compared to the X activity, Mario's existing brand "Capturing the *wild hours*"
+Compared to the X activity, Mario's brand "Capturing live moments & visuals"
 is **stronger written voice** than most competitors. The neon-pink + black
-combo is distinctive. We should:
+combo is distinctive.
 
 1. Lead with the brand line as hero text (already done in scaffold)
 2. Make the "About" copy more personal — X photographers who win are the
@@ -79,7 +79,7 @@ combo is distinctive. We should:
 ### 2. Alive Coverage — `alivecoverage.com`
 - **Layout:** Hero text overlaid on a full-bleed photo
 - **Accent color:** Bright magenta/pink on black — *almost identical to our spec*
-- **Takeaway for us:** Our "Capturing the wild hours" over a concert shot
+- **Takeaway for us:** Our "Capturing live moments & visuals" over a concert shot
   is right in this lane. We can pull their color contrast and bold font weight
 - **Steal:** Big italic accent words, button with thin border
 

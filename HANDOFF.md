@@ -33,7 +33,7 @@ The scaffold is **functional and deployed** at
 ## Brand Spec (Locked)
 
 - **Name:** Mario Preciado
-- **Tagline:** "Capturing the *wild hours*"
+- **Tagline:** "Capturing *live moments & visuals*"
 - **Location:** Bay Area, CA
 - **Disciplines:** Live Music, Street, Fashion, Portraiture, Community
 - **Tone:** Wild, vibrant, high-energy. Personal, human, not corporate.
@@ -188,7 +188,7 @@ and is authenticated against the `preciado-tech` team.
 - ❌ Do NOT add cookie banners
 
 - ✅ Do match the existing typography hierarchy
-- ✅ Do preserve the "wild hours" italic accent
+- ✅ Do preserve the "live moments & visuals" italic accent
 - ✅ Do add `<meta>` tags for SEO
 - ✅ Do test on mobile (Chrome DevTools mobile view)
 - ✅ Do commit frequently with descriptive messages

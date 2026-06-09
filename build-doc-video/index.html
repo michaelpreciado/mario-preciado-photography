@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1920">
+  <title>Mario Preciado Rebuild — Build Documentation</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --neon-pink: #ff10f0;
+      --neon-glow: rgba(255, 16, 240, 0.4);
+      --bg: #000000;
+      --text: #ffffff;
+      --text-dim: #71717a;
+      --terminal-bg: rgba(0, 0, 0, 0.85);
+      --border: rgba(255, 16, 240, 0.2);
+    }
+
+    body {
+      width: 1080px;
+      height: 1920px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Scanline overlay */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 1080px; height: 1920px;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ====== SCENE 1: HOOK ====== */
+    #scene-hook {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px; height: 1920px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    #hook-title {
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--neon-pink);
+      text-align: center;
+      letter-spacing: 4px;
+      filter: blur(10px);
+      text-shadow: 0 0 10px var(--neon-glow), 0 0 20px var(--neon-glow);
+    }
+
+    #hook-subtitle {
+      font-size: 28px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 30px;
+    }
+
+    #hook-line {
+      width: 200px;
+      height: 2px;
+      background: var(--neon-pink);
+      margin-top: 40px;
+      box-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    /* ====== SCENE 2: BUILD PROCESS ====== */
+    #scene-build {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px; height: 1920px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px;
+    }
+
+    #build-header {
+      font-size: 32px;
+      color: var(--neon-pink);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 60px;
+      letter-spacing: 2px;
+    }
+
+    .terminal-window {
+      width: 920px;
+      background: var(--terminal-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      line-height: 1.6;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .terminal-dot.red { background: #ff5f56; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #27c93f; }
+
+    .terminal-title {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-left: 12px;
+    }
+
+    .terminal-body {
+      padding: 30px;
+    }
+
+    .terminal-line {
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .terminal-prompt {
+      color: var(--neon-pink);
+    }
+
+    .terminal-cmd {
+      color: #e4e4e7;
+    }
+
+    .terminal-output {
+      color: #39ff14;
+      font-size: 18px;
+      padding-left: 24px;
+    }
+
+    .terminal-output.dim {
+      color: var(--text-dim);
+    }
+
+    /* Build step indicators */
+    .build-step {
+      display: flex;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .step-number {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--neon-pink);
+      margin-right: 20px;
+    }
+
+    .step-label {
+      font-size: 24px;
+      color: var(--text);
+    }
+
+    .step-label span {
+      color: var(--neon-pink);
+    }
+
+    /* ====== SCENE 3: LIVE SITE ====== */
+    #scene-live {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px; height: 1920px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #live-frame {
+      width: 800px;
+      height: 1400px;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+      box-shadow: 0 0 60px rgba(255,16,240,0.15);
+    }
+
+    #live-frame-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    #live-hero-text {
+      font-size: 48px;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    #live-hero-text .pink {
+      color: var(--neon-pink);
+      font-style: italic;
+    }
+
+    #live-badge {
+      margin-top: 40px;
+      padding: 12px 30px;
+      border: 1px solid var(--neon-pink);
+      border-radius: 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--neon-pink);
+    }
+
+    #live-url {
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--text-dim);
+    }
+
+    /* ====== SCENE 4: CTA ====== */
+    #scene-cta {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px; height: 1920px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cta-title {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--text);
+      text-align: center;
+    }
+
+    #cta-title .pink {
+      color: var(--neon-pink);
+    }
+
+    #cta-sub {
+      font-size: 24px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 30px;
+    }
+
+    #cta-button {
+      margin-top: 50px;
+      padding: 20px 60px;
+      border: 2px solid var(--neon-pink);
+      border-radius: 50px;
+      background: transparent;
+      color: var(--neon-pink);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(255,16,240,0.2);
+    }
+
+    #cta-logo {
+      position: absolute;
+      bottom: 120px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--text-dim);
+      letter-spacing: 4px;
+    }
+
+    /* ====== CLIP CLASS ====== */
+    .clip { }
+  </style>
+</head>
+<body>
+  <div data-composition-id="build-doc-video" data-width="1080" data-height="1920" data-start="0" style="width:1080px;height:1920px;position:relative;overflow:hidden;">
+
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+  <!-- ====== SCENE 1: HOOK ====== -->
+  <div id="scene-hook" class="clip" data-start="0" data-duration="3.5" data-track-index="0">
+    <div id="hook-title" class="clip" data-start="0.2" data-duration="2.5" data-track-index="1">MARIO PRECIADO</div>
+    <div id="hook-subtitle" class="clip" data-start="1.5" data-duration="2" data-track-index="2">PHOTOGRAPHY</div>
+    <div id="hook-line" class="clip" data-start="2.0" data-duration="1.5" data-track-index="3"></div>
+  </div>
+
+  <!-- ====== SCENE 2: BUILD PROCESS ====== -->
+  <div id="scene-build" class="clip" data-start="3.5" data-duration="16" data-track-index="4">
+    <div id="build-header" class="clip" data-start="3.8" data-duration="2" data-track-index="5">$ BUILD PROCESS</div>
+
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <div class="terminal-title">preciado-tech — mario-preciado-rebuild</div>
+      </div>
+      <div class="terminal-body">
+        <div id="term-line-1" class="terminal-line clip" data-start="5.0" data-duration="1.5" data-track-index="6">
+          <span class="terminal-prompt">$ </span><span class="terminal-cmd">git init && vercel --yes</span>
+        </div>
+        <div id="term-out-1" class="terminal-line terminal-output clip" data-start="5.8" data-duration="1.5" data-track-index="7">✓ Scaffold deployed → mario-preciado-rebuild.vercel.app</div>
+
+        <div id="term-line-2" class="terminal-line clip" data-start="7.5" data-duration="1.5" data-track-index="8">
+          <span class="terminal-prompt">$ </span><span class="terminal-cmd">curl -O assets/images/*.webp</span>
+        </div>
+        <div id="term-out-2" class="terminal-line terminal-output clip" data-start="8.3" data-duration="1.5" data-track-index="9">✓ 13 images scraped from original site</div>
+
+        <div id="term-line-3" class="terminal-line clip" data-start="10.0" data-duration="1.5" data-track-index="10">
+          <span class="terminal-prompt">$ </span><span class="terminal-cmd">claude -p "Implement lightbox" --model sonnet-4-6</span>
+        </div>
+        <div id="term-out-3" class="terminal-line terminal-output clip" data-start="10.8" data-duration="1.5" data-track-index="11">✓ Lightbox + Featured Capture + SEO + A11y + Perf</div>
+
+        <div id="term-line-4" class="terminal-line clip" data-start="12.5" data-duration="1.5" data-track-index="12">
+          <span class="terminal-prompt">$ </span><span class="terminal-cmd">vercel --prod</span>
+        </div>
+        <div id="term-out-4" class="terminal-line terminal-output clip" data-start="13.3" data-duration="1.5" data-track-index="13">✓ Production build complete</div>
+
+        <div id="term-line-5" class="terminal-line clip" data-start="15.0" data-duration="1.5" data-track-index="14">
+          <span class="terminal-prompt">$ </span><span class="terminal-cmd">claude -p "UX debug pass" --model sonnet-4-6</span>
+        </div>
+        <div id="term-out-5" class="terminal-line terminal-output clip" data-start="15.8" data-duration="1.5" data-track-index="15">✓ 11 bugs fixed — mobile menu, scroll, a11y</div>
+      </div>
+    </div>
+
+    <!-- Build steps -->
+    <div id="step-1" class="build-step clip" data-start="17.0" data-duration="1.5" data-track-index="16">
+      <div class="step-number">1</div>
+      <div class="step-label">Scaffold &amp; <span>Deploy</span></div>
+    </div>
+    <div id="step-2" class="build-step clip" data-start="18.0" data-duration="1.5" data-track-index="17">
+      <div class="step-number">2</div>
+      <div class="step-label">Image <span>Scraping</span></div>
+    </div>
+    <div id="step-3" class="build-step clip" data-start="19.0" data-duration="1.5" data-track-index="18">
+      <div class="step-number">3</div>
+      <div class="step-label">Sonnet 4.6 <span>Enhancements</span></div>
+    </div>
+  </div>
+
+  <!-- ====== SCENE 3: LIVE SITE ====== -->
+  <div id="scene-live" class="clip" data-start="19.5" data-duration="5" data-track-index="19">
+    <div id="live-frame" class="clip" data-start="19.8" data-duration="4.5" data-track-index="20">
+      <div id="live-frame-inner">
+        <div id="live-hero-text" class="clip" data-start="20.5" data-duration="3.5" data-track-index="21">
+          Capturing the<br><span class="pink">wild hours.</span>
+        </div>
+        <div id="live-badge" class="clip" data-start="21.5" data-duration="2.5" data-track-index="22">LIVE MUSIC · STREET · FASHION</div>
+        <div id="live-url" class="clip" data-start="22.5" data-duration="1.5" data-track-index="23">mario-preciado-rebuild.vercel.app</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCENE 4: CTA ====== -->
+  <div id="scene-cta" class="clip" data-start="24.5" data-duration="5.5" data-track-index="24">
+    <div id="cta-title" class="clip" data-start="25.0" data-duration="4.5" data-track-index="25">
+      Built with the<br><span class="pink">Preciado Tech</span><br>Web Pipeline
+    </div>
+    <div id="cta-sub" class="clip" data-start="26.0" data-duration="3.5" data-track-index="26">Scrape · Rebuild · Deploy · Scale</div>
+    <div id="cta-button" class="clip" data-start="27.0" data-duration="3" data-track-index="27">GET YOUR SITE →</div>
+    <div id="cta-logo" class="clip" data-start="28.0" data-duration="2" data-track-index="28">PRECIADO TECH</div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    // Main timeline
+    const tl = gsap.timeline({ paused: true });
+    window.__timelines['build-doc-video'] = tl;
+
+    // === SCENE 1: HOOK (0-3.5s) ===
+    tl.to('#hook-title', { filter: 'blur(0px)', scale: 1, duration: 0.8, ease: 'power3.out' }, 0.2);
+    tl.to('#hook-title', { scale: 0.8, opacity: 0, duration: 0.5, ease: 'power2.in' }, 2.5);
+    tl.to('#hook-subtitle', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 1.5);
+    tl.to('#hook-subtitle', { opacity: 0, duration: 0.3 }, 3.0);
+    tl.to('#hook-line', { opacity: 1, scaleX: 1, duration: 0.5, ease: 'back.out(2)' }, 2.0);
+    tl.to('#hook-line', { opacity: 0, duration: 0.3 }, 3.0);
+
+    // === SCENE 2: BUILD PROCESS (3.5-19.5s) ===
+    tl.to('#scene-build', { opacity: 1, duration: 0.4 }, 3.5);
+    tl.to('#build-header', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 3.8);
+
+    // Terminal lines animate in sequence
+    tl.to('[id^="term-line-"], [id^="term-out-"]', { opacity: 1, x: 0, duration: 0.3, stagger: 0.3 }, 5.0);
+
+    // Build steps
+    tl.to('[id^="step-"]', { opacity: 1, x: 0, duration: 0.4, stagger: 0.3, ease: 'back.out(1.5)' }, 17.0);
+
+    // === SCENE 3: LIVE SITE (19.5-24.5s) ===
+    tl.to('#scene-live', { opacity: 1, duration: 0.4 }, 19.5);
+    tl.to('#live-frame', { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)' }, 19.8);
+    tl.to('#live-hero-text', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 20.5);
+    tl.to('#live-badge', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 21.5);
+    tl.to('#live-url', { opacity: 1, duration: 0.4 }, 22.5);
+
+    // === SCENE 4: CTA (24.5-30s) ===
+    tl.to('#scene-cta', { opacity: 1, duration: 0.4 }, 24.5);
+    tl.to('#cta-title', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 25.0);
+    tl.to('#cta-sub', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 26.0);
+    tl.to('#cta-button', { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)' }, 27.0);
+    tl.to('#cta-button', { scale: 1.05, duration: 0.3, yoyo: true, repeat: 3 }, 28.0);
+    tl.to('#cta-logo', { opacity: 0.6, duration: 0.5 }, 28.0);
+  </script>
+</div>
+</body>
+</html>

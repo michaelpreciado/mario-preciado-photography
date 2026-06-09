@@ -126,3 +126,13 @@ Code and pipeline workflow © Preciado Tech.
 ---
 
 *Built with the Preciado Tech Web Pipeline — Scrape · Rebuild · Deploy · Scale*
+
+---
+
+## Improvements Pipeline
+
+- [ ] Instagram scraping — pull latest posts from @mariopreciado.art via Apify or client export, auto-populate portfolio grid
+- [ ] Custom domain — map `mariopreciado.art` or TBD custom domain to the Vercel deployment
+- [ ] Google Places lead gen — scrape local venues/photographers, run each through the pipeline, deploy as a preview network on `preciado-tech.com`
+- [ ] Preview deployments — set up per-branch Vercel preview URLs for iterating on client changes before going live
+- [ ] Analytics — add privacy-respecting analytics (Plausible or Vercel Analytics) to track visitors and popular portfolio images

@@ -61,6 +61,10 @@ The scaffold is **functional and deployed** at
 ✅ Image lazy loading (native loading="lazy"; redundant JS observer removed)
 ✅ Accessibility audit (ARIA labels, keyboard nav, sr-only defined in CSS)
 ✅ UX/visual debug pass (mobile menu fixed, scroll animations fixed, copyright updated)
+✅ Working contact form (Formspree, honeypot spam protection, async JS submission)
+✅ Client intake schema (`assets/client.json`)
+✅ Build-doc video updated with real site screenshot (Scene 3 + Scene 2 flash)
+✅ README Improvements Pipeline section added
 
 ---
 

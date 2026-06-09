@@ -1,1 +1,4 @@
 .vercel
+
+# Session memory — untracked in main repo, lives in jarvis profile instead
+memory/

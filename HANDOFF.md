@@ -52,7 +52,7 @@ The scaffold is **functional and deployed** at
 ✅ Git initialized (master branch)
 ✅ Mobile responsive, masonry grid, hover overlays, neon glow effects
 
-❌ Lightbox for full-size image viewing
+✅ Lightbox for full-size image viewing
 ❌ Featured Capture hero rotator
 ❌ Zine/Editorial section (recommended by X research)
 ❌ Loading states / skeleton screens

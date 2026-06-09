@@ -97,7 +97,11 @@ function initPortfolioGrid() {
         const item = document.createElement('div');
         item.className = 'masonry-item animate-fade-in-up';
         item.style.animationDelay = `${index * 0.1}s`;
-        
+        item.tabIndex = 0;
+        item.setAttribute('role', 'button');
+        item.setAttribute('aria-label', `View ${img.title} fullscreen`);
+        item.dataset.index = index;
+
         item.innerHTML = `
             <img src="${img.src}" alt="${img.alt}" loading="lazy"
                  onerror="this.onerror=null;this.src='assets/images/hero-001.webp'">
@@ -107,9 +111,142 @@ function initPortfolioGrid() {
                 <p class="text-zinc-400 text-xs">${img.alt}</p>
             </div>
         `;
-        
+
+        item.addEventListener('click', () => openLightbox(index));
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(index);
+            }
+        });
+
         grid.appendChild(item);
     });
+}
+
+/* ====== Lightbox ====== */
+let lightboxEl = null;
+let lightboxIndex = 0;
+let lastFocusedEl = null;
+
+function buildLightbox() {
+    if (lightboxEl) return lightboxEl;
+
+    lightboxEl = document.createElement('div');
+    lightboxEl.className = 'lightbox';
+    lightboxEl.setAttribute('role', 'dialog');
+    lightboxEl.setAttribute('aria-modal', 'true');
+    lightboxEl.setAttribute('aria-label', 'Image viewer');
+    lightboxEl.innerHTML = `
+        <span class="lightbox__counter" aria-hidden="true"></span>
+        <button class="lightbox__btn lightbox__close" aria-label="Close (Esc)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <button class="lightbox__btn lightbox__prev" aria-label="Previous image">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <button class="lightbox__btn lightbox__next" aria-label="Next image">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+        <figure class="lightbox__figure">
+            <img class="lightbox__img" src="" alt=""
+                 onerror="this.onerror=null;this.src='assets/images/hero-001.webp'">
+            <figcaption class="lightbox__caption">
+                <span class="cat"></span>
+                <span class="title"></span>
+                <span class="alt"></span>
+            </figcaption>
+        </figure>
+    `;
+    document.body.appendChild(lightboxEl);
+
+    // Controls
+    lightboxEl.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
+    lightboxEl.querySelector('.lightbox__prev').addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateLightbox(-1);
+    });
+    lightboxEl.querySelector('.lightbox__next').addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateLightbox(1);
+    });
+
+    // Click on backdrop (not the figure) closes
+    lightboxEl.addEventListener('click', (e) => {
+        if (e.target === lightboxEl) closeLightbox();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!lightboxEl.classList.contains('open')) return;
+        switch (e.key) {
+            case 'Escape': closeLightbox(); break;
+            case 'ArrowLeft': navigateLightbox(-1); break;
+            case 'ArrowRight': navigateLightbox(1); break;
+        }
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    let touchStartY = 0;
+    lightboxEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+    lightboxEl.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        // Horizontal swipe wins only if it's clearly horizontal and long enough
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+            navigateLightbox(dx < 0 ? 1 : -1);
+        }
+    }, { passive: true });
+
+    return lightboxEl;
+}
+
+function renderLightbox() {
+    const img = portfolioImages[lightboxIndex];
+    if (!img) return;
+    const imgEl = lightboxEl.querySelector('.lightbox__img');
+    imgEl.src = img.src;
+    imgEl.alt = img.alt;
+    lightboxEl.querySelector('.cat').textContent = img.category;
+    lightboxEl.querySelector('.title').textContent = img.title;
+    lightboxEl.querySelector('.alt').textContent = img.alt;
+    lightboxEl.querySelector('.lightbox__counter').textContent =
+        `${lightboxIndex + 1} / ${portfolioImages.length}`;
+}
+
+function openLightbox(index) {
+    buildLightbox();
+    lastFocusedEl = document.activeElement;
+    lightboxIndex = index;
+    renderLightbox();
+    lightboxEl.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lightboxEl.querySelector('.lightbox__close').focus();
+}
+
+function closeLightbox() {
+    if (!lightboxEl) return;
+    lightboxEl.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+        lastFocusedEl.focus();
+    }
+}
+
+function navigateLightbox(direction) {
+    const total = portfolioImages.length;
+    lightboxIndex = (lightboxIndex + direction + total) % total;
+    renderLightbox();
 }
 
 // Intersection Observer for scroll animations

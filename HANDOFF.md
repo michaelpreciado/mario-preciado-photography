@@ -56,10 +56,11 @@ The scaffold is **functional and deployed** at
 ✅ Featured Capture hero rotator
 ❌ Zine/Editorial section (recommended by X research)
 ❌ Loading states / skeleton screens
-✅ SEO meta tags
+✅ SEO meta tags (og:url, og:site_name added)
 ✅ Open Graph tags for social sharing
-✅ Image lazy loading verification
-✅ Accessibility audit (ARIA labels, keyboard nav)
+✅ Image lazy loading (native loading="lazy"; redundant JS observer removed)
+✅ Accessibility audit (ARIA labels, keyboard nav, sr-only defined in CSS)
+✅ UX/visual debug pass (mobile menu fixed, scroll animations fixed, copyright updated)
 
 ---
 

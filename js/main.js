@@ -279,8 +279,9 @@ function initScrollAnimations() {
         rootMargin: '0px 0px -50px 0px'
     });
 
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
+    // Skip #home (immediately visible — animating it causes a flash of invisible content)
+    // Skip #portfolio (its individual items already have staggered animations)
+    document.querySelectorAll('section:not(#home):not(#portfolio)').forEach(section => {
         observer.observe(section);
     });
 }
@@ -304,56 +305,61 @@ function initSmoothScroll() {
 // Mobile menu toggle
 function initMobileMenu() {
     const nav = document.querySelector('nav');
-    if (!nav) return;
+    if (!nav || nav.querySelector('.mobile-menu-btn')) return;
 
-    // Add mobile menu button if not exists
-    if (!nav.querySelector('.mobile-menu-btn')) {
-        const menuBtn = document.createElement('button');
-        menuBtn.className = 'mobile-menu-btn md:hidden text-white';
-        menuBtn.setAttribute('aria-label', 'Open navigation menu');
+    const navLinks = document.getElementById('nav-links');
+    if (!navLinks) return;
+
+    const menuBtn = document.createElement('button');
+    menuBtn.className = 'mobile-menu-btn';
+    menuBtn.setAttribute('aria-label', 'Open navigation menu');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-controls', 'nav-links');
+    // Explicit size attributes — no Tailwind dependency for JS-injected content
+    menuBtn.innerHTML = `
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+    `;
+
+    function closeMenu() {
+        navLinks.classList.remove('nav-open');
         menuBtn.setAttribute('aria-expanded', 'false');
-        menuBtn.innerHTML = `
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        `;
-        menuBtn.addEventListener('click', () => {
-            const navLinks = nav.querySelector('div:last-child');
-            const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
-            menuBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-            menuBtn.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
-            navLinks.classList.toggle('hidden');
-            navLinks.classList.toggle('flex');
-            navLinks.classList.toggle('flex-col');
-            navLinks.classList.toggle('absolute');
-            navLinks.classList.toggle('top-full');
-            navLinks.classList.toggle('left-0');
-            navLinks.classList.toggle('w-full');
-            navLinks.classList.toggle('bg-black');
-            navLinks.classList.toggle('p-4');
-        });
-        nav.appendChild(menuBtn);
+        menuBtn.setAttribute('aria-label', 'Open navigation menu');
     }
-}
 
-// Image lazy loading enhancement
-function initLazyLoading() {
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-            imageObserver.observe(img);
-        });
+    function openMenu() {
+        navLinks.classList.add('nav-open');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        menuBtn.setAttribute('aria-label', 'Close navigation menu');
     }
+
+    menuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.contains('nav-open') ? closeMenu() : openMenu();
+    });
+
+    // Close when a nav link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('nav-open')) {
+            closeMenu();
+            menuBtn.focus();
+        }
+    });
+
+    // Close when clicking outside the nav
+    document.addEventListener('click', (e) => {
+        if (navLinks.classList.contains('nav-open') && !nav.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    nav.appendChild(menuBtn);
 }
 
 // Initialize everything on DOM ready
@@ -362,9 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initSmoothScroll();
     initMobileMenu();
-    initLazyLoading();
-    
-    console.log('🎵 Mario Preciado Photography - Site Ready');
 });
 
 // Export for module usage if needed

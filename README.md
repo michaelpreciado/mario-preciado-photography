@@ -1,6 +1,6 @@
 # Mario Preciado Photography
 
-> **Capturing the wild hours.** — Live music, street, fashion, portraiture, and community photography based in the Bay Area, CA.
+> **Capturing live moments & Visuals.** — Live music, street, fashion, portraiture, and community photography based in the Bay Area, CA.
 
 [![Live Site](https://img.shields.io/badge/Live_Site-ff10f0?style=for-the-badge&logo=vercel&logoColor=white)](https://mario-preciado-rebuild.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/michaelpreciado/mario-preciado-photography)

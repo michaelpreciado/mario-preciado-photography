@@ -362,12 +362,57 @@ function initMobileMenu() {
     nav.appendChild(menuBtn);
 }
 
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const submit = document.getElementById('contact-submit');
+    const label = document.getElementById('contact-submit-label');
+    const success = document.getElementById('contact-success');
+    const error = document.getElementById('contact-error');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Bail silently if honeypot was filled
+        const honeypot = form.querySelector('[name="_gotcha"]');
+        if (honeypot && honeypot.value) return;
+
+        submit.disabled = true;
+        label.textContent = 'Sending…';
+        success.hidden = true;
+        error.hidden = true;
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { Accept: 'application/json' }
+            });
+
+            if (res.ok) {
+                form.reset();
+                success.hidden = false;
+                success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                error.hidden = false;
+            }
+        } catch {
+            error.hidden = false;
+        } finally {
+            submit.disabled = false;
+            label.textContent = 'Send Message';
+        }
+    });
+}
+
 // Initialize everything on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolioGrid();
     initScrollAnimations();
     initSmoothScroll();
     initMobileMenu();
+    initContactForm();
 });
 
 // Export for module usage if needed

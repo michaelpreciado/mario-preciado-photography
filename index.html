@@ -238,22 +238,87 @@
 
     <!-- Contact Section -->
     <section id="contact" aria-label="Contact" class="py-20 px-4 md:px-12 border-t border-zinc-900">
-        <div class="max-w-4xl mx-auto text-center">
+        <div class="max-w-2xl mx-auto">
             <div class="flex items-center justify-center gap-2 mb-6">
                 <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
                 <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Get in Touch</p>
             </div>
-            <h2 class="text-3xl md:text-5xl font-bold mb-6">Let's Create <span class="neon-pink italic">Together</span></h2>
-            <p class="text-zinc-500 mb-8 max-w-lg mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-center">Let's Create <span class="neon-pink italic">Together</span></h2>
+            <p class="text-zinc-500 mb-10 max-w-lg mx-auto text-center">
                 Available for bookings in the Bay Area and beyond. Let's capture your next event.
             </p>
-            <a href="mailto:contact@mariopreciado.art"
-               class="inline-flex items-center gap-2 px-8 py-3 border border-[#ff10f0] text-[#ff10f0] rounded-full hover:bg-[#ff10f0] hover:text-black transition-all duration-300 text-sm tracking-wider uppercase">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                Send Message
-            </a>
+
+            <form
+                id="contact-form"
+                action="https://formspree.io/f/xanyvgkj"
+                method="POST"
+                class="contact-form"
+                novalidate>
+
+                <!-- Honeypot — hidden from real users, bots fill it -->
+                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="contact-honeypot">
+
+                <div class="contact-form__row">
+                    <div class="contact-form__field">
+                        <label for="contact-name" class="contact-form__label">Name</label>
+                        <input
+                            type="text"
+                            id="contact-name"
+                            name="name"
+                            class="contact-form__input"
+                            placeholder="Your name"
+                            required
+                            autocomplete="name">
+                    </div>
+                    <div class="contact-form__field">
+                        <label for="contact-email" class="contact-form__label">Email</label>
+                        <input
+                            type="email"
+                            id="contact-email"
+                            name="email"
+                            class="contact-form__input"
+                            placeholder="your@email.com"
+                            required
+                            autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="contact-form__field">
+                    <label for="contact-subject" class="contact-form__label">Subject</label>
+                    <input
+                        type="text"
+                        id="contact-subject"
+                        name="subject"
+                        class="contact-form__input"
+                        placeholder="Booking inquiry, collaboration…"
+                        required>
+                </div>
+
+                <div class="contact-form__field">
+                    <label for="contact-message" class="contact-form__label">Message</label>
+                    <textarea
+                        id="contact-message"
+                        name="message"
+                        class="contact-form__input contact-form__textarea"
+                        placeholder="Tell me about your project or event…"
+                        required
+                        rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="contact-form__submit" id="contact-submit">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span id="contact-submit-label">Send Message</span>
+                </button>
+
+                <p id="contact-success" class="contact-form__success" role="status" hidden>
+                    Message sent — I'll be in touch soon.
+                </p>
+                <p id="contact-error" class="contact-form__error" role="alert" hidden>
+                    Something went wrong. Please try again or email me directly.
+                </p>
+            </form>
         </div>
     </section>
 

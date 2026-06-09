@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "client": {
+    "name": "Mario Preciado",
+    "email": "contact@mariopreciado.art",
+    "instagram": "@mariopreciado.art",
+    "location": {
+      "city": "Bay Area",
+      "state": "CA",
+      "country": "US"
+    }
+  },
+  "brand": {
+    "tagline": "Capturing the wild hours",
+    "colors": {
+      "primary": "#000000",
+      "accent": "#ff10f0"
+    },
+    "typography": {
+      "heading": "Inter",
+      "mono": "JetBrains Mono"
+    },
+    "disciplines": [
+      "Live Music",
+      "Street",
+      "Fashion",
+      "Portraiture",
+      "Community"
+    ]
+  },
+  "site": {
+    "live_url": "https://mario-preciado-rebuild.vercel.app",
+    "repo": "https://github.com/michaelpreciado/mario-preciado-photography",
+    "contact_endpoint": "https://formspree.io/f/xanyvgkj",
+    "deployed_at": "2026-06-09"
+  },
+  "assets": {
+    "hero_images": [
+      "assets/images/hero-001.webp",
+      "assets/images/hero-002.webp"
+    ],
+    "portfolio_images": [
+      "assets/images/portfolio_001.webp",
+      "assets/images/portfolio_002.webp",
+      "assets/images/portfolio_003.webp",
+      "assets/images/portfolio_004.webp",
+      "assets/images/portfolio_005.webp",
+      "assets/images/portfolio_006.webp",
+      "assets/images/portfolio_007.webp",
+      "assets/images/portfolio_008.webp",
+      "assets/images/portfolio_009.webp",
+      "assets/images/portfolio_010.webp",
+      "assets/images/portfolio_011.webp"
+    ]
+  },
+  "pipeline": {
+    "template": "preciado-tech-web-pipeline-v1",
+    "phases": [
+      "Discovery",
+      "Scaffold",
+      "Enhance",
+      "Polish",
+      "Deliver"
+    ],
+    "ai_model": "claude-sonnet-4-6"
+  }
+}

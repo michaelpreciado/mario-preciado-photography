@@ -3,49 +3,84 @@
  * Handles portfolio grid, animations, and interactions
  */
 
-// Portfolio image data structure - will be populated by scraper
+// Portfolio image data - sourced from original site scrape
 const portfolioImages = [
     {
-        src: 'assets/images/portfolio_001.jpg',
+        src: 'assets/images/portfolio_001.webp',
         alt: 'Live Music 001',
         title: 'Live Performance',
         category: 'LIVE MUSIC',
         aspect: 'portrait'
     },
     {
-        src: 'assets/images/portfolio_002.jpg',
+        src: 'assets/images/portfolio_002.webp',
         alt: 'Live Music 002',
         title: 'Stage Energy',
         category: 'LIVE MUSIC',
         aspect: 'landscape'
     },
     {
-        src: 'assets/images/portfolio_003.jpg',
-        alt: 'Street Photography',
-        title: 'Urban Stories',
-        category: 'STREET',
+        src: 'assets/images/portfolio_003.webp',
+        alt: 'Live Music 003',
+        title: 'Crowd Motion',
+        category: 'LIVE MUSIC',
+        aspect: 'landscape'
+    },
+    {
+        src: 'assets/images/portfolio_004.webp',
+        alt: 'Live Music 004',
+        title: 'Backlit Silhouette',
+        category: 'LIVE MUSIC',
         aspect: 'portrait'
     },
     {
-        src: 'assets/images/portfolio_004.jpg',
-        alt: 'Fashion Shoot',
-        title: 'Style editorial',
-        category: 'FASHION',
+        src: 'assets/images/portfolio_005.webp',
+        alt: 'Live Music 005',
+        title: 'Lead Vocalist',
+        category: 'LIVE MUSIC',
         aspect: 'portrait'
     },
     {
-        src: 'assets/images/portfolio_005.jpg',
-        alt: 'Portrait Session',
-        title: 'Character Study',
-        category: 'PORTRAITURE',
+        src: 'assets/images/portfolio_006.webp',
+        alt: 'Live Music 006',
+        title: 'Dramatic Lighting',
+        category: 'LIVE MUSIC',
+        aspect: 'portrait'
+    },
+    {
+        src: 'assets/images/portfolio_007.webp',
+        alt: 'Live Music 007',
+        title: 'Performance Peak',
+        category: 'LIVE MUSIC',
+        aspect: 'portrait'
+    },
+    {
+        src: 'assets/images/portfolio_008.webp',
+        alt: 'Live Music 008',
+        title: 'Stage Presence',
+        category: 'LIVE MUSIC',
+        aspect: 'landscape'
+    },
+    {
+        src: 'assets/images/portfolio_009.webp',
+        alt: 'Live Music 009',
+        title: 'Raw Energy',
+        category: 'LIVE MUSIC',
+        aspect: 'portrait'
+    },
+    {
+        src: 'assets/images/portfolio_010.webp',
+        alt: 'Live Music 010',
+        title: 'Event Capture',
+        category: 'LIVE MUSIC',
         aspect: 'square'
     },
     {
-        src: 'assets/images/portfolio_006.jpg',
-        alt: 'Community Event',
-        title: 'Together',
-        category: 'COMMUNITY',
-        aspect: 'landscape'
+        src: 'assets/images/portfolio_011.webp',
+        alt: 'Live Music 011',
+        title: 'Wild Hour',
+        category: 'LIVE MUSIC',
+        aspect: 'portrait'
     }
 ];
 
@@ -64,8 +99,8 @@ function initPortfolioGrid() {
         item.style.animationDelay = `${index * 0.1}s`;
         
         item.innerHTML = `
-            <img src="${img.src}" alt="${img.alt}" loading="lazy" 
-                 onerror="this.src='https://via.placeholder.com/400x600/111/333?text=Coming+Soon'">
+            <img src="${img.src}" alt="${img.alt}" loading="lazy"
+                 onerror="this.onerror=null;this.src='assets/images/hero-001.webp'">
             <div class="overlay">
                 <span class="text-[10px] tracking-wider text-[#ff10f0] uppercase mb-1">${img.category}</span>
                 <h3>${img.title}</h3>

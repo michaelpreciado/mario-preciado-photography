@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Preciado Photography | Capturing the Wild Hours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-zinc-900">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
+            <span class="text-sm tracking-[0.2em] uppercase font-semibold">Mario Preciado</span>
+        </div>
+        <div class="flex gap-6 text-sm text-zinc-400">
+            <a href="#home" class="hover:text-[#ff10f0] transition-colors">Home</a>
+            <a href="#portfolio" class="hover:text-[#ff10f0] transition-colors">Portfolio</a>
+            <a href="#about" class="hover:text-[#ff10f0] transition-colors">About</a>
+            <a href="#contact" class="hover:text-[#ff10f0] transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 md:px-12 pt-20">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            
+            <!-- Left: Photo -->
+            <div class="relative group order-2 md:order-1">
+                <div class="overflow-hidden rounded-2xl border border-zinc-800 transition-all duration-700 group-hover:border-[#ff10f0]/30">
+                    <img id="hero-image" 
+                         src="assets/images/hero-placeholder.jpg" 
+                         alt="Live performance photography"
+                         class="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700">
+                    
+                    <!-- Location Tag -->
+                    <div class="absolute bottom-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2">
+                        <span class="w-2 h-2 bg-[#ff10f0] rounded-full animate-pulse"></span>
+                        <span class="text-[10px] tracking-[0.2em] uppercase text-zinc-300">Bay Area • CA</span>
+                    </div>
+                </div>
+                <!-- Glow effect behind image -->
+                <div class="absolute -inset-4 bg-[#ff10f0]/5 rounded-3xl blur-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+
+            <!-- Right: Content -->
+            <div class="flex flex-col space-y-6 text-center md:text-left order-1 md:order-2">
+                <div>
+                    <p class="text-zinc-500 text-xs uppercase tracking-[0.3em] flex items-center justify-center md:justify-start gap-2">
+                        <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
+                        About the artist
+                    </p>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mt-4 leading-[0.95]">
+                        Capturing the <br>
+                        <span class="neon-pink italic">wild hours.</span>
+                    </h1>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-lg md:text-xl text-zinc-300">
+                        I'm <span class="font-bold text-white">Mario Preciado</span>, a Bay Area based photographer.
+                    </p>
+                    <p class="text-zinc-500 leading-relaxed max-w-md mx-auto md:mx-0 text-sm md:text-base">
+                        My photography consists of live music, street, fashion, portraiture, art culture and community. 
+                        My focus is expressing the style and vibrant colors that I believe help reflect the atmosphere of these subjects and events.
+                    </p>
+                    <p class="text-zinc-400 text-sm italic">
+                        I look forward to working with you.
+                    </p>
+                </div>
+
+                <!-- Category Tags -->
+                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <span class="category-tag">LIVE MUSIC</span>
+                    <span class="category-tag">STREET</span>
+                    <span class="category-tag">FASHION</span>
+                    <span class="category-tag">PORTRAITURE</span>
+                    <span class="category-tag">COMMUNITY</span>
+                </div>
+
+                <!-- Social Links -->
+                <div class="flex gap-4 justify-center md:justify-start pt-2">
+                    <a href="https://www.instagram.com/mariopreciado.art" 
+                       target="_blank"
+                       class="social-icon" 
+                       aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:contact@mariopreciado.art" 
+                       class="social-icon" 
+                       aria-label="Email">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 px-4 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-2 mb-12">
+                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
+                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Selected Work</p>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-bold mb-12">Recent <span class="neon-pink italic">Captures</span></h2>
+            
+            <!-- Masonry Grid -->
+            <div class="masonry-grid" id="portfolio-grid">
+                <!-- Images will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 md:px-12 border-t border-zinc-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
+                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Get in Touch</p>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Let's Create <span class="neon-pink italic">Together</span></h2>
+            <p class="text-zinc-500 mb-8 max-w-lg mx-auto">
+                Available for bookings in the Bay Area and beyond. Let's capture your next event.
+            </p>
+            <a href="mailto:contact@mariopreciado.art" 
+               class="inline-flex items-center gap-2 px-8 py-3 border border-[#ff10f0] text-[#ff10f0] rounded-full hover:bg-[#ff10f0] hover:text-black transition-all duration-300 text-sm tracking-wider uppercase">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Send Message
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 md:px-12 border-t border-zinc-900">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-zinc-600 text-xs tracking-wider">© 2024 MARIO PRECIADO PHOTOGRAPHY</p>
+            <div class="flex gap-4">
+                <a href="https://www.instagram.com/mariopreciado.art" target="_blank" class="text-zinc-600 hover:text-[#ff10f0] transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

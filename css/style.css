@@ -1,0 +1,202 @@
+/* ====== Mario Preciado Photography - Core Styles ====== */
+
+:root {
+    --neon-pink: #ff10f0;
+    --neon-pink-glow: rgba(255, 16, 240, 0.4);
+    --bg-black: #000000;
+    --bg-dark: #0a0a0a;
+    --border-subtle: #27272a;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #52525b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* ====== Neon Pink Text Effect ====== */
+.neon-pink {
+    color: var(--neon-pink);
+    text-shadow: 
+        0 0 5px var(--neon-pink-glow),
+        0 0 10px var(--neon-pink-glow),
+        0 0 20px var(--neon-pink-glow),
+        0 0 40px rgba(255, 16, 240, 0.2);
+    animation: neonFlicker 3s infinite alternate;
+}
+
+@keyframes neonFlicker {
+    0%, 100% { opacity: 1; }
+    41% { opacity: 1; }
+    42% { opacity: 0.8; }
+    43% { opacity: 1; }
+    47% { opacity: 1; }
+    48% { opacity: 0.4; }
+    49% { opacity: 1; }
+}
+
+/* ====== Category Tags ====== */
+.category-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.category-tag:hover {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink-glow);
+}
+
+/* ====== Social Icons ====== */
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink-glow);
+    transform: translateY(-2px);
+}
+
+/* ====== Masonry Grid ====== */
+.masonry-grid {
+    column-count: 1;
+    column-gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .masonry-grid { column-count: 2; }
+}
+
+@media (min-width: 1024px) {
+    .masonry-grid { column-count: 3; }
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.4s ease;
+}
+
+.masonry-item:hover {
+    border-color: var(--neon-pink);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255, 16, 240, 0.1);
+}
+
+.masonry-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: grayscale(20%);
+}
+
+.masonry-item:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+.masonry-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.masonry-item:hover .overlay {
+    opacity: 1;
+}
+
+.masonry-item .overlay h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.masonry-item .overlay p {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* ====== Smooth Scroll ====== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ====== Selection ====== */
+::selection {
+    background: var(--neon-pink);
+    color: black;
+}
+
+/* ====== Scrollbar ====== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-pink);
+}
+
+/* ====== Loading Animation ====== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}

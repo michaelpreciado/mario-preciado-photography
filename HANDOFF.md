@@ -56,8 +56,8 @@ The scaffold is **functional and deployed** at
 ✅ Featured Capture hero rotator
 ❌ Zine/Editorial section (recommended by X research)
 ❌ Loading states / skeleton screens
-❌ SEO meta tags
-❌ Open Graph tags for social sharing
+✅ SEO meta tags
+✅ Open Graph tags for social sharing
 ❌ Image lazy loading verification
 ❌ Accessibility audit (ARIA labels, keyboard nav)
 

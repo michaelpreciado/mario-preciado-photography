@@ -137,21 +137,16 @@ function initPortfolioGrid() {
     });
 }
 
-// Load an external script only once (returns the script element)
-const loadedScripts = {};
-function loadScriptOnce(src) {
-    if (loadedScripts[src]) return loadedScripts[src];
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    document.body.appendChild(script);
-    loadedScripts[src] = script;
-    return script;
-}
-
 // Escape a string for safe use inside an HTML attribute
 function escapeAttr(str) {
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Extract the shortcode from an Instagram reel/post URL
+// e.g. https://www.instagram.com/reel/DOer3adjbu5/?igsh=... -> DOer3adjbu5
+function instagramShortcode(url) {
+    const match = String(url).match(/instagram\.com\/(?:reel|p|tv)\/([^/?#]+)/i);
+    return match ? match[1] : null;
 }
 
 // Initialize videos grid (Instagram Reels + self-hosted clips)
@@ -166,8 +161,6 @@ function initVideoGrid() {
         return;
     }
 
-    let hasReel = false;
-
     videoData.forEach((video, index) => {
         const item = document.createElement('div');
         item.className = 'video-item animate-fade-in-up';
@@ -175,17 +168,26 @@ function initVideoGrid() {
         item.setAttribute('role', 'listitem');
 
         if (video.type === 'reel') {
-            hasReel = true;
+            // Direct iframe embed — no embed.js needed, renders reliably
+            const code = instagramShortcode(video.url);
             item.classList.add('video-item--reel');
-            item.innerHTML = `
-                <blockquote class="instagram-media"
-                    data-instgrm-permalink="${escapeAttr(video.url)}"
-                    data-instgrm-version="14"></blockquote>
-            `;
+            if (code) {
+                item.innerHTML = `
+                    <iframe class="video-item__embed"
+                        src="https://www.instagram.com/reel/${escapeAttr(code)}/embed/"
+                        loading="lazy" frameborder="0" scrolling="no"
+                        allowtransparency="true" allowfullscreen
+                        title="Instagram reel"></iframe>
+                `;
+            } else {
+                item.innerHTML = `<a class="video-item__fallback" href="${escapeAttr(video.url)}" target="_blank" rel="noopener noreferrer">View on Instagram</a>`;
+            }
         } else {
+            // Self-hosted clip — autoplay muted (browsers block sound autoplay),
+            // looped and inline; controls let the viewer unmute.
             item.classList.add('video-item--file');
             item.innerHTML = `
-                <video controls preload="metadata" playsinline class="video-item__media">
+                <video class="video-item__media" controls autoplay muted loop playsinline preload="metadata">
                     <source src="${escapeAttr(video.src)}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -198,20 +200,6 @@ function initVideoGrid() {
 
         grid.appendChild(item);
     });
-
-    // Render Instagram embeds (load the embed script once, then process)
-    if (hasReel) {
-        if (window.instgrm && window.instgrm.Embeds) {
-            window.instgrm.Embeds.process();
-        } else {
-            const script = loadScriptOnce('https://www.instagram.com/embed.js');
-            script.addEventListener('load', () => {
-                if (window.instgrm && window.instgrm.Embeds) {
-                    window.instgrm.Embeds.process();
-                }
-            });
-        }
-    }
 }
 
 /* ====== Lightbox ====== */

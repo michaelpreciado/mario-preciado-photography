@@ -257,18 +257,25 @@ body {
     color: var(--text-primary);
 }
 
-/* Constrain Instagram embeds so Reels sit cleanly in the grid */
+/* Instagram Reel iframe embed — fills the card, vertical reel aspect */
 .video-item--reel {
-    display: flex;
-    justify-content: center;
+    background: #000;
 }
 
-.video-item--reel .instagram-media {
-    max-width: 100% !important;
-    min-width: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border-radius: 12px !important;
+.video-item__embed {
+    display: block;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    min-height: 540px;
+    border: 0;
+}
+
+.video-item__fallback {
+    display: block;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--neon-pink);
+    font-size: 14px;
 }
 
 .videos-empty {

@@ -84,6 +84,19 @@ const portfolioImages = [
     }
 ];
 
+// Video data - Instagram Reels (embedded) + self-hosted clips.
+// To add more: drop a file in assets/videos/ and add a { type: 'file', ... } entry,
+// or paste a Reel share URL as a { type: 'reel', ... } entry.
+const videoData = [
+    { type: 'reel', url: 'https://www.instagram.com/reel/DOer3adjbu5/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DN9Z45mjf_r/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DMvXmeEJ6Rp/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DMaz3iVS2b-/' },
+    { type: 'file', src: 'assets/videos/video_001.mov', title: 'Live Set', category: 'LIVE MUSIC' },
+    { type: 'file', src: 'assets/videos/video_002.mov', title: 'On Stage', category: 'LIVE MUSIC' },
+    { type: 'file', src: 'assets/videos/video_003.mov', title: 'Crowd', category: 'LIVE MUSIC' }
+];
+
 // Initialize portfolio grid
 function initPortfolioGrid() {
     const grid = document.getElementById('portfolio-grid');
@@ -122,6 +135,83 @@ function initPortfolioGrid() {
 
         grid.appendChild(item);
     });
+}
+
+// Load an external script only once (returns the script element)
+const loadedScripts = {};
+function loadScriptOnce(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.body.appendChild(script);
+    loadedScripts[src] = script;
+    return script;
+}
+
+// Escape a string for safe use inside an HTML attribute
+function escapeAttr(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Initialize videos grid (Instagram Reels + self-hosted clips)
+function initVideoGrid() {
+    const grid = document.getElementById('videos-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    if (!videoData.length) {
+        grid.innerHTML = '<p class="videos-empty">Reels coming soon.</p>';
+        return;
+    }
+
+    let hasReel = false;
+
+    videoData.forEach((video, index) => {
+        const item = document.createElement('div');
+        item.className = 'video-item animate-fade-in-up';
+        item.style.animationDelay = `${index * 0.1}s`;
+        item.setAttribute('role', 'listitem');
+
+        if (video.type === 'reel') {
+            hasReel = true;
+            item.classList.add('video-item--reel');
+            item.innerHTML = `
+                <blockquote class="instagram-media"
+                    data-instgrm-permalink="${escapeAttr(video.url)}"
+                    data-instgrm-version="14"></blockquote>
+            `;
+        } else {
+            item.classList.add('video-item--file');
+            item.innerHTML = `
+                <video controls preload="metadata" playsinline class="video-item__media">
+                    <source src="${escapeAttr(video.src)}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-item__caption">
+                    <span class="video-item__category">${escapeAttr(video.category || '')}</span>
+                    <h3 class="video-item__title">${escapeAttr(video.title || '')}</h3>
+                </div>
+            `;
+        }
+
+        grid.appendChild(item);
+    });
+
+    // Render Instagram embeds (load the embed script once, then process)
+    if (hasReel) {
+        if (window.instgrm && window.instgrm.Embeds) {
+            window.instgrm.Embeds.process();
+        } else {
+            const script = loadScriptOnce('https://www.instagram.com/embed.js');
+            script.addEventListener('load', () => {
+                if (window.instgrm && window.instgrm.Embeds) {
+                    window.instgrm.Embeds.process();
+                }
+            });
+        }
+    }
 }
 
 /* ====== Lightbox ====== */
@@ -409,6 +499,7 @@ function initContactForm() {
 // Initialize everything on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolioGrid();
+    initVideoGrid();
     initScrollAnimations();
     initSmoothScroll();
     initMobileMenu();
@@ -417,5 +508,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for module usage if needed
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { portfolioImages, initPortfolioGrid };
+    module.exports = { portfolioImages, initPortfolioGrid, videoData, initVideoGrid };
 }

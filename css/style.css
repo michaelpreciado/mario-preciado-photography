@@ -200,6 +200,82 @@ body {
     color: var(--text-secondary);
 }
 
+/* ====== Videos grid ====== */
+.videos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+@media (min-width: 640px) {
+    .videos-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .videos-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.video-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-dark);
+    transition: all 0.4s ease;
+}
+
+.video-item:hover {
+    border-color: var(--neon-pink);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255, 16, 240, 0.1);
+}
+
+.video-item__media {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+}
+
+.video-item__caption {
+    padding: 0.75rem 1rem 1rem;
+}
+
+.video-item__category {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    margin-bottom: 4px;
+}
+
+.video-item__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Constrain Instagram embeds so Reels sit cleanly in the grid */
+.video-item--reel {
+    display: flex;
+    justify-content: center;
+}
+
+.video-item--reel .instagram-media {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+}
+
+.videos-empty {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
 /* ====== Scroll margin for fixed nav ====== */
 /* Ensures anchor targets aren't hidden under the fixed navigation bar */
 section[id],

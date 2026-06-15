@@ -142,11 +142,30 @@ function escapeAttr(str) {
     return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// Extract the shortcode from an Instagram reel/post URL
-// e.g. https://www.instagram.com/reel/DOer3adjbu5/?igsh=... -> DOer3adjbu5
-function instagramShortcode(url) {
-    const match = String(url).match(/instagram\.com\/(?:reel|p|tv)\/([^/?#]+)/i);
-    return match ? match[1] : null;
+// Load an external script only once (returns the script element)
+const loadedScripts = {};
+function loadScriptOnce(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.body.appendChild(script);
+    loadedScripts[src] = script;
+    return script;
+}
+
+// Render Instagram embeds via the official SDK (the only reliable way for Reels)
+function processInstagramEmbeds() {
+    if (window.instgrm && window.instgrm.Embeds) {
+        window.instgrm.Embeds.process();
+        return;
+    }
+    const script = loadScriptOnce('https://www.instagram.com/embed.js');
+    script.addEventListener('load', () => {
+        if (window.instgrm && window.instgrm.Embeds) {
+            window.instgrm.Embeds.process();
+        }
+    });
 }
 
 // Initialize videos grid (Instagram Reels + self-hosted clips)
@@ -161,6 +180,8 @@ function initVideoGrid() {
         return;
     }
 
+    let hasReel = false;
+
     videoData.forEach((video, index) => {
         const item = document.createElement('div');
         item.className = 'video-item animate-fade-in-up';
@@ -168,38 +189,32 @@ function initVideoGrid() {
         item.setAttribute('role', 'listitem');
 
         if (video.type === 'reel') {
-            // Direct iframe embed — no embed.js needed, renders reliably
-            const code = instagramShortcode(video.url);
+            // Official Instagram embed — bare iframes are rejected for Reels,
+            // so use the blockquote that embed.js upgrades into the real player.
+            hasReel = true;
             item.classList.add('video-item--reel');
-            if (code) {
-                item.innerHTML = `
-                    <iframe class="video-item__embed"
-                        src="https://www.instagram.com/reel/${escapeAttr(code)}/embed/"
-                        loading="lazy" frameborder="0" scrolling="no"
-                        allowtransparency="true" allowfullscreen
-                        title="Instagram reel"></iframe>
-                `;
-            } else {
-                item.innerHTML = `<a class="video-item__fallback" href="${escapeAttr(video.url)}" target="_blank" rel="noopener noreferrer">View on Instagram</a>`;
-            }
+            item.innerHTML = `
+                <blockquote class="instagram-media"
+                    data-instgrm-permalink="${escapeAttr(video.url)}"
+                    data-instgrm-version="14"
+                    style="margin:0;width:100%;min-width:0;"></blockquote>
+            `;
         } else {
             // Self-hosted clip — autoplay muted (browsers block sound autoplay),
-            // looped and inline; controls let the viewer unmute.
+            // looped and inline; controls let the viewer unmute. No caption overlay.
             item.classList.add('video-item--file');
             item.innerHTML = `
                 <video class="video-item__media" controls autoplay muted loop playsinline preload="metadata">
                     <source src="${escapeAttr(video.src)}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <div class="video-item__caption">
-                    <span class="video-item__category">${escapeAttr(video.category || '')}</span>
-                    <h3 class="video-item__title">${escapeAttr(video.title || '')}</h3>
-                </div>
             `;
         }
 
         grid.appendChild(item);
     });
+
+    if (hasReel) processInstagramEmbeds();
 }
 
 // Rotate the Featured Capture image through existing work with a crossfade

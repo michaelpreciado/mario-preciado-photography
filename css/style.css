@@ -201,19 +201,12 @@ body {
 }
 
 /* ====== Videos grid ====== */
+/* auto-fit keeps every column >= 330px so Instagram embeds (326px min) never collapse */
 .videos-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
     gap: 1rem;
     align-items: start;
-}
-
-@media (min-width: 640px) {
-    .videos-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 1024px) {
-    .videos-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 .video-item {
@@ -238,44 +231,16 @@ body {
     background: #000;
 }
 
-.video-item__caption {
-    padding: 0.75rem 1rem 1rem;
-}
-
-.video-item__category {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--neon-pink);
-    margin-bottom: 4px;
-}
-
-.video-item__title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-/* Instagram Reel iframe embed — fills the card, vertical reel aspect */
+/* Instagram Reel — center the official embed within the card */
 .video-item--reel {
+    display: flex;
+    justify-content: center;
     background: #000;
 }
 
-.video-item__embed {
-    display: block;
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    min-height: 540px;
-    border: 0;
-}
-
-.video-item__fallback {
-    display: block;
-    padding: 2rem 1rem;
-    text-align: center;
-    color: var(--neon-pink);
-    font-size: 14px;
+.video-item--reel .instagram-media {
+    margin: 0 !important;
+    max-width: 100% !important;
 }
 
 .videos-empty {

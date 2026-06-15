@@ -78,8 +78,8 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Google Fonts — async (non-blocking) via preload swap trick -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Press+Start+2P&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Press+Start+2P&display=swap"></noscript>
 
     <!-- Tailwind CDN — deferred so it doesn't block the initial render -->
     <script src="https://cdn.tailwindcss.com" defer></script>
@@ -91,13 +91,14 @@
 
     <!-- Navigation -->
     <nav aria-label="Main navigation" class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-zinc-900">
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-            <span class="text-sm tracking-[0.2em] uppercase font-semibold">Mario Preciado</span>
-        </div>
-        <div id="nav-links" class="flex gap-6 text-sm text-zinc-400">
+        <a href="#home" class="brand" aria-label="Mario Preciado — home">
+            <img src="assets/images/logo-records.jpg" alt="Mario Preciado logo" class="brand__logo" width="320" height="107" decoding="async">
+            <span class="brand__name">Mario Preciado</span>
+        </a>
+        <div id="nav-links" class="font-pixel flex gap-6 text-zinc-400">
             <a href="#home" class="hover:text-[#ff10f0] transition-colors">Home</a>
             <a href="#portfolio" class="hover:text-[#ff10f0] transition-colors">Portfolio</a>
+            <a href="#videos" class="hover:text-[#ff10f0] transition-colors">Videos</a>
             <a href="#instagram" class="hover:text-[#ff10f0] transition-colors">Feed</a>
             <a href="#about" class="hover:text-[#ff10f0] transition-colors">About</a>
             <a href="#contact" class="hover:text-[#ff10f0] transition-colors">Contact</a>
@@ -231,6 +232,23 @@
             <!-- Masonry Grid -->
             <div class="masonry-grid" id="portfolio-grid" role="list" aria-label="Portfolio images">
                 <!-- Images will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" aria-label="Videos" class="py-20 px-4 md:px-12 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-2 mb-12">
+                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
+                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Video Work</p>
+            </div>
+
+            <h2 class="text-3xl md:text-5xl font-bold mb-12">Motion <span class="neon-pink italic">Reels</span></h2>
+
+            <!-- Videos Grid -->
+            <div class="videos-grid" id="videos-grid" role="list" aria-label="Videos">
+                <!-- Videos will be populated by JS -->
             </div>
         </div>
     </section>

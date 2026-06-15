@@ -200,6 +200,97 @@ body {
     color: var(--text-secondary);
 }
 
+/* ====== Videos grid ====== */
+/* auto-fit keeps every column >= 330px so Instagram embeds (326px min) never collapse */
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 1rem;
+    align-items: start;
+}
+
+.video-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-dark);
+    transition: all 0.4s ease;
+}
+
+.video-item:hover {
+    border-color: var(--neon-pink);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(255, 16, 240, 0.1);
+}
+
+.video-item__media {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+}
+
+/* Instagram Reel — center the official embed within the card */
+.video-item--reel {
+    display: flex;
+    justify-content: center;
+    background: #000;
+}
+
+.video-item--reel .instagram-media {
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+
+.videos-empty {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ====== 8-bit header: brand logo + pixel font ====== */
+.font-pixel {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+}
+
+.brand__logo {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+.brand__name {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Pixel-font nav links — smaller so they fit the retro look */
+#nav-links.font-pixel {
+    gap: 1.1rem;
+}
+
+#nav-links.font-pixel a {
+    font-size: 8px;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+}
+
+/* Keep the header tidy on small screens — logo alone is recognizable */
+@media (max-width: 400px) {
+    .brand__name { display: none; }
+}
+
 /* ====== Scroll margin for fixed nav ====== */
 /* Ensures anchor targets aren't hidden under the fixed navigation bar */
 section[id],
@@ -515,6 +606,14 @@ html {
     display: block;
     transition: transform 0.9s ease, filter 0.5s ease;
     filter: grayscale(15%);
+}
+
+/* Top crossfade layer for the rotating featured image */
+.featured-capture__img--top {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease, transform 0.9s ease, filter 0.5s ease;
 }
 
 .featured-capture__overlay {

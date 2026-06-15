@@ -84,6 +84,19 @@ const portfolioImages = [
     }
 ];
 
+// Video data - Instagram Reels (embedded) + self-hosted clips.
+// To add more: drop a file in assets/videos/ and add a { type: 'file', ... } entry,
+// or paste a Reel share URL as a { type: 'reel', ... } entry.
+const videoData = [
+    { type: 'reel', url: 'https://www.instagram.com/reel/DOer3adjbu5/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DN9Z45mjf_r/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DMvXmeEJ6Rp/' },
+    { type: 'reel', url: 'https://www.instagram.com/reel/DMaz3iVS2b-/' },
+    { type: 'file', src: 'assets/videos/video_001.mov', title: 'Live Set', category: 'LIVE MUSIC' },
+    { type: 'file', src: 'assets/videos/video_002.mov', title: 'On Stage', category: 'LIVE MUSIC' },
+    { type: 'file', src: 'assets/videos/video_003.mov', title: 'Crowd', category: 'LIVE MUSIC' }
+];
+
 // Initialize portfolio grid
 function initPortfolioGrid() {
     const grid = document.getElementById('portfolio-grid');
@@ -122,6 +135,126 @@ function initPortfolioGrid() {
 
         grid.appendChild(item);
     });
+}
+
+// Escape a string for safe use inside an HTML attribute
+function escapeAttr(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Load an external script only once (returns the script element)
+const loadedScripts = {};
+function loadScriptOnce(src) {
+    if (loadedScripts[src]) return loadedScripts[src];
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.body.appendChild(script);
+    loadedScripts[src] = script;
+    return script;
+}
+
+// Render Instagram embeds via the official SDK (the only reliable way for Reels)
+function processInstagramEmbeds() {
+    if (window.instgrm && window.instgrm.Embeds) {
+        window.instgrm.Embeds.process();
+        return;
+    }
+    const script = loadScriptOnce('https://www.instagram.com/embed.js');
+    script.addEventListener('load', () => {
+        if (window.instgrm && window.instgrm.Embeds) {
+            window.instgrm.Embeds.process();
+        }
+    });
+}
+
+// Initialize videos grid (Instagram Reels + self-hosted clips)
+function initVideoGrid() {
+    const grid = document.getElementById('videos-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    if (!videoData.length) {
+        grid.innerHTML = '<p class="videos-empty">Reels coming soon.</p>';
+        return;
+    }
+
+    let hasReel = false;
+
+    videoData.forEach((video, index) => {
+        const item = document.createElement('div');
+        item.className = 'video-item animate-fade-in-up';
+        item.style.animationDelay = `${index * 0.1}s`;
+        item.setAttribute('role', 'listitem');
+
+        if (video.type === 'reel') {
+            // Official Instagram embed — bare iframes are rejected for Reels,
+            // so use the blockquote that embed.js upgrades into the real player.
+            hasReel = true;
+            item.classList.add('video-item--reel');
+            item.innerHTML = `
+                <blockquote class="instagram-media"
+                    data-instgrm-permalink="${escapeAttr(video.url)}"
+                    data-instgrm-version="14"
+                    style="margin:0;width:100%;min-width:0;"></blockquote>
+            `;
+        } else {
+            // Self-hosted clip — autoplay muted (browsers block sound autoplay),
+            // looped and inline; controls let the viewer unmute. No caption overlay.
+            item.classList.add('video-item--file');
+            item.innerHTML = `
+                <video class="video-item__media" controls autoplay muted loop playsinline preload="metadata">
+                    <source src="${escapeAttr(video.src)}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        grid.appendChild(item);
+    });
+
+    if (hasReel) processInstagramEmbeds();
+}
+
+// Rotate the Featured Capture image through existing work with a crossfade
+function initFeaturedRotation() {
+    const base = document.querySelector('.featured-capture__img');
+    if (!base) return;
+
+    // Respect users who prefer reduced motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const srcs = portfolioImages.map((img) => img.src);
+    if (srcs.length < 2) return;
+
+    // Top crossfade layer stacked over the base image (sits before the overlay)
+    const top = base.cloneNode(false);
+    top.classList.add('featured-capture__img--top');
+    top.removeAttribute('id');
+    top.alt = '';
+    base.insertAdjacentElement('afterend', top);
+
+    let idx = 0;
+
+    setInterval(() => {
+        idx = (idx + 1) % srcs.length;
+        const nextSrc = srcs[idx];
+
+        // Preload, then crossfade the top layer in over the current image
+        const pre = new Image();
+        pre.onload = () => {
+            top.src = nextSrc;
+            requestAnimationFrame(() => { top.style.opacity = '1'; });
+            const commit = () => {
+                top.removeEventListener('transitionend', commit);
+                base.src = nextSrc;       // bottom layer now holds the new image
+                top.style.opacity = '0';  // hide top again (under the identical image)
+            };
+            top.addEventListener('transitionend', commit);
+        };
+        pre.src = nextSrc;
+    }, 5000);
 }
 
 /* ====== Lightbox ====== */
@@ -409,6 +542,8 @@ function initContactForm() {
 // Initialize everything on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolioGrid();
+    initVideoGrid();
+    initFeaturedRotation();
     initScrollAnimations();
     initSmoothScroll();
     initMobileMenu();
@@ -417,5 +552,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for module usage if needed
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { portfolioImages, initPortfolioGrid };
+    module.exports = { portfolioImages, initPortfolioGrid, videoData, initVideoGrid };
 }

@@ -78,8 +78,8 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Google Fonts — async (non-blocking) via preload swap trick -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Press+Start+2P&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Press+Start+2P&display=swap"></noscript>
 
     <!-- Tailwind CDN — deferred so it doesn't block the initial render -->
     <script src="https://cdn.tailwindcss.com" defer></script>
@@ -91,11 +91,11 @@
 
     <!-- Navigation -->
     <nav aria-label="Main navigation" class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-zinc-900">
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-            <span class="text-sm tracking-[0.2em] uppercase font-semibold">Mario Preciado</span>
-        </div>
-        <div id="nav-links" class="flex gap-6 text-sm text-zinc-400">
+        <a href="#home" class="brand" aria-label="Mario Preciado — home">
+            <img src="assets/images/logo-records.jpg" alt="Mario Preciado logo" class="brand__logo" width="320" height="107" decoding="async">
+            <span class="brand__name">Mario Preciado</span>
+        </a>
+        <div id="nav-links" class="font-pixel flex gap-6 text-zinc-400">
             <a href="#home" class="hover:text-[#ff10f0] transition-colors">Home</a>
             <a href="#portfolio" class="hover:text-[#ff10f0] transition-colors">Portfolio</a>
             <a href="#videos" class="hover:text-[#ff10f0] transition-colors">Videos</a>

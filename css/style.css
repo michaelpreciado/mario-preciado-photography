@@ -283,6 +283,49 @@ body {
     font-size: 14px;
 }
 
+/* ====== 8-bit header: brand logo + pixel font ====== */
+.font-pixel {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+}
+
+.brand__logo {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+.brand__name {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Pixel-font nav links — smaller so they fit the retro look */
+#nav-links.font-pixel {
+    gap: 1.1rem;
+}
+
+#nav-links.font-pixel a {
+    font-size: 8px;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+}
+
+/* Keep the header tidy on small screens — logo alone is recognizable */
+@media (max-width: 400px) {
+    .brand__name { display: none; }
+}
+
 /* ====== Scroll margin for fixed nav ====== */
 /* Ensures anchor targets aren't hidden under the fixed navigation bar */
 section[id],
@@ -598,6 +641,14 @@ html {
     display: block;
     transition: transform 0.9s ease, filter 0.5s ease;
     filter: grayscale(15%);
+}
+
+/* Top crossfade layer for the rotating featured image */
+.featured-capture__img--top {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease, transform 0.9s ease, filter 0.5s ease;
 }
 
 .featured-capture__overlay {

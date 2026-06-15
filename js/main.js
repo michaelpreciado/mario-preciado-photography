@@ -202,6 +202,46 @@ function initVideoGrid() {
     });
 }
 
+// Rotate the Featured Capture image through existing work with a crossfade
+function initFeaturedRotation() {
+    const base = document.querySelector('.featured-capture__img');
+    if (!base) return;
+
+    // Respect users who prefer reduced motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const srcs = portfolioImages.map((img) => img.src);
+    if (srcs.length < 2) return;
+
+    // Top crossfade layer stacked over the base image (sits before the overlay)
+    const top = base.cloneNode(false);
+    top.classList.add('featured-capture__img--top');
+    top.removeAttribute('id');
+    top.alt = '';
+    base.insertAdjacentElement('afterend', top);
+
+    let idx = 0;
+
+    setInterval(() => {
+        idx = (idx + 1) % srcs.length;
+        const nextSrc = srcs[idx];
+
+        // Preload, then crossfade the top layer in over the current image
+        const pre = new Image();
+        pre.onload = () => {
+            top.src = nextSrc;
+            requestAnimationFrame(() => { top.style.opacity = '1'; });
+            const commit = () => {
+                top.removeEventListener('transitionend', commit);
+                base.src = nextSrc;       // bottom layer now holds the new image
+                top.style.opacity = '0';  // hide top again (under the identical image)
+            };
+            top.addEventListener('transitionend', commit);
+        };
+        pre.src = nextSrc;
+    }, 5000);
+}
+
 /* ====== Lightbox ====== */
 let lightboxEl = null;
 let lightboxIndex = 0;
@@ -488,6 +528,7 @@ function initContactForm() {
 document.addEventListener('DOMContentLoaded', () => {
     initPortfolioGrid();
     initVideoGrid();
+    initFeaturedRotation();
     initScrollAnimations();
     initSmoothScroll();
     initMobileMenu();

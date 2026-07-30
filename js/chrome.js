@@ -44,7 +44,7 @@ export async function initBoot() {
     if (done) return;
     done = true;
     store.set(BOOT_KEY, '1');
-    if (status) status.textContent = '[ SIGNAL ACQUIRED ]';
+    if (status) status.textContent = 'Ready';
     if (fill) fill.style.setProperty('--boot-progress', 1);
     boot.classList.add('is-done');
     document.body.style.overflow = '';
@@ -116,7 +116,11 @@ export function initNav() {
   });
 
   // ── current section ──
-  const anchors = [...(links?.querySelectorAll('a') ?? [])];
+  // Only in-page anchors. Since the site went multi-page the nav mostly holds
+  // path hrefs ("/work/"), and passing one of those to querySelector throws a
+  // SyntaxError — the current page is marked server-side with aria-current
+  // instead.
+  const anchors = [...(links?.querySelectorAll('a[href^="#"]') ?? [])];
   const sections = anchors
     .map((a) => document.querySelector(a.getAttribute('href')))
     .filter(Boolean);
@@ -248,4 +252,50 @@ export function initCursor() {
   // Leaving the window shouldn't strand a floating square.
   document.addEventListener('pointerleave', () => (el.style.opacity = '0'));
   document.addEventListener('pointerenter', () => (el.style.opacity = '1'));
+}
+
+/**
+ * Depth. Hero and featured frames drift slower than the page, the way a long
+ * lens separates a subject from its background.
+ *
+ * Only a CSS custom property feeding a transform is written — no layout is read
+ * in the scroll handler, and element positions are measured once up front and
+ * again on resize. Offscreen elements are skipped entirely.
+ */
+export function initParallax() {
+  if (!env.rich || env.reduced) return;
+
+  const items = [...document.querySelectorAll('.parallax')].map((el) => ({
+    el,
+    rate: Number(el.dataset.parallax) || 0.15,
+    top: 0,
+    h: 0,
+    last: null,
+  }));
+  if (!items.length) return;
+
+  const measure = () => {
+    for (const i of items) {
+      const r = i.el.getBoundingClientRect();
+      i.top = r.top + scrollY;
+      i.h = r.height;
+    }
+  };
+
+  measure();
+
+  onScroll(() => {
+    for (const i of items) {
+      const rel = scrollY - i.top;
+      // Nothing to do while the element is nowhere near the viewport.
+      if (rel < -innerHeight || rel > i.h + innerHeight) continue;
+      const py = Math.round(rel * i.rate);
+      if (py === i.last) continue;   // skip redundant style writes
+      i.last = py;
+      i.el.style.setProperty('--py', `${py}px`);
+    }
+  });
+
+  addEventListener('resize', measure, { passive: true });
+  addEventListener('load', measure);
 }

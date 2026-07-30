@@ -3,9 +3,13 @@
    Nomad-cyberpunk concert photography portfolio.
 
    The chrome is a machine; the photographs are the signal. Cold interface —
-   hairline HUD, monospace telemetry, 8-bit counters, stepped motion, glitch on
-   state change — wrapped around hot, saturated, untouched stage photography.
-   No effect ever distorts a photograph.
+   hairline HUD, monospace telemetry, 8-bit counters, glitch on state change —
+   wrapped around hot, saturated, untouched stage photography. No effect ever
+   distorts a photograph.
+
+   Stepped (8-bit) timing is confined to the machine parts: progress bar, boot
+   meter, counters, cursor snap, grain. It never touches a photograph, because
+   stepped motion on an image reads as stutter rather than style.
 
    Authored mobile-first: base styles are the phone, min-width queries add
    complexity upward. Desktop-only chrome only ever exists inside its gate.
@@ -26,11 +30,12 @@
      13  about
      14  contact
      15  footer
-     16  lightbox
-     17  keyframes
-     18  responsive
-     19  reduced motion
-     20  debug
+     16  keyframes
+     17  responsive
+     18  reduced motion
+     19  debug
+     20  pages            work index · single frame · cta
+     21  photographic effects   grain · parallax
    ═══════════════════════════════════════════════════════════════════════ */
 
 
@@ -340,10 +345,15 @@ button { background: none; border: none; cursor: pointer; }
    it can never be un-clipped, and the lazy images inside it never start
    loading either. That deadlock hid all 14 photographs. Stepped opacity and
    translate give the same chunky 8-bit arrival with no clipping involved. */
+/* Smooth, not stepped.
+   These were on steps(4), which makes an element arrive in four discrete hops.
+   On UI chrome that reads as 8-bit; on a photograph it just reads as stutter.
+   Stepped timing is now confined to the machine parts — progress bar, boot
+   meter, counters, cursor snap — and never touches the work. */
 .js .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity var(--d-mid) var(--ez-step4), transform var(--d-mid) var(--ez-step4);
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 620ms var(--ez-out), transform 820ms var(--ez-out);
 }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
@@ -946,14 +956,30 @@ button { background: none; border: none; cursor: pointer; }
   height: 100%;
   object-fit: cover;
   image-rendering: auto;      /* the photograph itself is never pixelated */
-  transition: opacity var(--d-slow) var(--ez-out), transform var(--d-slow) var(--ez-out);
+  transition: transform var(--d-slow) var(--ez-out);
 }
-.js .frame__img,
-.js .hero__img,
-.js .signal__img { opacity: 0; transition: opacity var(--d-slow) var(--ez-out); }
-.js .frame__img.is-loaded,
-.js .hero__img.is-loaded,
-.js .signal__img.is-loaded { opacity: 1; }
+
+/* The pixel veil, not the photograph, is what animates.
+   Fading the image itself meant recompositing a full-resolution frame on every
+   tick of the transition — measurably janky on a throttled machine. The veil is
+   a 24px source upscaled, so its raster is trivial no matter how large it is
+   drawn. Same visual result: the frame resolves out of 8-bit blocks. */
+.frame__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: inherit;   /* the parent's LQIP data URI — no extra bytes */
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated;
+  opacity: 0;                  /* no JS → nothing covers the photograph */
+  pointer-events: none;
+}
+
+.js .frame__veil { opacity: 1; transition: opacity var(--d-mid) var(--ez-out); }
+.js .frame__media.is-loaded .frame__veil { opacity: 0; }
+/* Once faded it is removed from the compositor entirely. */
+.js .frame__media.is-retired .frame__veil { display: none; }
 
 /* Corner brackets on every frame — static, no motion cost. */
 .frame__media::before,
@@ -1191,69 +1217,6 @@ button { background: none; border: none; cursor: pointer; }
 .foot__ig:hover { color: var(--mag); border-color: var(--mag-dim); }
 
 
-/* ── 16 · lightbox ───────────────────────────────────────────────────────── */
-
-.lb {
-  width: 100vw;
-  max-width: 100vw;
-  height: 100dvh;              /* dvh so it tracks the mobile toolbar live */
-  max-height: 100dvh;
-  padding: 0;
-  border: 0;
-  background: var(--ink-0);
-  color: var(--text-1);
-}
-.lb::backdrop { background: rgba(0, 0, 0, 0.94); }
-
-.lb__stage {
-  position: relative;
-  height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: calc(var(--hud-inset) + var(--s-3)) var(--s-4) calc(var(--hud-inset-b) + var(--s-4));
-  gap: var(--s-3);
-}
-
-.lb__top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
-.lb__count { font-family: var(--f-pixel); font-size: var(--t-2xs); color: var(--ui); }
-
-.lb__fig { display: grid; place-items: center; min-height: 0; }
-.lb__img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition: opacity var(--d-mid) var(--ez-step4);
-}
-.lb.is-swapping .lb__img { opacity: 0; }
-
-.lb__cap { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; }
-.lb__title { font-size: var(--t-sm); }
-.lb__alt { color: var(--text-3); font-size: var(--t-xs); flex-basis: 100%; line-height: 1.5; }
-
-.lb__btn {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: var(--b-hair) solid var(--line-2);
-  color: var(--text-1);
-  transition: border-color var(--d-fast), color var(--d-fast);
-}
-.lb__btn:hover { border-color: var(--mag); color: var(--mag); }
-
-.lb__nav { display: flex; gap: var(--s-2); }
-
-.lb__sr {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-
 /* ── 17 · keyframes ──────────────────────────────────────────────────────── */
 
 @keyframes glitch-a {
@@ -1340,7 +1303,14 @@ button { background: none; border: none; cursor: pointer; }
 @media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
   @media (prefers-reduced-motion: no-preference) {
     .scanlines { display: block; }
+    .grain { display: block; }
   }
+}
+
+@media (min-width: 48rem) {
+  .solo { padding-top: calc(var(--hud-inset) + var(--s-16)); }
+  .solo__body { grid-template-columns: 1.4fr 1fr; gap: var(--s-10); align-items: start; }
+  .solo__meta { grid-template-columns: 1fr 1fr; }
 }
 
 
@@ -1361,12 +1331,14 @@ button { background: none; border: none; cursor: pointer; }
   .js .reveal,
   .js .reveal:not(.is-in) { opacity: 1; transform: none; }
 
-  .js .frame__img,
-  .js .hero__img,
-  .js .signal__img { opacity: 1; }
+  .js .frame__veil { opacity: 0; transition: none; }
 
   .scanlines,
+  .grain,
   .cursor { display: none !important; }
+
+  /* Depth is motion too — hold the frames still. */
+  .parallax > .frame__media--fill { transform: scale(1.12); }
 
   .glitch::before,
   .glitch::after,
@@ -1424,3 +1396,178 @@ button { background: none; border: none; cursor: pointer; }
 }
 .dbg b { color: var(--ui); font-weight: 400; }
 .dbg .warn { color: var(--mag-lift); }
+
+
+/* ── 21 · pages ──────────────────────────────────────────────────────────────
+   Added when the site became multi-page: /work, /work/<slug>, /about, /contact.
+   The chrome is identical across all of them (tools/lib/shell.mjs); only these
+   layout blocks differ. */
+
+/* Frames are links now, not JS-driven buttons — shareable, crawlable, and they
+   work with scripting off. */
+.frame__link {
+  display: block;
+  color: inherit;
+}
+
+.work__more,
+.cta {
+  display: flex;
+  justify-content: center;
+  padding: var(--s-10) var(--gutter) var(--s-12);
+}
+
+.cta { border-top: var(--b-hair) solid var(--line-1); }
+
+.cta__inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-6);
+  text-align: center;
+}
+
+.cta__title {
+  font-family: var(--f-display);
+  font-size: var(--t-xl);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.cta__title em { font-style: normal; color: var(--mag); }
+
+.sec-head--page { padding-top: var(--s-12); }
+
+/* ── single frame page ─────────────────────────────────────────────────────── */
+
+.solo {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: calc(var(--hud-inset) + var(--s-12)) var(--gutter) var(--s-10);
+}
+
+/* Title sits above the frame so the space under the nav carries information
+   rather than reading as an empty gap. */
+.solo__head { margin-bottom: var(--s-5); }
+
+.solo__stage {
+  display: grid;
+  place-items: center;
+  margin-bottom: var(--s-6);
+}
+
+/* Contain, never crop: on a page dedicated to one photograph the whole frame
+   has to be visible, unlike the gallery where cover-cropping serves the grid. */
+.frame__media--solo {
+  aspect-ratio: var(--ar, 1);
+  max-height: 66svh;
+  width: auto;
+  max-width: 100%;
+  border: var(--b-hair) solid var(--line-1);
+}
+.frame__media--solo .solo__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.solo__body {
+  display: grid;
+  gap: var(--s-6);
+  padding-bottom: var(--s-8);
+  border-bottom: var(--b-hair) solid var(--line-1);
+}
+
+.solo__title {
+  font-family: var(--f-display);
+  font-size: var(--t-xl);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin-top: var(--s-2);
+  overflow-wrap: break-word;
+}
+
+.solo__caption {
+  max-width: 46rem;
+  color: var(--text-2);
+}
+
+.solo__meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4);
+}
+.solo__meta div { display: grid; gap: var(--s-1); }
+.solo__meta dt { color: var(--text-3); }
+.solo__meta dd { color: var(--text-1); text-transform: none; letter-spacing: 0; }
+
+/* prev / all / next */
+.framenav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-6) 0;
+}
+
+.framenav__link { display: grid; gap: var(--s-1); min-height: 44px; }
+.framenav__link--next { text-align: right; }
+.framenav__link .mono { color: var(--ui); }
+.framenav__title {
+  font-family: var(--f-display);
+  font-size: var(--t-md);
+  text-transform: uppercase;
+  transition: color var(--d-fast);
+}
+.framenav__link:hover .framenav__title { color: var(--mag); }
+
+.framenav__all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border: var(--b-hair) solid var(--line-2);
+  color: var(--text-2);
+  transition: color var(--d-fast), border-color var(--d-fast);
+}
+.framenav__all:hover { color: var(--text-1); border-color: var(--ui); }
+
+
+/* ── 22 · photographic effects ───────────────────────────────────────────────
+   Effects drawn from how a photograph is actually made — grain, depth, a scrim
+   that breathes — rather than generic web motion. All of them animate only
+   transform or opacity, because the load-in stutter came from asking the
+   browser to recomposite full-resolution imagery mid-transition. */
+
+/* Film grain. A static tiled SVG turbulence, so it costs one small raster and
+   then composites for free. Sits above the photographs but below all chrome. */
+.grain {
+  position: fixed;
+  inset: -50%;              /* oversized so the drift never exposes an edge */
+  z-index: calc(var(--z-hud) - 2);
+  pointer-events: none;
+  opacity: 0.055;
+  display: none;            /* desktop-only, enabled in the gate below */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  will-change: transform;
+  animation: grain-drift 700ms steps(5, end) infinite;
+}
+
+/* Grain should shimmer like real film, not slide — discrete jumps, and only a
+   few pixels, so it reads as emulsion rather than movement. */
+@keyframes grain-drift {
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(-3px, 2px, 0); }
+  40%  { transform: translate3d(2px, -3px, 0); }
+  60%  { transform: translate3d(-2px, -2px, 0); }
+  80%  { transform: translate3d(3px, 1px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* Depth. The hero and featured frames drift slower than the page, the way a
+   long lens separates a subject from its background. Driven from JS so the
+   transform stays a single composited property. */
+.parallax { will-change: transform; }
+.parallax > .frame__media--fill { transform: translate3d(0, var(--py, 0px), 0) scale(1.12); }

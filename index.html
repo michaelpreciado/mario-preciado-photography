@@ -9,20 +9,18 @@
 <meta name="description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
 <meta name="author" content="Mario Preciado">
 <link rel="canonical" href="https://mario-preciado-rebuild.vercel.app/">
-
-<!-- 8-bit aperture mark, inlined — also stops the favicon.ico 404 on every load -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Cpath fill='%23ff10f0' d='M5 2h6v2H5zM3 4h2v2H3zm8 0h2v2h-2zM2 6h2v4H2zm10 0h2v4h-2zM3 10h2v2H3zm8 0h2v2h-2zM5 12h6v2H5z'/%3E%3Crect x='7' y='7' width='2' height='2' fill='%23ffb020'/%3E%3C/svg%3E">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mario Preciado — Live Music &amp; Concert Photography">
-<meta property="og:description" content="Capturing live moments &amp; visuals. Bay Area photographer — live music, street, fashion, portraiture, community.">
+<meta property="og:title" content="Mario Preciado — Live Music &amp; Concert Photography, Bay Area">
+<meta property="og:description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
 <meta property="og:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
 <meta property="og:url" content="https://mario-preciado-rebuild.vercel.app/">
 <meta property="og:site_name" content="Mario Preciado Photography">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Mario Preciado — Live Music &amp; Concert Photography">
-<meta name="twitter:description" content="Capturing live moments &amp; visuals. Bay Area photographer.">
+<meta name="twitter:title" content="Mario Preciado — Live Music &amp; Concert Photography, Bay Area">
+<meta name="twitter:description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
 <meta name="twitter:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
 
 <script type="application/ld+json">
@@ -35,39 +33,49 @@
   "url": "https://mario-preciado-rebuild.vercel.app/",
   "email": "marioopreciadoo@gmail.com",
   "image": "https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp",
-  "sameAs": ["https://www.instagram.com/mariopreciado.art"],
-  "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US", "addressLocality": "Bay Area" },
-  "knowsAbout": ["Live music photography", "Concert photography", "Street photography", "Portraiture", "Fashion photography"]
+  "sameAs": [
+    "https://www.instagram.com/mariopreciado.art"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "CA",
+    "addressCountry": "US",
+    "addressLocality": "Bay Area"
+  },
+  "knowsAbout": [
+    "Live music photography",
+    "Concert photography",
+    "Street photography",
+    "Portraiture",
+    "Fashion photography"
+  ]
 }
 </script>
 
-<!-- Self-hosted type. crossorigin is REQUIRED on font preloads even same-origin,
-     otherwise the browser fetches each file twice. -->
-<link rel="preload" href="assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
+<!-- crossorigin is REQUIRED on font preloads even same-origin, or each file is fetched twice -->
+<link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="/assets/images/opt/hero-001-480.avif" imagesrcset="/assets/images/opt/hero-001-320.avif 320w, /assets/images/opt/hero-001-480.avif 480w, /assets/images/opt/hero-001-960.avif 960w, /assets/images/opt/hero-001-1280.avif 1280w" imagesizes="(max-width: 640px) 72vw, 100vw" fetchpriority="high">
+<link rel="stylesheet" href="/css/style.css">
 
-<!-- Marks that JS is alive BEFORE first paint, so progressive-enhancement
-     styles (hidden-then-revealed frames) only apply when something can
-     actually reveal them. Without this a JS failure leaves a blank page. -->
+<!-- Marks JS alive BEFORE first paint so progressive-enhancement styles only
+     apply when something can actually reveal the content. -->
 <script>document.documentElement.classList.add('js');</script>
 
-<script type="module" src="js/main.js"></script>
+<script type="module" src="/js/main.js"></script>
 </head>
 
 <body>
 
-<!-- ═══ BOOT ═══ first visit only, ≤900ms, skippable, never blocks a return visit -->
 <div id="boot" class="boot" aria-hidden="true" hidden>
   <div class="boot__inner">
     <p class="boot__word" data-text="MARIO PRECIADO">MARIO PRECIADO</p>
     <div class="boot__bar"><span class="boot__fill"></span></div>
-    <p class="boot__status">ACQUIRING SIGNAL</p>
+    <p class="boot__status">Loading</p>
   </div>
-  <button class="boot__skip" type="button">SKIP</button>
+  <button class="boot__skip" type="button">Skip</button>
 </div>
 
-<!-- ═══ PERSISTENT CHROME ═══ decorative; JS adds the cursor, CSS draws the rest -->
 <div class="hud" aria-hidden="true">
   <span class="hud__corner hud__corner--tl"></span>
   <span class="hud__corner hud__corner--tr"></span>
@@ -76,21 +84,21 @@
   <div class="hud__progress"><span class="hud__progress-fill"></span></div>
 </div>
 <div class="scanlines" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <a href="#main" class="skip-link">Skip to content</a>
 
-<!-- ═══ NAV ═══ -->
 <header class="nav">
-  <a class="nav__mark" href="#home">
+  <a class="nav__mark" href="/" aria-label="Mario Preciado — home">
     <span class="nav__dot" aria-hidden="true"></span>
     <span class="nav__name glitch" data-text="MARIO PRECIADO">MARIO PRECIADO</span>
   </a>
 
   <nav id="nav-links" class="nav__links" aria-label="Primary">
-    <a href="#home"><span class="nav__idx" aria-hidden="true">01</span>INDEX</a>
-    <a href="#work"><span class="nav__idx" aria-hidden="true">02</span>WORK</a>
-    <a href="#about"><span class="nav__idx" aria-hidden="true">04</span>ABOUT</a>
-    <a href="#contact"><span class="nav__idx" aria-hidden="true">05</span>CONTACT</a>
+    <a href="/" aria-current="page"><span class="nav__idx" aria-hidden="true">01</span>HOME</a>
+    <a href="/work/"><span class="nav__idx" aria-hidden="true">02</span>WORK</a>
+    <a href="/about/"><span class="nav__idx" aria-hidden="true">03</span>ABOUT</a>
+    <a href="/contact/"><span class="nav__idx" aria-hidden="true">04</span>CONTACT</a>
   </nav>
 
   <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
@@ -100,63 +108,46 @@
 </header>
 
 <main id="main">
-
-  <!-- ═══ 01 · HERO ═══ full-bleed, one photograph, type over it -->
   <section id="home" class="hero" aria-label="Introduction">
-    <div class="hero__media">
-      <!-- gallery:hero:start -->
-<div class="frame__media frame__media--fill" style="--ar:0.7503;background-image:url(data:image/webp;base64,UklGRhoBAABXRUJQVlA4IA4BAAAQBwCdASoYACAAPwFmqU6rJSOiMAgBYCAJbACdMoR/d9M58GW2yPPi6aBvJ4FCh2d1e8XT+7POZ+pjIow8k+9mAAD+7qGOMg1pD/rZooejT5tKbRYwnjFFZFz6yF8MirPiz5+XAz47y9J/1U4pDs/gmIKf1cRyIKKKx0xrqflevs1lRUHdtoVfZ/0F3gnm5qpaZ4jCo9S9A02ZwneG1RZUbVKKavIKP+/7X/P2NKL32bLop/mfp/0qZ0s7+3uTxALYFNU/VqTHLMkUeaC2SQriSLg1/EPJBgGHAss2zZ7V8XRIDvGjTNHRPcNrJpBq4aVqO9e3I8IJp7DPNSeyN7ZxJ94Z23M8wkzXyRLiYAA=)">
-  <picture>
-    <source type="image/avif" srcset="assets/images/opt/hero-001-320.avif 320w, assets/images/opt/hero-001-480.avif 480w, assets/images/opt/hero-001-960.avif 960w, assets/images/opt/hero-001-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
-    <source type="image/webp" srcset="assets/images/opt/hero-001-320.webp 320w, assets/images/opt/hero-001-480.webp 480w, assets/images/opt/hero-001-960.webp 960w, assets/images/opt/hero-001-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
-    <img class="hero__img" src="assets/images/opt/hero-001-480.webp" width="1280" height="1706" alt="Musician in a bucket hat and glasses playing a synth rig beneath a blue and magenta liquid light projection." decoding="async" fetchpriority="high">
-  </picture>
-</div>
-<!-- gallery:hero:end -->
+    <div class="hero__media parallax" data-parallax="0.18">
+      <div class="frame__media frame__media--fill" style="--ar:0.7503;background-image:url(data:image/webp;base64,UklGRhoBAABXRUJQVlA4IA4BAAAQBwCdASoYACAAPwFmqU6rJSOiMAgBYCAJbACdMoR/d9M58GW2yPPi6aBvJ4FCh2d1e8XT+7POZ+pjIow8k+9mAAD+7qGOMg1pD/rZooejT5tKbRYwnjFFZFz6yF8MirPiz5+XAz47y9J/1U4pDs/gmIKf1cRyIKKKx0xrqflevs1lRUHdtoVfZ/0F3gnm5qpaZ4jCo9S9A02ZwneG1RZUbVKKavIKP+/7X/P2NKL32bLop/mfp/0qZ0s7+3uTxALYFNU/VqTHLMkUeaC2SQriSLg1/EPJBgGHAss2zZ7V8XRIDvGjTNHRPcNrJpBq4aVqO9e3I8IJp7DPNSeyN7ZxJ94Z23M8wkzXyRLiYAA=)">
+        <picture>
+          <source type="image/avif" srcset="/assets/images/opt/hero-001-320.avif 320w, /assets/images/opt/hero-001-480.avif 480w, /assets/images/opt/hero-001-960.avif 960w, /assets/images/opt/hero-001-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <source type="image/webp" srcset="/assets/images/opt/hero-001-320.webp 320w, /assets/images/opt/hero-001-480.webp 480w, /assets/images/opt/hero-001-960.webp 960w, /assets/images/opt/hero-001-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <img class="hero__img" src="/assets/images/opt/hero-001-480.webp" width="1280" height="1706" alt="Musician in a bucket hat and glasses playing a synth rig beneath a blue and magenta liquid light projection." decoding="async" fetchpriority="high">
+        </picture>
+        <span class="frame__veil" aria-hidden="true"></span>
+      </div>
       <div class="hero__scrim" aria-hidden="true"></div>
     </div>
 
     <div class="hero__body">
-      <p class="eyebrow"><span class="eyebrow__pip" aria-hidden="true"></span>Bay Area &middot; CA</p>
-      <h1 class="hero__title">
-        Capturing<br>
-        <em>live moments</em><br>
-        &amp; visuals<span class="hero__stop" aria-hidden="true">.</span>
-      </h1>
-      <p class="hero__lede">Mario Preciado — photographer. Live music, street, fashion, portraiture, art&nbsp;culture and community.</p>
+      <p class="eyebrow"><span class="eyebrow__pip" aria-hidden="true"></span>Bay Area · CA</p>
+      <h1 class="hero__title">Capturing<br><em>live moments</em><br>&amp; visuals<span class="hero__stop" aria-hidden="true">.</span></h1>
+      <p class="hero__lede">Live music, portraiture and editorial work across the Bay Area. Available for shows, features and commissions.</p>
     </div>
 
     <div class="hero__meta" aria-hidden="true">
-      <span class="mono">37.8044&deg; N &nbsp;/&nbsp; 122.2712&deg; W</span>
+      <span class="mono">37.8044° N / 122.2712° W</span>
       <span class="mono hero__count"></span>
     </div>
 
     <a class="hero__scroll" href="#work" aria-label="Scroll to selected work">
-      <span class="mono">SCROLL</span>
-      <svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-        <path d="M7 2h2v8h2v2H9v2H7v-2H5v-2h2V2zM3 8h2v2H3V8zm8 0h2v2h-2V8z"/>
-      </svg>
+      <span class="mono">Scroll</span>
+      <svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M7 2h2v8h2v2H9v2H7v-2H5v-2h2V2zM3 8h2v2H3V8zm8 0h2v2h-2V8z"/></svg>
     </a>
   </section>
 
-  <!-- ═══ 01b · BRAND MARK ═══ five overlapping records over the name in
-       spectrum type. Pure CSS — no image, crisp at any size. The records are
-       decorative; the name is the real heading. -->
   <section class="brand" aria-label="Mario Preciado">
     <div class="brand__stack" aria-hidden="true">
-      <span class="record"></span>
-      <span class="record"></span>
-      <span class="record"></span>
-      <span class="record"></span>
-      <span class="record"></span>
+      <span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span>
     </div>
     <div class="brand__caption">
       <p class="brand__name">Mario Preciado</p>
-      <p class="brand__role mono">Live Music Photographer &nbsp;·&nbsp; Bay Area, CA</p>
+      <p class="brand__role mono">Photographer &nbsp;·&nbsp; San Francisco Bay Area</p>
     </div>
   </section>
 
-  <!-- ═══ 02 · TICKER ═══ the disciplines. First run is readable; repeats are hidden. -->
   <div class="ticker">
     <div class="ticker__track">
       <ul class="ticker__run">
@@ -171,334 +162,232 @@
     </div>
   </div>
 
-  <!-- ═══ 03 · WORK ═══ asymmetric editorial sequence, not a masonry grid.
-       Markup between the markers is generated by `npm run gallery` from
-       assets/images/manifest.json — edit tools/build-gallery.mjs, not this. -->
   <section id="work" class="work" aria-label="Selected work">
     <header class="sec-head">
       <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">02</span>Selected Work</p>
-      <h2 class="sec-title">Recent <em>Captures</em></h2>
-      <p class="sec-note mono">Shot on location across Bay Area venues. Click any frame to open full size.</p>
+      <h2 class="sec-title reveal">Recent<br><em>Captures</em></h2>
+      <p class="sec-note mono reveal">Selected frames from recent shows. Select any image to view it larger.</p>
     </header>
 
     <div class="work__seq">
-      <!-- gallery:work:start -->
-<div class="row row--full">
-  <figure class="frame frame--full reveal" data-idx="1" data-name="portfolio_003"
-          data-full="assets/images/opt/portfolio_003-1280.webp" data-full-avif="assets/images/opt/portfolio_003-1280.avif"
-          data-title="Crowd Motion" data-alt="Crowd surfer carried on raised hands through a packed audience under blue stage light." tabindex="0" role="button"
-          aria-label="Open Crowd Motion full size">
-    <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABIAPwFysFIrJqSiqAqpYCAJYgAAL4egUmJ8gmkaeWzd9PAA/u8+RrxBqMAx3aWCizz/YoxTUdZ9QiCgF2MZDYAeKanSR2GJFq279SoK/5eUg01tA2uerZN7ovyjdoJBC4IxfaYAAA==)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_003-320.avif 320w, assets/images/opt/portfolio_003-480.avif 480w, assets/images/opt/portfolio_003-960.avif 960w, assets/images/opt/portfolio_003-1280.avif 1280w" sizes="92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_003-320.webp 320w, assets/images/opt/portfolio_003-480.webp 480w, assets/images/opt/portfolio_003-960.webp 960w, assets/images/opt/portfolio_003-1280.webp 1280w" sizes="92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_003-480.webp" width="1280" height="960" alt="Crowd surfer carried on raised hands through a packed audience under blue stage light." decoding="async" loading="lazy">
-      </picture>
+      <div class="row row--full">
+        <figure class="frame frame--full reveal" data-idx="1" data-name="portfolio_003">
+          <a class="frame__link" href="/work/crowd-motion/" aria-label="Crowd Motion — open frame">
+            <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABIAPwFysFIrJqSiqAqpYCAJYgAAL4egUmJ8gmkaeWzd9PAA/u8+RrxBqMAx3aWCizz/YoxTUdZ9QiCgF2MZDYAeKanSR2GJFq279SoK/5eUg01tA2uerZN7ovyjdoJBC4IxfaYAAA==)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_003-320.avif 320w, /assets/images/opt/portfolio_003-480.avif 480w, /assets/images/opt/portfolio_003-960.avif 960w, /assets/images/opt/portfolio_003-1280.avif 1280w" sizes="92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_003-320.webp 320w, /assets/images/opt/portfolio_003-480.webp 480w, /assets/images/opt/portfolio_003-960.webp 960w, /assets/images/opt/portfolio_003-1280.webp 1280w" sizes="92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_003-480.webp" width="1280" height="960" alt="Crowd surfer carried on raised hands through a packed audience under blue stage light." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">01</span>
+              <span class="frame__title">Crowd Motion</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
+      <div class="row row--duo">
+        <figure class="frame frame--lead reveal" data-idx="2" data-name="portfolio_001">
+          <a class="frame__link" href="/work/liquid-light/" aria-label="Liquid Light — open frame">
+            <div class="frame__media" style="--ar:0.7668;background-image:url(data:image/webp;base64,UklGRh4BAABXRUJQVlA4IBIBAAAQBgCdASoYAB8APwFmqk6rJSOiMAgBYCAJbACdMu0A/vM5PGYwv+yUwMWhCeRFmw6X6b3C7JWZ6AAA/uQ2z+R/TXEd8aiMih3WlHmsO7w9jwA6htp+D10kl8IjxSbQ3tU4MUzB3v9wdF7y6I83EAWNfSkbqKOCBIPuc+/D1P4AsoDfPhkOCJ9nqFQCv38cnT3RDGaqr+J2frs/hY8x/ZkX6G+OrA/ltHM4ZeYkztarvvzHE57dSK2edDj/g2yo6tEQ4H/2J+IfI1CNFCdO2C4TP1sLfuZ7RLIQhvYhJL8SMIQnDCQAPq7hrzQoky4ie561ckz1Q2s4vNdITqD/QxLFi9rY2vM7eX0InKdjsyhGWPAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_001-320.avif 320w, /assets/images/opt/portfolio_001-480.avif 480w, /assets/images/opt/portfolio_001-776.avif 776w" sizes="(min-width: 768px) 56vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_001-320.webp 320w, /assets/images/opt/portfolio_001-480.webp 480w, /assets/images/opt/portfolio_001-776.webp 776w" sizes="(min-width: 768px) 56vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_001-480.webp" width="776" height="1012" alt="Band on stage under a psychedelic green and magenta liquid light projection, guitarist at the microphone." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">02</span>
+              <span class="frame__title">Liquid Light</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--sub reveal" data-idx="3" data-name="portfolio_007">
+          <a class="frame__link" href="/work/solar/" aria-label="Solar — open frame">
+            <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_007-320.avif 320w, /assets/images/opt/portfolio_007-480.avif 480w, /assets/images/opt/portfolio_007-960.avif 960w, /assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 34vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_007-320.webp 320w, /assets/images/opt/portfolio_007-480.webp 480w, /assets/images/opt/portfolio_007-960.webp 960w, /assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 34vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">03</span>
+              <span class="frame__title">Solar</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
+      <div class="row row--trio">
+        <figure class="frame frame--trio reveal" data-idx="4" data-name="portfolio_009">
+          <a class="frame__link" href="/work/raw-energy/" aria-label="Raw Energy — open frame">
+            <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_009-320.avif 320w, /assets/images/opt/portfolio_009-480.avif 480w, /assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_009-320.webp 320w, /assets/images/opt/portfolio_009-480.webp 480w, /assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">04</span>
+              <span class="frame__title">Raw Energy</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--trio reveal" data-idx="5" data-name="portfolio_011">
+          <a class="frame__link" href="/work/green-room/" aria-label="Green Room — open frame">
+            <div class="frame__media" style="--ar:0.6674;background-image:url(data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwBACdASoYACQAPwF0sFKrJqSjpWzJYCAJQBWGaFi10sLlwTpIqxW1C0o2bGNrjgAA/vDWy59BF7mAOgas+YPpEYFijgs0aW+U+ygiJZW1NT4QlCDpZsgDKSJdWEwRAHNWDmuPbR2njSFYi92pqw66zipQu0UV8pii+v6Cy6hHy3qYohIHsZSjZAA=)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_011-320.avif 320w, /assets/images/opt/portfolio_011-480.avif 480w, /assets/images/opt/portfolio_011-960.avif 960w, /assets/images/opt/portfolio_011-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_011-320.webp 320w, /assets/images/opt/portfolio_011-480.webp 480w, /assets/images/opt/portfolio_011-960.webp 960w, /assets/images/opt/portfolio_011-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_011-480.webp" width="1280" height="1918" alt="Guitarist with a hollow-body electric bathed in deep green stage light." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">05</span>
+              <span class="frame__title">Green Room</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--trio reveal" data-idx="6" data-name="portfolio_005">
+          <a class="frame__link" href="/work/lead-vocalist/" aria-label="Lead Vocalist — open frame">
+            <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACwBACdASoYACAAPwF4s1OrJySiqAgBYCAJYgDImFaav+i1NyCHBO8Tz0kvtxGAAP766d8IaWGKwZHHd7FmjGAMwVKxGF+MMwF9DFSav2v+CWjL1gbH+dYQD5m9ifFlOTAZF4iE9MEcIn73cL8/I4jAGUlXe4Rd5TjpKoIcsvrO4SAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_005-320.avif 320w, /assets/images/opt/portfolio_005-480.avif 480w, /assets/images/opt/portfolio_005-960.avif 960w, /assets/images/opt/portfolio_005-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_005-320.webp 320w, /assets/images/opt/portfolio_005-480.webp 480w, /assets/images/opt/portfolio_005-960.webp 960w, /assets/images/opt/portfolio_005-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_005-480.webp" width="1280" height="1707" alt="Guitarist leaning into the microphone in profile, violet rim light across a white electric guitar." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">06</span>
+              <span class="frame__title">Lead Vocalist</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
     </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">01</span>
-      <span class="frame__title">Crowd Motion</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<div class="row row--duo">
-  <figure class="frame frame--lead reveal" data-idx="2" data-name="portfolio_001"
-          data-full="assets/images/opt/portfolio_001-776.webp" data-full-avif="assets/images/opt/portfolio_001-776.avif"
-          data-title="Liquid Light" data-alt="Band on stage under a psychedelic green and magenta liquid light projection, guitarist at the microphone." tabindex="0" role="button"
-          aria-label="Open Liquid Light full size">
-    <div class="frame__media" style="--ar:0.7668;background-image:url(data:image/webp;base64,UklGRh4BAABXRUJQVlA4IBIBAAAQBgCdASoYAB8APwFmqk6rJSOiMAgBYCAJbACdMu0A/vM5PGYwv+yUwMWhCeRFmw6X6b3C7JWZ6AAA/uQ2z+R/TXEd8aiMih3WlHmsO7w9jwA6htp+D10kl8IjxSbQ3tU4MUzB3v9wdF7y6I83EAWNfSkbqKOCBIPuc+/D1P4AsoDfPhkOCJ9nqFQCv38cnT3RDGaqr+J2frs/hY8x/ZkX6G+OrA/ltHM4ZeYkztarvvzHE57dSK2edDj/g2yo6tEQ4H/2J+IfI1CNFCdO2C4TP1sLfuZ7RLIQhvYhJL8SMIQnDCQAPq7hrzQoky4ie561ckz1Q2s4vNdITqD/QxLFi9rY2vM7eX0InKdjsyhGWPAA)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_001-320.avif 320w, assets/images/opt/portfolio_001-480.avif 480w, assets/images/opt/portfolio_001-776.avif 776w" sizes="(min-width: 768px) 56vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_001-320.webp 320w, assets/images/opt/portfolio_001-480.webp 480w, assets/images/opt/portfolio_001-776.webp 776w" sizes="(min-width: 768px) 56vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_001-480.webp" width="776" height="1012" alt="Band on stage under a psychedelic green and magenta liquid light projection, guitarist at the microphone." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">02</span>
-      <span class="frame__title">Liquid Light</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-  <figure class="frame frame--sub reveal" data-idx="3" data-name="portfolio_007"
-          data-full="assets/images/opt/portfolio_007-1280.webp" data-full-avif="assets/images/opt/portfolio_007-1280.avif"
-          data-title="Solar" data-alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." tabindex="0" role="button"
-          aria-label="Open Solar full size">
-    <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_007-320.avif 320w, assets/images/opt/portfolio_007-480.avif 480w, assets/images/opt/portfolio_007-960.avif 960w, assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 34vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_007-320.webp 320w, assets/images/opt/portfolio_007-480.webp 480w, assets/images/opt/portfolio_007-960.webp 960w, assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 34vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">03</span>
-      <span class="frame__title">Solar</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<div class="row row--full">
-  <figure class="frame frame--full reveal" data-idx="4" data-name="portfolio_008"
-          data-full="assets/images/opt/portfolio_008-1280.webp" data-full-avif="assets/images/opt/portfolio_008-1280.avif"
-          data-title="Main Stage" data-alt="Wide venue shot — an arched stage set in blue light and smoke, audience silhouetted in the foreground." tabindex="0" role="button"
-          aria-label="Open Main Stage full size">
-    <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACQBACdASoYABIAPwFyslGrJqSjqAqpYCAJbACxHzQ5aBEAp9eIdvJ3rIZW0YAA/uZ2dISe97xR7llFygD8gZMr9quUo5QgH58P5vSVgMUWSvmnH/cFWNQxVVIh4zWsyMZ1quZLAi+DdWzzWJdPOT3hYtW7qTCI6WJsaHFjvfT9px6Z9Q89J/9k5fp6VRbpJ1ReDOicxvfoNCjdeUXzfwAAAAA=)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_008-320.avif 320w, assets/images/opt/portfolio_008-480.avif 480w, assets/images/opt/portfolio_008-960.avif 960w, assets/images/opt/portfolio_008-1280.avif 1280w" sizes="92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_008-320.webp 320w, assets/images/opt/portfolio_008-480.webp 480w, assets/images/opt/portfolio_008-960.webp 960w, assets/images/opt/portfolio_008-1280.webp 1280w" sizes="92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_008-480.webp" width="1280" height="960" alt="Wide venue shot — an arched stage set in blue light and smoke, audience silhouetted in the foreground." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">04</span>
-      <span class="frame__title">Main Stage</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<div class="row row--trio">
-  <figure class="frame frame--trio reveal" data-idx="5" data-name="portfolio_009"
-          data-full="assets/images/opt/portfolio_009-654.webp" data-full-avif="assets/images/opt/portfolio_009-654.avif"
-          data-title="Raw Energy" data-alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." tabindex="0" role="button"
-          aria-label="Open Raw Energy full size">
-    <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_009-320.avif 320w, assets/images/opt/portfolio_009-480.avif 480w, assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 30vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_009-320.webp 320w, assets/images/opt/portfolio_009-480.webp 480w, assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 30vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">05</span>
-      <span class="frame__title">Raw Energy</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-  <figure class="frame frame--trio reveal" data-idx="6" data-name="portfolio_011"
-          data-full="assets/images/opt/portfolio_011-1280.webp" data-full-avif="assets/images/opt/portfolio_011-1280.avif"
-          data-title="Green Room" data-alt="Guitarist with a hollow-body electric bathed in deep green stage light." tabindex="0" role="button"
-          aria-label="Open Green Room full size">
-    <div class="frame__media" style="--ar:0.6674;background-image:url(data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwBACdASoYACQAPwF0sFKrJqSjpWzJYCAJQBWGaFi10sLlwTpIqxW1C0o2bGNrjgAA/vDWy59BF7mAOgas+YPpEYFijgs0aW+U+ygiJZW1NT4QlCDpZsgDKSJdWEwRAHNWDmuPbR2njSFYi92pqw66zipQu0UV8pii+v6Cy6hHy3qYohIHsZSjZAA=)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_011-320.avif 320w, assets/images/opt/portfolio_011-480.avif 480w, assets/images/opt/portfolio_011-960.avif 960w, assets/images/opt/portfolio_011-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_011-320.webp 320w, assets/images/opt/portfolio_011-480.webp 480w, assets/images/opt/portfolio_011-960.webp 960w, assets/images/opt/portfolio_011-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_011-480.webp" width="1280" height="1918" alt="Guitarist with a hollow-body electric bathed in deep green stage light." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">06</span>
-      <span class="frame__title">Green Room</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-  <figure class="frame frame--trio reveal" data-idx="7" data-name="portfolio_005"
-          data-full="assets/images/opt/portfolio_005-1280.webp" data-full-avif="assets/images/opt/portfolio_005-1280.avif"
-          data-title="Lead Vocalist" data-alt="Guitarist leaning into the microphone in profile, violet rim light across a white electric guitar." tabindex="0" role="button"
-          aria-label="Open Lead Vocalist full size">
-    <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACwBACdASoYACAAPwF4s1OrJySiqAgBYCAJYgDImFaav+i1NyCHBO8Tz0kvtxGAAP766d8IaWGKwZHHd7FmjGAMwVKxGF+MMwF9DFSav2v+CWjL1gbH+dYQD5m9ifFlOTAZF4iE9MEcIn73cL8/I4jAGUlXe4Rd5TjpKoIcsvrO4SAA)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_005-320.avif 320w, assets/images/opt/portfolio_005-480.avif 480w, assets/images/opt/portfolio_005-960.avif 960w, assets/images/opt/portfolio_005-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_005-320.webp 320w, assets/images/opt/portfolio_005-480.webp 480w, assets/images/opt/portfolio_005-960.webp 960w, assets/images/opt/portfolio_005-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_005-480.webp" width="1280" height="1707" alt="Guitarist leaning into the microphone in profile, violet rim light across a white electric guitar." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">07</span>
-      <span class="frame__title">Lead Vocalist</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<div class="row row--duo-rev">
-  <figure class="frame frame--sub reveal" data-idx="8" data-name="portfolio_002"
-          data-full="assets/images/opt/portfolio_002-1024.webp" data-full-avif="assets/images/opt/portfolio_002-1024.avif"
-          data-title="Tinsel" data-alt="Vocalist in a patterned dress arching backward mid-note in front of a silver tinsel curtain, drummer behind." tabindex="0" role="button"
-          aria-label="Open Tinsel full size">
-    <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQBACdASoYABIAPwFurVCrJiQiqA1RYCAJZgC4MA2QqvlEj+Dw/IpEirAAAP2z/TqglwatOlG2ly+daGS/4zD8g+AAwMxHJA27J71PCLRucOvS0kCqXUVMV0gW9xsGIdgviZCE+4AAAA==)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_002-320.avif 320w, assets/images/opt/portfolio_002-480.avif 480w, assets/images/opt/portfolio_002-960.avif 960w, assets/images/opt/portfolio_002-1024.avif 1024w" sizes="(min-width: 768px) 34vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_002-320.webp 320w, assets/images/opt/portfolio_002-480.webp 480w, assets/images/opt/portfolio_002-960.webp 960w, assets/images/opt/portfolio_002-1024.webp 1024w" sizes="(min-width: 768px) 34vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_002-480.webp" width="1024" height="768" alt="Vocalist in a patterned dress arching backward mid-note in front of a silver tinsel curtain, drummer behind." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">08</span>
-      <span class="frame__title">Tinsel</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-  <figure class="frame frame--lead reveal" data-idx="9" data-name="portfolio_006"
-          data-full="assets/images/opt/portfolio_006-1280.webp" data-full-avif="assets/images/opt/portfolio_006-1280.avif"
-          data-title="Reach" data-alt="Vocalist in a floral dress holding the microphone stand overhead against a tinsel backdrop." tabindex="0" role="button"
-          aria-label="Open Reach full size">
-    <div class="frame__media" style="--ar:0.7561;background-image:url(data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAABQBQCdASoYACAAPv1kq06rJSOiN/VYAWAfiWQAwzRFX0ni1c4noRbHbIJ1ofZSDoqqNIAA/vVnmD3oKj24veRE2QxDLdKTambp433TdSKzJ001Z4SOLtGCAu0+gerIjYyhk5Eub/CPlzJ5OPHdGzPw6IxNPOqpP4tz4AAA)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_006-320.avif 320w, assets/images/opt/portfolio_006-480.avif 480w, assets/images/opt/portfolio_006-960.avif 960w, assets/images/opt/portfolio_006-1280.avif 1280w" sizes="(min-width: 768px) 56vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_006-320.webp 320w, assets/images/opt/portfolio_006-480.webp 480w, assets/images/opt/portfolio_006-960.webp 960w, assets/images/opt/portfolio_006-1280.webp 1280w" sizes="(min-width: 768px) 56vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_006-480.webp" width="1280" height="1693" alt="Vocalist in a floral dress holding the microphone stand overhead against a tinsel backdrop." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">09</span>
-      <span class="frame__title">Reach</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<div class="row row--duo">
-  <figure class="frame frame--lead reveal" data-idx="10" data-name="portfolio_010"
-          data-full="assets/images/opt/portfolio_010-848.webp" data-full-avif="assets/images/opt/portfolio_010-848.avif"
-          data-title="Wide Brim" data-alt="Long-haired guitarist in a wide-brimmed hat singing at the microphone under warm amber light." tabindex="0" role="button"
-          aria-label="Open Wide Brim full size">
-    <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBgCdASoYABIAPwFysVIrJqSiqAqpYCAJbACdMtU8LoLzZ6AP//iYAB4aoTce1midx1wOuVHoD8FrmEIgAP50i7jCaV2r3gR5f2+kXlIIdpNOHOk9IluOe/VCgcuTd9O4qfDx1eylYVot1l3wy0VSyiDCTA8bWxt6qCHg9Y0Y6rIWlOBoMfbRNbWiBkm9HUfzLOrvIVqdey/lwuhkc7Rg5om4Glpt+S0RvXyYvgTpaVtO1IYORiAA)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_010-320.avif 320w, assets/images/opt/portfolio_010-480.avif 480w, assets/images/opt/portfolio_010-848.avif 848w" sizes="(min-width: 768px) 56vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_010-320.webp 320w, assets/images/opt/portfolio_010-480.webp 480w, assets/images/opt/portfolio_010-848.webp 848w" sizes="(min-width: 768px) 56vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_010-480.webp" width="848" height="636" alt="Long-haired guitarist in a wide-brimmed hat singing at the microphone under warm amber light." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">10</span>
-      <span class="frame__title">Wide Brim</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-  <figure class="frame frame--sub reveal" data-idx="11" data-name="portfolio_004"
-          data-full="assets/images/opt/portfolio_004-1280.webp" data-full-avif="assets/images/opt/portfolio_004-1280.avif"
-          data-title="Red Kit" data-alt="Drummer mid-set drenched in deep red stage light, cymbals catching the glow." tabindex="0" role="button"
-          aria-label="Open Red Kit full size">
-    <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAABQBQCdASoYACAAPwF0sFKrJqQiqAqpYCAJbACdMtSIOymoZggjMABxfrq0sNroF4v5i0AA/vRKitAkYAlp4yHamNvym7WfteCW11viehgaskf3iDcTLvlW7DRLlczRQLtS6u5EwKa6AVlCzK/9dtYQ8fgJhuOxekAsTONVrmm+KC2fANRsx0534znwPOWhf3LaVVFKIbDLDgn2kLMAzAf2RNCallRr0AA=)">
-      <picture>
-        <source type="image/avif" srcset="assets/images/opt/portfolio_004-320.avif 320w, assets/images/opt/portfolio_004-480.avif 480w, assets/images/opt/portfolio_004-960.avif 960w, assets/images/opt/portfolio_004-1280.avif 1280w" sizes="(min-width: 768px) 34vw, 92vw">
-        <source type="image/webp" srcset="assets/images/opt/portfolio_004-320.webp 320w, assets/images/opt/portfolio_004-480.webp 480w, assets/images/opt/portfolio_004-960.webp 960w, assets/images/opt/portfolio_004-1280.webp 1280w" sizes="(min-width: 768px) 34vw, 92vw">
-        <img class="frame__img" src="assets/images/opt/portfolio_004-480.webp" width="1280" height="1707" alt="Drummer mid-set drenched in deep red stage light, cymbals catching the glow." decoding="async" loading="lazy">
-      </picture>
-    </div>
-    <figcaption class="frame__cap">
-      <span class="frame__no mono">11</span>
-      <span class="frame__title">Red Kit</span>
-      <span class="frame__cat mono">Live Music</span>
-    </figcaption>
-  </figure>
-</div>
-<!-- gallery:work:end -->
+
+    <div class="work__more">
+      <a class="btn" href="/work/"><span>See all work</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></a>
     </div>
   </section>
 
-  <!-- ═══ 04 · SIGNAL 001 ═══ full-bleed editorial interlude -->
   <section id="signal" class="signal" aria-label="Featured capture">
-    <div class="signal__media">
-      <!-- gallery:signal:start -->
-<div class="frame__media frame__media--fill" style="--ar:0.7155;background-image:url(data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACwBgCdASoYACIAPwF4sFOrJyQipWsxYCAJZACxG71MMDkg25Mi/HDHG3uqUNOyFLtbq03nCKM5dCHEPdERgAD+8NGU3SewpUuCf44f8qz0voGgMjo1lLW7zzxLv70it20QEV7KxZM0We7EZn1qastcPoTkzUnicWN4XAm6TcOilkyo649EPgLgTFDnZXnHsxAQ5+pxaF9BQb6uC016r2E0OF0Rd4H+mmvSDkrHUWwXdSXrGDvMWI/KAuL5ahuQuyb547Z7w1PA8FR8gAA=)">
-  <picture>
-    <source type="image/avif" srcset="assets/images/opt/hero-002-320.avif 320w, assets/images/opt/hero-002-480.avif 480w, assets/images/opt/hero-002-960.avif 960w, assets/images/opt/hero-002-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
-    <source type="image/webp" srcset="assets/images/opt/hero-002-320.webp 320w, assets/images/opt/hero-002-480.webp 480w, assets/images/opt/hero-002-960.webp 960w, assets/images/opt/hero-002-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
-    <img class="signal__img" src="assets/images/opt/hero-002-480.webp" width="1280" height="1789" alt="Singer at the microphone behind a blue keyboard, lit in warm amber and olive stage light." decoding="async" loading="lazy">
-  </picture>
-</div>
-<!-- gallery:signal:end -->
+    <div class="signal__media parallax" data-parallax="0.12">
+      <div class="frame__media frame__media--fill" style="--ar:0.7155;background-image:url(data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACwBgCdASoYACIAPwF4sFOrJyQipWsxYCAJZACxG71MMDkg25Mi/HDHG3uqUNOyFLtbq03nCKM5dCHEPdERgAD+8NGU3SewpUuCf44f8qz0voGgMjo1lLW7zzxLv70it20QEV7KxZM0We7EZn1qastcPoTkzUnicWN4XAm6TcOilkyo649EPgLgTFDnZXnHsxAQ5+pxaF9BQb6uC016r2E0OF0Rd4H+mmvSDkrHUWwXdSXrGDvMWI/KAuL5ahuQuyb547Z7w1PA8FR8gAA=)">
+        <picture>
+          <source type="image/avif" srcset="/assets/images/opt/hero-002-320.avif 320w, /assets/images/opt/hero-002-480.avif 480w, /assets/images/opt/hero-002-960.avif 960w, /assets/images/opt/hero-002-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <source type="image/webp" srcset="/assets/images/opt/hero-002-320.webp 320w, /assets/images/opt/hero-002-480.webp 480w, /assets/images/opt/hero-002-960.webp 960w, /assets/images/opt/hero-002-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <img class="signal__img" src="/assets/images/opt/hero-002-480.webp" width="1280" height="1789" alt="Singer at the microphone behind a blue keyboard, lit in warm amber and olive stage light." decoding="async" loading="lazy">
+        </picture>
+        <span class="frame__veil" aria-hidden="true"></span>
+      </div>
       <div class="signal__scrim" aria-hidden="true"></div>
     </div>
     <div class="signal__body">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">03</span>Signal 001</p>
-      <h2 class="signal__title">Live<br><em>moments</em></h2>
-      <p class="signal__meta mono">Mario Preciado &nbsp;·&nbsp; Bay Area, CA &nbsp;·&nbsp; Live Music</p>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">03</span>Featured</p>
+      <h2 class="signal__title">On<br><em>stage</em></h2>
+      <p class="signal__meta mono">Amber Hour &nbsp;·&nbsp; Bay Area, CA</p>
     </div>
   </section>
 
-  <!-- ═══ 05 · ABOUT ═══ -->
   <section id="about" class="about" aria-label="About Mario Preciado">
     <header class="sec-head">
       <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>About the artist</p>
+      
     </header>
 
     <div class="about__grid">
-      <div class="about__panel">
+      <div class="about__panel reveal">
         <div class="panel">
           <span class="panel__bar mono" aria-hidden="true">
             <span class="panel__dots"><i></i><i></i><i></i></span>
-            mario@bay-area:~
+            Mario Preciado — Bay Area, CA
           </span>
           <div class="panel__body">
-            <p class="about__line"><span class="mono about__prompt" aria-hidden="true">&gt;</span> I'm <strong>Mario Preciado</strong>, a Bay Area based photographer.</p>
+            <p class="about__line"><span class="mono about__prompt" aria-hidden="true">—</span> I'm <strong>Mario Preciado</strong>, a Bay Area based photographer.</p>
             <p class="about__line">My photography consists of live music, street, fashion, portraiture, art culture and community. My focus is expressing the style and vibrant colors that I believe help reflect the atmosphere of these subjects and events.</p>
             <p class="about__line about__line--em">I look forward to working with you.</p>
           </div>
         </div>
 
         <ul class="stats" aria-label="At a glance">
-          <li><span class="stats__n">11</span><span class="stats__k mono">Frames shown</span></li>
-          <li><span class="stats__n">6</span><span class="stats__k mono">Disciplines</span></li>
-          <li><span class="stats__n">SF</span><span class="stats__k mono">Bay Area based</span></li>
+          <li><span class="stats__n">Live</span><span class="stats__k mono">Music &amp; events</span></li>
+          <li><span class="stats__n">Editorial</span><span class="stats__k mono">Portrait &amp; feature</span></li>
+          <li><span class="stats__n">Bay Area</span><span class="stats__k mono">Available to travel</span></li>
         </ul>
 
         <div class="about__cta">
-          <a class="btn" href="#contact">
-            <span>Work with me</span>
-            <svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/>
-            </svg>
-          </a>
-          <a class="btn btn--ghost" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer">
-            <span>@mariopreciado.art</span>
-          </a>
+          <a class="btn" href="/contact/"><span>Get in touch</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></a>
+          <a class="btn btn--ghost" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer"><span>@mariopreciado.art</span></a>
         </div>
       </div>
 
       <div class="about__stack">
-        <!-- gallery:about:start -->
-<div class="strip__item reveal" style="--i:0">
-  <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
-    <picture>
-      <source type="image/avif" srcset="assets/images/opt/portfolio_007-320.avif 320w, assets/images/opt/portfolio_007-480.avif 480w, assets/images/opt/portfolio_007-960.avif 960w, assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 20vw, 26vw">
-      <source type="image/webp" srcset="assets/images/opt/portfolio_007-320.webp 320w, assets/images/opt/portfolio_007-480.webp 480w, assets/images/opt/portfolio_007-960.webp 960w, assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 20vw, 26vw">
-      <img class="frame__img" src="assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
-    </picture>
-  </div>
-</div>
-<div class="strip__item reveal" style="--i:1">
-  <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
-    <picture>
-      <source type="image/avif" srcset="assets/images/opt/portfolio_009-320.avif 320w, assets/images/opt/portfolio_009-480.avif 480w, assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 20vw, 26vw">
-      <source type="image/webp" srcset="assets/images/opt/portfolio_009-320.webp 320w, assets/images/opt/portfolio_009-480.webp 480w, assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 20vw, 26vw">
-      <img class="frame__img" src="assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
-    </picture>
-  </div>
-</div>
-<div class="strip__item reveal" style="--i:2">
-  <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBgCdASoYABIAPwFysVIrJqSiqAqpYCAJbACdMtU8LoLzZ6AP//iYAB4aoTce1midx1wOuVHoD8FrmEIgAP50i7jCaV2r3gR5f2+kXlIIdpNOHOk9IluOe/VCgcuTd9O4qfDx1eylYVot1l3wy0VSyiDCTA8bWxt6qCHg9Y0Y6rIWlOBoMfbRNbWiBkm9HUfzLOrvIVqdey/lwuhkc7Rg5om4Glpt+S0RvXyYvgTpaVtO1IYORiAA)">
-    <picture>
-      <source type="image/avif" srcset="assets/images/opt/portfolio_010-320.avif 320w, assets/images/opt/portfolio_010-480.avif 480w, assets/images/opt/portfolio_010-848.avif 848w" sizes="(min-width: 768px) 20vw, 26vw">
-      <source type="image/webp" srcset="assets/images/opt/portfolio_010-320.webp 320w, assets/images/opt/portfolio_010-480.webp 480w, assets/images/opt/portfolio_010-848.webp 848w" sizes="(min-width: 768px) 20vw, 26vw">
-      <img class="frame__img" src="assets/images/opt/portfolio_010-480.webp" width="848" height="636" alt="Long-haired guitarist in a wide-brimmed hat singing at the microphone under warm amber light." decoding="async" loading="lazy">
-    </picture>
-  </div>
-</div>
-<!-- gallery:about:end -->
+        <div class="strip__item reveal" style="--i:0">
+          <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_007-320.avif 320w, /assets/images/opt/portfolio_007-480.avif 480w, /assets/images/opt/portfolio_007-960.avif 960w, /assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_007-320.webp 320w, /assets/images/opt/portfolio_007-480.webp 480w, /assets/images/opt/portfolio_007-960.webp 960w, /assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="strip__item reveal" style="--i:1">
+          <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_009-320.avif 320w, /assets/images/opt/portfolio_009-480.avif 480w, /assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_009-320.webp 320w, /assets/images/opt/portfolio_009-480.webp 480w, /assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="strip__item reveal" style="--i:2">
+          <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBgCdASoYABIAPwFysVIrJqSiqAqpYCAJbACdMtU8LoLzZ6AP//iYAB4aoTce1midx1wOuVHoD8FrmEIgAP50i7jCaV2r3gR5f2+kXlIIdpNOHOk9IluOe/VCgcuTd9O4qfDx1eylYVot1l3wy0VSyiDCTA8bWxt6qCHg9Y0Y6rIWlOBoMfbRNbWiBkm9HUfzLOrvIVqdey/lwuhkc7Rg5om4Glpt+S0RvXyYvgTpaVtO1IYORiAA)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_010-320.avif 320w, /assets/images/opt/portfolio_010-480.avif 480w, /assets/images/opt/portfolio_010-848.avif 848w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_010-320.webp 320w, /assets/images/opt/portfolio_010-480.webp 480w, /assets/images/opt/portfolio_010-848.webp 848w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_010-480.webp" width="848" height="636" alt="Long-haired guitarist in a wide-brimmed hat singing at the microphone under warm amber light." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ 06 · CONTACT ═══ -->
   <section id="contact" class="contact" aria-label="Contact">
     <header class="sec-head">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Open channel</p>
-      <h2 class="sec-title">Let's make<br>something <em>loud</em></h2>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Contact</p>
+      <h2 class="sec-title reveal">Let's work<br><em>together</em></h2>
     </header>
 
     <div class="contact__grid">
-      <div class="contact__aside">
-        <p class="contact__pitch">Shows, editorial, portraits, or something that doesn't have a name yet — tell me what you're planning.</p>
+      <div class="contact__aside reveal">
+        <p class="contact__pitch">Available for live music, editorial, portrait and event work. Tell me about your project and I’ll get back to you.</p>
         <dl class="contact__list mono">
           <div><dt>Email</dt><dd><a href="mailto:marioopreciadoo@gmail.com">marioopreciadoo@gmail.com</a></dd></div>
           <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer">@mariopreciado.art</a></dd></div>
-          <div><dt>Based</dt><dd>Bay Area, California</dd></div>
+          <div><dt>Based</dt><dd>San Francisco Bay Area</dd></div>
         </dl>
       </div>
 
-      <form id="contact-form" class="form" action="https://formspree.io/f/xanyvgkj" method="POST" novalidate>
-        <!-- honeypot: real people never fill this in -->
+      <form id="contact-form" class="form reveal" action="https://formspree.io/f/xanyvgkj" method="POST" novalidate>
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="form__gotcha">
 
         <div class="field">
@@ -511,41 +400,26 @@
         </div>
         <div class="field">
           <label for="subject" class="mono">Subject</label>
-          <input id="subject" name="subject" type="text" placeholder="Show, shoot, collaboration…">
+          <input id="subject" name="subject" type="text" placeholder="Live show, portrait session, editorial…">
         </div>
         <div class="field">
           <label for="message" class="mono">Message</label>
-          <textarea id="message" name="message" rows="5" required placeholder="What are you working on?"></textarea>
+          <textarea id="message" name="message" rows="5" required placeholder="Dates, venue, what you have in mind…"></textarea>
         </div>
 
-        <button type="submit" class="btn btn--block">
-          <span class="form__label">Send transmission</span>
-          <svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-            <path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/>
-          </svg>
-        </button>
+        <button type="submit" class="btn btn--block"><span class="form__label">Send message</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></button>
 
-        <p id="form-ok" class="form__msg form__msg--ok mono" role="status" hidden>[ TRANSMISSION RECEIVED ] — I'll be in touch shortly.</p>
-        <p id="form-err" class="form__msg form__msg--err mono" role="alert" hidden>[ SIGNAL LOST ] — something went wrong. Email me directly at marioopreciadoo@gmail.com.</p>
+        <p id="form-ok" class="form__msg form__msg--ok mono" role="status" hidden>Thanks — your message is through. I’ll be in touch shortly.</p>
+        <p id="form-err" class="form__msg form__msg--err mono" role="alert" hidden>Something went wrong sending that. Please email me directly at marioopreciadoo@gmail.com.</p>
       </form>
     </div>
   </section>
-
 </main>
 
 <footer class="foot">
   <p class="mono">&copy; <span id="year">2026</span> Mario Preciado Photography</p>
-  <p class="mono foot__made">
-    Made in the Bay
-    <svg class="sprite sprite--heart" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-      <path d="M2 4h2V2h4v2h2V2h4v2h2v4h-2v2h-2v2h-2v2H8v-2H6v-2H4V8H2V4z"/>
-    </svg>
-  </p>
-  <a class="foot__ig" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18">
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-    </svg>
-  </a>
+  <p class="mono foot__made">San Francisco Bay Area</p>
+  <a class="foot__ig" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
 </footer>
 
 </body>

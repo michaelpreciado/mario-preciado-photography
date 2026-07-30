@@ -49,23 +49,48 @@ export function initReveals() {
 }
 
 /**
- * Fade each photograph in over its own LQIP. The placeholder is already
- * painted as the element's background, so this reads as the frame resolving
- * out of 8-bit blocks into full fidelity.
+ * Resolve each photograph out of its pixel veil.
+ *
+ * Two things keep this smooth:
+ *
+ * 1. What animates is the veil (a 24px LQIP upscaled), never the photograph.
+ *    Fading the full-resolution image meant recompositing it on every frame of
+ *    the transition.
+ * 2. `img.decode()` is awaited before the veil is pulled, so the fade can never
+ *    race decoding. Without it the browser may still be rasterising the frame
+ *    as it becomes visible, which is exactly when a stutter is most obvious.
+ *
+ * The veil is then removed from the DOM flow so it stops costing a layer.
  */
 export function initImages() {
-  const imgs = [...document.querySelectorAll('.frame__img, .hero__img, .signal__img')];
+  // Selected structurally, not by class. Listing every variant (.frame__img,
+  // .hero__img, .signal__img, .solo__img…) means each new page type silently
+  // ships with a veil that never lifts — which is exactly what happened to the
+  // single-frame pages.
+  const imgs = [...document.querySelectorAll('.frame__media picture img')];
 
-  const mark = (img) => img.classList.add('is-loaded');
+  const reveal = (img) => {
+    const media = img.closest('.frame__media');
+    if (!media || media.classList.contains('is-loaded')) return;
+    media.classList.add('is-loaded');
+    // Retire the veil once it has finished fading, so it stops being composited.
+    const done = () => media.classList.add('is-retired');
+    media.querySelector('.frame__veil')?.addEventListener('transitionend', done, { once: true });
+    setTimeout(done, 1200);   // belt and braces if the transition never fires
+  };
+
+  const settle = (img) => {
+    // decode() rejects on a broken image; either way the veil must lift rather
+    // than leave the visitor staring at a permanent blur.
+    if (typeof img.decode === 'function') img.decode().then(() => reveal(img), () => reveal(img));
+    else reveal(img);
+  };
 
   imgs.forEach((img) => {
-    // Cached images are already complete before this module runs.
-    if (img.complete && img.naturalWidth > 0) mark(img);
+    if (img.complete && img.naturalWidth > 0) settle(img);
     else {
-      img.addEventListener('load', () => mark(img), { once: true });
-      // A broken file must still clear the placeholder rather than sit on a
-      // blurred block forever.
-      img.addEventListener('error', () => mark(img), { once: true });
+      img.addEventListener('load', () => settle(img), { once: true });
+      img.addEventListener('error', () => reveal(img), { once: true });
     }
   });
 

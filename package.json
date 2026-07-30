@@ -7,9 +7,9 @@
   "scripts": {
     "images": "node tools/build-images.mjs",
     "fonts": "node tools/build-fonts.mjs",
-    "assets": "npm run images && npm run fonts && npm run gallery",
+    "assets": "npm run images && npm run fonts && npm run site",
     "serve": "python3 -m http.server 8000",
-    "gallery": "node tools/build-gallery.mjs"
+    "site": "node tools/build-site.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/inter": "^5.2.8",

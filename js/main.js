@@ -15,9 +15,8 @@
  */
 
 import { initDebug } from './debug.js';
-import { initBoot, initNav, initProgress, initCursor } from './chrome.js';
+import { initBoot, initNav, initProgress, initCursor, initParallax } from './chrome.js';
 import { initReveals, initImages, initCount } from './work.js';
-import { initLightbox } from './lightbox.js';
 import { initForm } from './form.js';
 
 function boot() {
@@ -25,7 +24,7 @@ function boot() {
 
   // Everything below is independent — one failure must not take the rest of
   // the page with it, so each is isolated.
-  const steps = [initNav, initProgress, initCursor, initReveals, initImages, initCount, initLightbox, initForm];
+  const steps = [initNav, initProgress, initCursor, initParallax, initReveals, initImages, initCount, initForm];
 
   for (const step of steps) {
     try {

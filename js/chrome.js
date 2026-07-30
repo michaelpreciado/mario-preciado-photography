@@ -79,7 +79,15 @@ export function initNav() {
   const mark = document.querySelector('.nav__name');
   if (!nav) return;
 
-  onScroll(() => nav.classList.toggle('is-stuck', scrollY > 24));
+  // Guarded so a class write (and the style invalidation behind it) only
+  // happens on the transition, not on every scroll frame.
+  let stuck = null;
+  onScroll(() => {
+    const next = scrollY > 24;
+    if (next === stuck) return;
+    stuck = next;
+    nav.classList.toggle('is-stuck', next);
+  });
 
   // ── mobile drawer ──
   const close = () => {
@@ -139,16 +147,50 @@ export function initNav() {
   sections.forEach((s) => io.observe(s));
 }
 
-/** Scroll progress along the top of the HUD frame, in 32 discrete steps. */
+/**
+ * Scroll progress along the top of the HUD frame, in 32 discrete steps.
+ *
+ * Two things matter for holding 120Hz, where the whole frame budget is 8.3ms:
+ *
+ * 1. `scrollHeight` is never read inside the scroll handler. Reading it forces
+ *    a synchronous layout, and doing that once per scroll frame was costing a
+ *    forced reflow on literally every frame of a scroll.
+ * 2. The custom property is only written when the quantised step actually
+ *    changes. It moves in 32 steps over the whole page, so the vast majority
+ *    of frames need no style invalidation at all.
+ */
 export function initProgress() {
   const fill = document.querySelector('.hud__progress-fill');
   if (!fill) return;
 
-  onScroll(() => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const raw = max > 0 ? scrollY / max : 0;
-    fill.style.setProperty('--progress', Math.round(raw * 32) / 32);
-  });
+  let max = 0;
+  let last = -1;
+
+  const measure = () => {
+    max = document.documentElement.scrollHeight - innerHeight;
+  };
+
+  const update = () => {
+    const step = max > 0 ? Math.round((scrollY / max) * 32) / 32 : 0;
+    if (step === last) return;
+    last = step;
+    fill.style.setProperty('--progress', step);
+  };
+
+  measure();
+  onScroll(update);
+
+  addEventListener('resize', () => { measure(); update(); }, { passive: true });
+  // Lazy images landing changes the document height, so re-measure as they do
+  // rather than reading it per frame.
+  addEventListener('load', measure);
+  if ('ResizeObserver' in window) {
+    let raf = 0;
+    new ResizeObserver(() => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; measure(); update(); });
+    }).observe(document.body);
+  }
 }
 
 /**
@@ -171,10 +213,21 @@ export function initCursor() {
   let y = innerHeight / 2;
   let raf = 0;
 
+  let lastX = -1;
+  let lastY = -1;
+
   const draw = () => {
     raf = 0;
-    // Snap to a 4px grid so it steps like a sprite instead of gliding.
-    el.style.transform = `translate(${Math.round(x / 4) * 4}px, ${Math.round(y / 4) * 4}px)`;
+    // Snap to a 4px grid so it steps like a sprite instead of gliding. The snap
+    // also means most frames land on the same cell, so skipping the write when
+    // nothing moved removes ~3 in 4 style invalidations during a slow drag.
+    const gx = Math.round(x / 4) * 4;
+    const gy = Math.round(y / 4) * 4;
+    if (gx === lastX && gy === lastY) return;
+    lastX = gx;
+    lastY = gy;
+    // translate3d keeps it on the compositor rather than repainting.
+    el.style.transform = `translate3d(${gx}px, ${gy}px, 0)`;
   };
 
   addEventListener(

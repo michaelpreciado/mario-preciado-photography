@@ -394,11 +394,18 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 /* JS quantises --progress to 32 discrete steps, so the bar ticks in 8-bit
-   increments instead of sliding. */
+   increments instead of sliding.
+
+   scaleX, not width. Animating width relayouts and repaints the bar on every
+   scroll frame; a transform stays on the compositor. At 120Hz the whole budget
+   is 8.3ms, so per-frame layout is the difference between smooth and not. */
 .hud__progress-fill {
   display: block;
   height: 100%;
-  width: calc(var(--progress, 0) * 100%);
+  width: 100%;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left center;
+  will-change: transform;
   background: var(--ui);
 }
 
@@ -408,6 +415,9 @@ button { background: none; border: none; cursor: pointer; }
   z-index: calc(var(--z-hud) - 1);
   pointer-events: none;
   display: none;                 /* desktop-only, enabled in the gate below */
+  /* Promoted to its own layer so this full-viewport fixed overlay is composited
+     rather than repainted as content scrolls under it. */
+  transform: translateZ(0);
   /* Alpha lives in the gradient only — never also on the element, or the two
      multiply. Testing at 0.35 put visible banding across the photographs and
      the amber submit button, which breaks the one rule that matters here: the
@@ -432,7 +442,11 @@ button { background: none; border: none; cursor: pointer; }
   height: 22px;
   margin: -11px 0 0 -11px;
   pointer-events: none;
-  mix-blend-mode: difference;
+  /* No mix-blend-mode. `difference` forces the compositor to read the backdrop
+     and re-blend a region on every pointer frame, which is the single most
+     expensive thing a cursor can do at 120Hz. The page is uniformly near-black,
+     so plain white is visually equivalent here and composites for free. */
+  will-change: transform;
   transition: width var(--d-fast) var(--ez-out), height var(--d-fast) var(--ez-out), margin var(--d-fast) var(--ez-out);
 }
 .cursor::before,
@@ -820,6 +834,7 @@ button { background: none; border: none; cursor: pointer; }
   display: flex;
   width: max-content;
   animation: ticker 38s linear infinite;
+  will-change: transform;   /* own compositor layer; never repaints while it runs */
 }
 
 .ticker__run {
@@ -889,7 +904,16 @@ button { background: none; border: none; cursor: pointer; }
    on phones. */
 .row { display: grid; gap: var(--s-6); }
 
-.frame { position: relative; cursor: pointer; }
+/* Layout containment bounds invalidation to the frame, so a hover scale on one
+   photograph can't force the browser to re-check layout for the rest of the
+   sequence. Deliberately NOT `paint` as well: the extra win was too small to
+   measure, and paint containment risks clipping the focus ring, which is a bad
+   trade for an element that is keyboard-operable. */
+.frame {
+  position: relative;
+  cursor: pointer;
+  contain: layout;
+}
 
 .frame__media {
   position: relative;

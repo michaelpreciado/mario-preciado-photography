@@ -365,6 +365,9 @@ button { background: none; border: none; cursor: pointer; }
   top: -100%;
   left: var(--s-4);
   z-index: calc(var(--z-boot) + 1);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;          /* was 42px — just under the tap-target floor */
   padding: var(--s-3) var(--s-4);
   background: var(--mag);
   color: var(--ink-0);
@@ -560,15 +563,29 @@ button { background: none; border: none; cursor: pointer; }
   border-bottom: var(--b-hair) solid transparent;
 }
 
-.nav.is-stuck {
+/* The blur lives on a pseudo-element, NOT on .nav itself.
+   `backdrop-filter` makes an element the containing block for its
+   position:fixed descendants. With it on .nav, the mobile drawer's `inset: 0`
+   resolved against the ~92px nav bar instead of the viewport the moment the
+   nav went sticky — the menu collapsed to the height of the bar, its black
+   background stopped covering the page, and the links spilled over the content
+   behind it. Keeping .nav filter-free means fixed children resolve against the
+   viewport as intended. Do not move this back onto .nav. */
+.nav.is-stuck { border-bottom-color: var(--line-1); }
+
+.nav.is-stuck::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(12px);
-  border-bottom-color: var(--line-1);
 }
 
 .nav__mark {
   display: flex;
   align-items: center;
+  min-height: 44px;          /* was 18px — it is the main way back to home */
   gap: var(--s-2);
   font-family: var(--f-pixel);
   font-size: var(--t-2xs);
@@ -1149,8 +1166,24 @@ button { background: none; border: none; cursor: pointer; }
 .contact__list div { display: grid; gap: var(--s-1); }
 .contact__list dt { color: var(--text-3); }
 .contact__list dd { color: var(--text-1); font-size: var(--t-sm); letter-spacing: 0; text-transform: none; }
-.contact__list a { border-bottom: var(--b-hair) solid var(--line-2); transition: color var(--d-fast), border-color var(--d-fast); }
+.contact__list a { position: relative; border-bottom: var(--b-hair) solid var(--line-2); transition: color var(--d-fast), border-color var(--d-fast); }
 .contact__list a:hover { color: var(--mag); border-color: var(--mag); }
+
+/* The email and Instagram links are the highest-intent actions on the site and
+   were 19px tall. Expanding the hit area with a pseudo-element rather than
+   padding keeps the underline tight against the text while giving the finger a
+   44px target. Touch only — it would serve no purpose against a mouse. */
+@media (hover: none) {
+  .contact__list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+}
 
 .form { display: grid; gap: var(--s-5); position: relative; }
 

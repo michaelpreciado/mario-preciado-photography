@@ -201,7 +201,19 @@ and is authenticated against the `preciado-tech` team.
 
 ---
 
-## Constraints & Red Lines
+## Constraints & Red Lines (SUPERSEDED — v1 only)
+
+> ⚠️ **Superseded by the v2 rebuild.** The scaffold was replaced rather than
+> enhanced, the palette was extended beyond black + magenta, and hard 8-bit
+> shadows were introduced — all at the client's explicit direction. The one
+> red line that still stands, and is now enforced throughout: **no effect ever
+> distorts a photograph.** Glitch, scanlines and pixel treatments live in the
+> chrome only.
+>
+> Current architecture is documented in `README.md` and in the header comment
+> of `css/style.css`. Asset generation is `npm run assets`.
+
+### v1 constraints, for reference
 
 - ❌ Do NOT remove the existing scaffold — enhance it
 - ❌ Do NOT change the color palette (black + neon pink is locked)

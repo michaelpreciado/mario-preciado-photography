@@ -106,7 +106,30 @@ combo is distinctive.
 
 ---
 
-## Section C: Locked Design Decisions (Do Not Deviate)
+## Section C: Locked Design Decisions (SUPERSEDED — v1 only)
+
+> ⚠️ **This section and Section D describe the v1 build and no longer apply.**
+> The v2 rebuild replaced the layout, palette and type system at the client's
+> direction. Kept for history; do not treat as current spec.
+>
+> What changed and why:
+> - **Palette opened up.** Black + single magenta became black + magenta +
+>   violet `#c084fc` (the systematic UI accent) + amber `#ffb020`, plus a
+>   five-stop spectrum ramp. The two photographic accents were derived by
+>   sampling dominant saturated hues across all 13 images; the spectrum came
+>   from a client reference.
+> - **Hard shadows are now in use** (`4px 4px 0`) on buttons and the contact
+>   strip — the 8-bit direction the client asked for. Still never on a
+>   photograph, which is what "no drop shadows on images" was protecting.
+> - **Masonry grid replaced** by an asymmetric editorial sequence.
+> - **Inter is no longer the only face.** Anton (display), Inter (body),
+>   JetBrains Mono (HUD), Silkscreen (8-bit), all self-hosted.
+> - **Section B's reference sites still hold** and were used directly:
+>   edge-to-edge images and no rounded corners (Pooneh Ghana), magenta on black
+>   with thin-border buttons (Alive Coverage), the featured-capture module
+>   (Mark Seliger).
+
+### v1 spec, for reference
 
 | Element | Spec |
 |---|---|

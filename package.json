@@ -1,0 +1,21 @@
+{
+  "name": "mario-preciado-photography",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mario Preciado — Bay Area live music photography. Static site, zero build step at serve time.",
+  "scripts": {
+    "images": "node tools/build-images.mjs",
+    "fonts": "node tools/build-fonts.mjs",
+    "assets": "npm run images && npm run fonts && npm run gallery",
+    "serve": "python3 -m http.server 8000",
+    "gallery": "node tools/build-gallery.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.9",
+    "@fontsource/anton": "^5.2.9",
+    "@fontsource/silkscreen": "^5.2.9",
+    "sharp": "^0.34.0"
+  }
+}

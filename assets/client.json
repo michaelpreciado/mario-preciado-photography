@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "client": {
     "name": "Mario Preciado",
-    "email": "contact@mariopreciado.art",
+    "email": "marioopreciadoo@gmail.com",
     "instagram": "@mariopreciado.art",
     "location": {
       "city": "Bay Area",
@@ -13,18 +13,39 @@
   "brand": {
     "tagline": "Capturing live moments & visuals",
     "colors": {
-      "primary": "#000000",
-      "accent": "#ff10f0"
+      "ground": "#000000",
+      "accent": "#ff10f0",
+      "ui": "#c084fc",
+      "amber": "#ffb020",
+      "spectrum": [
+        "#c084fc",
+        "#5cb8ff",
+        "#5ef2c4",
+        "#b9f26e",
+        "#ffd84d"
+      ],
+      "records": [
+        "#f5a3c7",
+        "#6fc4f5",
+        "#4fc78a",
+        "#f2c53d",
+        "#e8433f"
+      ],
+      "note": "accent + amber sampled from the photographs; spectrum drives the brand mark and primary buttons"
     },
     "typography": {
-      "heading": "Inter",
-      "mono": "JetBrains Mono"
+      "display": "Anton",
+      "body": "Inter Variable",
+      "mono": "JetBrains Mono Variable",
+      "pixel": "Silkscreen",
+      "hosting": "self-hosted, latin subset, assets/fonts/"
     },
     "disciplines": [
       "Live Music",
       "Street",
       "Fashion",
       "Portraiture",
+      "Art Culture",
       "Community"
     ]
   },
@@ -51,17 +72,33 @@
       "assets/images/portfolio_009.webp",
       "assets/images/portfolio_010.webp",
       "assets/images/portfolio_011.webp"
-    ]
+    ],
+    "fonts": [
+      "assets/fonts/anton-latin-400-normal.woff2",
+      "assets/fonts/inter-latin-wght-normal.woff2",
+      "assets/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "assets/fonts/silkscreen-latin-400-normal.woff2"
+    ],
+    "generated": {
+      "variants": "assets/images/opt/ (avif + webp @ 320/480/960/native)",
+      "manifest": "assets/images/manifest.json"
+    }
   },
   "pipeline": {
-    "template": "preciado-tech-web-pipeline-v1",
+    "template": "static, zero build step at serve time",
+    "tools": {
+      "images": "npm run images",
+      "fonts": "npm run fonts",
+      "gallery": "npm run gallery",
+      "all": "npm run assets"
+    },
     "phases": [
       "Discovery",
       "Scaffold",
       "Enhance",
       "Polish",
-      "Deliver"
-    ],
-    "ai_model": "claude-sonnet-4-6"
+      "Deliver",
+      "Rebuild v2"
+    ]
   }
 }

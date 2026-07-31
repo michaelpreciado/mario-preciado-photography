@@ -1,391 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Preciado Photography | Bay Area Live Music, Street & Portrait</title>
-    <meta name="description" content="Mario Preciado is a Bay Area photographer specializing in live music, street, fashion, portraiture, and community. Capturing live moments & visuals.">
-    <meta name="author" content="Mario Preciado">
-    <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mario-preciado-rebuild.vercel.app/">
-    <meta property="og:site_name" content="Mario Preciado Photography">
-    <meta property="og:title" content="Mario Preciado Photography | Live Music & Visuals">
-    <meta property="og:description" content="Bay Area photographer — live music, street, fashion, portraiture, and community. Capturing live moments & visuals.">
-    <meta property="og:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
-    <meta property="og:image:alt" content="Live performance photography by Mario Preciado">
-    <meta property="og:locale" content="en_US">
+<title>Mario Preciado — Live Music &amp; Concert Photography, Bay Area</title>
+<meta name="description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
+<meta name="author" content="Mario Preciado">
+<link rel="canonical" href="https://mario-preciado-rebuild.vercel.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Cpath fill='%23ff10f0' d='M5 2h6v2H5zM3 4h2v2H3zm8 0h2v2h-2zM2 6h2v4H2zm10 0h2v4h-2zM3 10h2v2H3zm8 0h2v2h-2zM5 12h6v2H5z'/%3E%3Crect x='7' y='7' width='2' height='2' fill='%23ffb020'/%3E%3C/svg%3E">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mario Preciado Photography | Capturing live music & visuals">
-    <meta name="twitter:description" content="Bay Area photographer — live music, street, fashion, portraiture, and community. Capturing live moments & visuals.">
-    <meta name="twitter:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
-    <meta name="twitter:image:alt" content="Live performance photography by Mario Preciado">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mario Preciado — Live Music &amp; Concert Photography, Bay Area">
+<meta property="og:description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
+<meta property="og:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
+<meta property="og:url" content="https://mario-preciado-rebuild.vercel.app/">
+<meta property="og:site_name" content="Mario Preciado Photography">
 
-    <!-- JSON-LD Person Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Mario Preciado",
-      "jobTitle": "Photographer",
-      "description": "Bay Area photographer specializing in live music, street, fashion, portraiture, and community photography.",
-      "url": "https://mario-preciado-rebuild.vercel.app/",
-      "image": "https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "CA",
-        "addressLocality": "Bay Area",
-        "addressCountry": "US"
-      },
-      "sameAs": [
-        "https://www.instagram.com/mariopreciado.art"
-      ],
-      "knowsAbout": ["Live Music Photography", "Street Photography", "Fashion Photography", "Portraiture", "Community Photography"]
-    }
-    </script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mario Preciado — Live Music &amp; Concert Photography, Bay Area">
+<meta name="twitter:description" content="Mario Preciado is a Bay Area photographer shooting live music, street, fashion, portraiture and community. Available for shows, editorial and portrait work.">
+<meta name="twitter:image" content="https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp">
 
-    <!-- Preconnects for Google Fonts CDN (googleapis = CSS, gstatic = font files) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mario Preciado",
+  "jobTitle": "Photographer",
+  "description": "Bay Area photographer specialising in live music, street, fashion, portraiture, art culture and community.",
+  "url": "https://mario-preciado-rebuild.vercel.app/",
+  "email": "marioopreciadoo@gmail.com",
+  "image": "https://mario-preciado-rebuild.vercel.app/assets/images/hero-001.webp",
+  "sameAs": [
+    "https://www.instagram.com/mariopreciado.art"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "CA",
+    "addressCountry": "US",
+    "addressLocality": "Bay Area"
+  },
+  "knowsAbout": [
+    "Live music photography",
+    "Concert photography",
+    "Street photography",
+    "Portraiture",
+    "Fashion photography"
+  ]
+}
+</script>
 
-    <!-- Inline critical CSS — hero and nav render before any external resource loads -->
-    <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:#000;color:#fff;font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;min-height:100vh}
-    nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border-bottom:1px solid #18181b}
-    .skip-to-content{position:absolute;top:-100%;left:1rem;z-index:9999;padding:10px 20px;background:#ff10f0;color:#000;font-weight:700;border-radius:0 0 8px 8px;text-decoration:none}
-    .skip-to-content:focus{top:0}
-    #home{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1rem 1rem}
-    @media(min-width:768px){#home{padding:5rem 3rem 1rem}}
-    .neon-pink{color:#ff10f0;text-shadow:0 0 10px rgba(255,16,240,.4),0 0 20px rgba(255,16,240,.4)}
-    h1{font-weight:700;line-height:.95;font-size:2.25rem}
-    @media(min-width:768px){h1{font-size:3.75rem}}
-    @media(min-width:1024px){h1{font-size:4.375rem}}
-    #hero-image{width:100%;object-fit:cover;border-radius:1rem;height:400px}
-    @media(min-width:768px){#hero-image{height:550px}}
-    /* Nav link fallback — hides on mobile, shows as flex on md+ without Tailwind */
-    #nav-links{display:none}
-    @media(min-width:768px){#nav-links{display:flex;align-items:center;gap:1.5rem}}
-    nav a{color:#a1a1aa;text-decoration:none;font-size:.875rem;transition:color .2s ease}
-    nav a:hover{color:#ff10f0}
-    </style>
+<!-- crossorigin is REQUIRED on font preloads even same-origin, or each file is fetched twice -->
+<link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="/assets/images/opt/hero-001-480.avif" imagesrcset="/assets/images/opt/hero-001-320.avif 320w, /assets/images/opt/hero-001-480.avif 480w, /assets/images/opt/hero-001-960.avif 960w, /assets/images/opt/hero-001-1280.avif 1280w" imagesizes="(max-width: 640px) 72vw, 100vw" fetchpriority="high">
+<link rel="stylesheet" href="/css/style.css">
 
-    <link rel="stylesheet" href="css/style.css">
+<!-- Marks JS alive BEFORE first paint so progressive-enhancement styles only
+     apply when something can actually reveal the content. -->
+<script>document.documentElement.classList.add('js');</script>
 
-    <!-- Google Fonts — async (non-blocking) via preload swap trick -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"></noscript>
-
-    <!-- Tailwind CDN — deferred so it doesn't block the initial render -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+<script type="module" src="/js/main.js"></script>
 </head>
-<body class="bg-black text-white min-h-screen">
 
-    <!-- Skip to main content -->
-    <a href="#main-content" class="skip-to-content">Skip to content</a>
+<body>
 
-    <!-- Navigation -->
-    <nav aria-label="Main navigation" class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/80 backdrop-blur-sm border-b border-zinc-900">
-        <div class="flex items-center gap-2">
-            <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-            <span class="text-sm tracking-[0.2em] uppercase font-semibold">Mario Preciado</span>
+<div id="boot" class="boot" aria-hidden="true" hidden>
+  <div class="boot__inner">
+    <p class="boot__word" data-text="MARIO PRECIADO">MARIO PRECIADO</p>
+    <div class="boot__bar"><span class="boot__fill"></span></div>
+    <p class="boot__status">Loading</p>
+  </div>
+  <button class="boot__skip" type="button">Skip</button>
+</div>
+
+<div class="hud" aria-hidden="true">
+  <span class="hud__corner hud__corner--tl"></span>
+  <span class="hud__corner hud__corner--tr"></span>
+  <span class="hud__corner hud__corner--bl"></span>
+  <span class="hud__corner hud__corner--br"></span>
+  <div class="hud__progress"><span class="hud__progress-fill"></span></div>
+</div>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="nav">
+  <a class="nav__mark" href="/" aria-label="Mario Preciado — home">
+    <span class="nav__dot" aria-hidden="true"></span>
+    <span class="nav__name glitch" data-text="MARIO PRECIADO">MARIO PRECIADO</span>
+  </a>
+
+  <nav id="nav-links" class="nav__links" aria-label="Primary">
+    <a href="/" aria-current="page"><span class="nav__idx" aria-hidden="true">01</span>HOME</a>
+    <a href="/work/"><span class="nav__idx" aria-hidden="true">02</span>WORK</a>
+    <a href="/about/"><span class="nav__idx" aria-hidden="true">03</span>ABOUT</a>
+    <a href="/contact/"><span class="nav__idx" aria-hidden="true">04</span>CONTACT</a>
+  </nav>
+
+  <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+    <span class="nav__toggle-bar"></span>
+    <span class="nav__toggle-bar"></span>
+  </button>
+</header>
+
+<main id="main">
+  <section id="home" class="hero" aria-label="Introduction">
+    <div class="hero__media parallax" data-parallax="0.18">
+      <div class="frame__media frame__media--fill" style="--ar:0.7503;background-image:url(data:image/webp;base64,UklGRhoBAABXRUJQVlA4IA4BAAAQBwCdASoYACAAPwFmqU6rJSOiMAgBYCAJbACdMoR/d9M58GW2yPPi6aBvJ4FCh2d1e8XT+7POZ+pjIow8k+9mAAD+7qGOMg1pD/rZooejT5tKbRYwnjFFZFz6yF8MirPiz5+XAz47y9J/1U4pDs/gmIKf1cRyIKKKx0xrqflevs1lRUHdtoVfZ/0F3gnm5qpaZ4jCo9S9A02ZwneG1RZUbVKKavIKP+/7X/P2NKL32bLop/mfp/0qZ0s7+3uTxALYFNU/VqTHLMkUeaC2SQriSLg1/EPJBgGHAss2zZ7V8XRIDvGjTNHRPcNrJpBq4aVqO9e3I8IJp7DPNSeyN7ZxJ94Z23M8wkzXyRLiYAA=)">
+        <picture>
+          <source type="image/avif" srcset="/assets/images/opt/hero-001-320.avif 320w, /assets/images/opt/hero-001-480.avif 480w, /assets/images/opt/hero-001-960.avif 960w, /assets/images/opt/hero-001-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <source type="image/webp" srcset="/assets/images/opt/hero-001-320.webp 320w, /assets/images/opt/hero-001-480.webp 480w, /assets/images/opt/hero-001-960.webp 960w, /assets/images/opt/hero-001-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <img class="hero__img" src="/assets/images/opt/hero-001-480.webp" width="1280" height="1706" alt="Musician in a bucket hat and glasses playing a synth rig beneath a blue and magenta liquid light projection." decoding="async" fetchpriority="high">
+        </picture>
+        <span class="frame__veil" aria-hidden="true"></span>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </div>
+
+    <div class="hero__body">
+      <p class="eyebrow"><span class="eyebrow__pip" aria-hidden="true"></span>Bay Area · CA</p>
+      <h1 class="hero__title">Capturing<br><em>live moments</em><br>&amp; visuals<span class="hero__stop" aria-hidden="true">.</span></h1>
+      <p class="hero__lede">Live music, portraiture and editorial work across the Bay Area. Available for shows, features and commissions.</p>
+    </div>
+
+    <div class="hero__meta" aria-hidden="true">
+      <span class="mono">37.8044° N / 122.2712° W</span>
+      <span class="mono hero__count"></span>
+    </div>
+
+    <a class="hero__scroll" href="#work" aria-label="Scroll to selected work">
+      <span class="mono">Scroll</span>
+      <svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M7 2h2v8h2v2H9v2H7v-2H5v-2h2V2zM3 8h2v2H3V8zm8 0h2v2h-2V8z"/></svg>
+    </a>
+  </section>
+
+  <section class="brand" aria-label="Mario Preciado">
+    <div class="brand__stack" aria-hidden="true">
+      <span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span>
+    </div>
+    <div class="brand__caption">
+      <p class="brand__name">Mario Preciado</p>
+      <p class="brand__role mono">Photographer &nbsp;·&nbsp; San Francisco Bay Area</p>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker__track">
+      <ul class="ticker__run">
+        <li>Live Music</li><li>Street</li><li>Fashion</li><li>Portraiture</li><li>Art Culture</li><li>Community</li>
+      </ul>
+      <ul class="ticker__run" aria-hidden="true">
+        <li>Live Music</li><li>Street</li><li>Fashion</li><li>Portraiture</li><li>Art Culture</li><li>Community</li>
+      </ul>
+      <ul class="ticker__run" aria-hidden="true">
+        <li>Live Music</li><li>Street</li><li>Fashion</li><li>Portraiture</li><li>Art Culture</li><li>Community</li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="work" class="work" aria-label="Selected work">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">02</span>Selected Work</p>
+      <h2 class="sec-title reveal">Recent<br><em>Captures</em></h2>
+      <p class="sec-note mono reveal">Selected frames from recent shows. Select any image to view it larger.</p>
+    </header>
+
+    <div class="work__seq">
+      <div class="row row--full">
+        <figure class="frame frame--full reveal" data-idx="1" data-name="portfolio_003">
+          <a class="frame__link" href="/work/crowd-motion/" aria-label="Crowd Motion — open frame">
+            <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABIAPwFysFIrJqSiqAqpYCAJYgAAL4egUmJ8gmkaeWzd9PAA/u8+RrxBqMAx3aWCizz/YoxTUdZ9QiCgF2MZDYAeKanSR2GJFq279SoK/5eUg01tA2uerZN7ovyjdoJBC4IxfaYAAA==)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_003-320.avif 320w, /assets/images/opt/portfolio_003-480.avif 480w, /assets/images/opt/portfolio_003-960.avif 960w, /assets/images/opt/portfolio_003-1280.avif 1280w" sizes="92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_003-320.webp 320w, /assets/images/opt/portfolio_003-480.webp 480w, /assets/images/opt/portfolio_003-960.webp 960w, /assets/images/opt/portfolio_003-1280.webp 1280w" sizes="92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_003-480.webp" width="1280" height="960" alt="Crowd surfer carried on raised hands through a packed audience under blue stage light." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">01</span>
+              <span class="frame__title">Crowd Motion</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
+      <div class="row row--duo">
+        <figure class="frame frame--lead reveal" data-idx="2" data-name="portfolio_001">
+          <a class="frame__link" href="/work/liquid-light/" aria-label="Liquid Light — open frame">
+            <div class="frame__media" style="--ar:0.7668;background-image:url(data:image/webp;base64,UklGRh4BAABXRUJQVlA4IBIBAAAQBgCdASoYAB8APwFmqk6rJSOiMAgBYCAJbACdMu0A/vM5PGYwv+yUwMWhCeRFmw6X6b3C7JWZ6AAA/uQ2z+R/TXEd8aiMih3WlHmsO7w9jwA6htp+D10kl8IjxSbQ3tU4MUzB3v9wdF7y6I83EAWNfSkbqKOCBIPuc+/D1P4AsoDfPhkOCJ9nqFQCv38cnT3RDGaqr+J2frs/hY8x/ZkX6G+OrA/ltHM4ZeYkztarvvzHE57dSK2edDj/g2yo6tEQ4H/2J+IfI1CNFCdO2C4TP1sLfuZ7RLIQhvYhJL8SMIQnDCQAPq7hrzQoky4ie561ckz1Q2s4vNdITqD/QxLFi9rY2vM7eX0InKdjsyhGWPAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_001-320.avif 320w, /assets/images/opt/portfolio_001-480.avif 480w, /assets/images/opt/portfolio_001-776.avif 776w" sizes="(min-width: 768px) 56vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_001-320.webp 320w, /assets/images/opt/portfolio_001-480.webp 480w, /assets/images/opt/portfolio_001-776.webp 776w" sizes="(min-width: 768px) 56vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_001-480.webp" width="776" height="1012" alt="Band on stage under a psychedelic green and magenta liquid light projection, guitarist at the microphone." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">02</span>
+              <span class="frame__title">Liquid Light</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--sub reveal" data-idx="3" data-name="portfolio_007">
+          <a class="frame__link" href="/work/solar/" aria-label="Solar — open frame">
+            <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_007-320.avif 320w, /assets/images/opt/portfolio_007-480.avif 480w, /assets/images/opt/portfolio_007-960.avif 960w, /assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 34vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_007-320.webp 320w, /assets/images/opt/portfolio_007-480.webp 480w, /assets/images/opt/portfolio_007-960.webp 960w, /assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 34vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">03</span>
+              <span class="frame__title">Solar</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
+      <div class="row row--trio">
+        <figure class="frame frame--trio reveal" data-idx="4" data-name="portfolio_009">
+          <a class="frame__link" href="/work/raw-energy/" aria-label="Raw Energy — open frame">
+            <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_009-320.avif 320w, /assets/images/opt/portfolio_009-480.avif 480w, /assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_009-320.webp 320w, /assets/images/opt/portfolio_009-480.webp 480w, /assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">04</span>
+              <span class="frame__title">Raw Energy</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--trio reveal" data-idx="5" data-name="portfolio_011">
+          <a class="frame__link" href="/work/green-room/" aria-label="Green Room — open frame">
+            <div class="frame__media" style="--ar:0.6674;background-image:url(data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwBACdASoYACQAPwF0sFKrJqSjpWzJYCAJQBWGaFi10sLlwTpIqxW1C0o2bGNrjgAA/vDWy59BF7mAOgas+YPpEYFijgs0aW+U+ygiJZW1NT4QlCDpZsgDKSJdWEwRAHNWDmuPbR2njSFYi92pqw66zipQu0UV8pii+v6Cy6hHy3qYohIHsZSjZAA=)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_011-320.avif 320w, /assets/images/opt/portfolio_011-480.avif 480w, /assets/images/opt/portfolio_011-960.avif 960w, /assets/images/opt/portfolio_011-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_011-320.webp 320w, /assets/images/opt/portfolio_011-480.webp 480w, /assets/images/opt/portfolio_011-960.webp 960w, /assets/images/opt/portfolio_011-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_011-480.webp" width="1280" height="1918" alt="Guitarist with a hollow-body electric bathed in deep green stage light." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">05</span>
+              <span class="frame__title">Green Room</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+        <figure class="frame frame--trio reveal" data-idx="6" data-name="portfolio_005">
+          <a class="frame__link" href="/work/lead-vocalist/" aria-label="Lead Vocalist — open frame">
+            <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACwBACdASoYACAAPwF4s1OrJySiqAgBYCAJYgDImFaav+i1NyCHBO8Tz0kvtxGAAP766d8IaWGKwZHHd7FmjGAMwVKxGF+MMwF9DFSav2v+CWjL1gbH+dYQD5m9ifFlOTAZF4iE9MEcIn73cL8/I4jAGUlXe4Rd5TjpKoIcsvrO4SAA)">
+              <picture>
+                <source type="image/avif" srcset="/assets/images/opt/portfolio_005-320.avif 320w, /assets/images/opt/portfolio_005-480.avif 480w, /assets/images/opt/portfolio_005-960.avif 960w, /assets/images/opt/portfolio_005-1280.avif 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <source type="image/webp" srcset="/assets/images/opt/portfolio_005-320.webp 320w, /assets/images/opt/portfolio_005-480.webp 480w, /assets/images/opt/portfolio_005-960.webp 960w, /assets/images/opt/portfolio_005-1280.webp 1280w" sizes="(min-width: 768px) 30vw, 92vw">
+                <img class="frame__img" src="/assets/images/opt/portfolio_005-480.webp" width="1280" height="1707" alt="Guitarist leaning into the microphone in profile, violet rim light across a white electric guitar." decoding="async" loading="lazy">
+              </picture>
+              <span class="frame__veil" aria-hidden="true"></span>
+            </div>
+            <figcaption class="frame__cap">
+              <span class="frame__no mono">06</span>
+              <span class="frame__title">Lead Vocalist</span>
+              <span class="frame__cat mono">Live Music</span>
+            </figcaption>
+          </a>
+        </figure>
+      </div>
+    </div>
+
+    <div class="work__more">
+      <a class="btn" href="/work/"><span>See all work</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></a>
+    </div>
+  </section>
+
+  <section id="signal" class="signal" aria-label="Featured capture">
+    <div class="signal__media parallax" data-parallax="0.12">
+      <div class="frame__media frame__media--fill" style="--ar:0.7155;background-image:url(data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACwBgCdASoYACIAPwF4sFOrJyQipWsxYCAJZACxG71MMDkg25Mi/HDHG3uqUNOyFLtbq03nCKM5dCHEPdERgAD+8NGU3SewpUuCf44f8qz0voGgMjo1lLW7zzxLv70it20QEV7KxZM0We7EZn1qastcPoTkzUnicWN4XAm6TcOilkyo649EPgLgTFDnZXnHsxAQ5+pxaF9BQb6uC016r2E0OF0Rd4H+mmvSDkrHUWwXdSXrGDvMWI/KAuL5ahuQuyb547Z7w1PA8FR8gAA=)">
+        <picture>
+          <source type="image/avif" srcset="/assets/images/opt/hero-002-320.avif 320w, /assets/images/opt/hero-002-480.avif 480w, /assets/images/opt/hero-002-960.avif 960w, /assets/images/opt/hero-002-1280.avif 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <source type="image/webp" srcset="/assets/images/opt/hero-002-320.webp 320w, /assets/images/opt/hero-002-480.webp 480w, /assets/images/opt/hero-002-960.webp 960w, /assets/images/opt/hero-002-1280.webp 1280w" sizes="(max-width: 640px) 72vw, 100vw">
+          <img class="signal__img" src="/assets/images/opt/hero-002-480.webp" width="1280" height="1789" alt="Singer at the microphone behind a blue keyboard, lit in warm amber and olive stage light." decoding="async" loading="lazy">
+        </picture>
+        <span class="frame__veil" aria-hidden="true"></span>
+      </div>
+      <div class="signal__scrim" aria-hidden="true"></div>
+    </div>
+    <div class="signal__body">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">03</span>Featured</p>
+      <h2 class="signal__title">On<br><em>stage</em></h2>
+      <p class="signal__meta mono">Amber Hour &nbsp;·&nbsp; Bay Area, CA</p>
+    </div>
+  </section>
+
+  <section id="about" class="about" aria-label="About Mario Preciado">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>About the artist</p>
+      
+    </header>
+
+    <div class="about__grid">
+      <div class="about__panel reveal">
+        <div class="panel">
+          <span class="panel__bar mono" aria-hidden="true">
+            <span class="panel__dots"><i></i><i></i><i></i></span>
+            Mario Preciado — Bay Area, CA
+          </span>
+          <div class="panel__body">
+            <p class="about__line"><span class="mono about__prompt" aria-hidden="true">—</span> I'm <strong>Mario Preciado</strong>, a Bay Area based photographer.</p>
+            <p class="about__line">My photography consists of live music, street, fashion, portraiture, art culture and community. My focus is expressing the style and vibrant colors that I believe help reflect the atmosphere of these subjects and events.</p>
+            <p class="about__line about__line--em">I look forward to working with you.</p>
+          </div>
         </div>
-        <div id="nav-links" class="flex gap-6 text-sm text-zinc-400">
-            <a href="#home" class="hover:text-[#ff10f0] transition-colors">Home</a>
-            <a href="#portfolio" class="hover:text-[#ff10f0] transition-colors">Portfolio</a>
-            <a href="#instagram" class="hover:text-[#ff10f0] transition-colors">Feed</a>
-            <a href="#about" class="hover:text-[#ff10f0] transition-colors">About</a>
-            <a href="#contact" class="hover:text-[#ff10f0] transition-colors">Contact</a>
+
+        <ul class="stats" aria-label="At a glance">
+          <li><span class="stats__n">Live</span><span class="stats__k mono">Music &amp; events</span></li>
+          <li><span class="stats__n">Editorial</span><span class="stats__k mono">Portrait &amp; feature</span></li>
+          <li><span class="stats__n">Bay Area</span><span class="stats__k mono">Available to travel</span></li>
+        </ul>
+
+        <div class="about__cta">
+          <a class="btn" href="/contact/"><span>Get in touch</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></a>
+          <a class="btn btn--ghost" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer"><span>@mariopreciado.art</span></a>
         </div>
-    </nav>
+      </div>
 
-    <main id="main-content">
-
-    <!-- Hero Section -->
-    <section id="home" aria-label="Introduction" class="min-h-screen flex items-center justify-center px-4 md:px-12 pt-20">
-        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            
-            <!-- Left: Photo -->
-            <div class="relative group order-2 md:order-1">
-                <div class="overflow-hidden rounded-2xl border border-zinc-800 transition-all duration-700 group-hover:border-[#ff10f0]/30">
-                    <img id="hero-image"
-                         src="assets/images/hero-001.webp"
-                         alt="Live performance photography"
-                         class="w-full h-[400px] md:h-[550px] object-cover transition-all duration-700"
-                         fetchpriority="high"
-                         decoding="async"
-                         onerror="this.onerror=null;this.src='assets/images/hero-002.webp'">
-                    
-                    <!-- Location Tag -->
-                    <div class="absolute bottom-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2">
-                        <span class="w-2 h-2 bg-[#ff10f0] rounded-full animate-pulse"></span>
-                        <span class="text-[10px] tracking-[0.2em] uppercase text-zinc-300">Bay Area • CA</span>
-                    </div>
-                </div>
-                <!-- Glow effect behind image -->
-                <div class="absolute -inset-4 bg-[#ff10f0]/5 rounded-3xl blur-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            </div>
-
-            <!-- Right: Content -->
-            <div id="about" class="flex flex-col space-y-6 text-center md:text-left order-1 md:order-2">
-                <div>
-                    <p class="text-zinc-500 text-xs uppercase tracking-[0.3em] flex items-center justify-center md:justify-start gap-2">
-                        <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-                        About the artist
-                    </p>
-                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mt-4 leading-[0.95]">
-                        Capturing <span class="neon-pink italic">live moments &amp; visuals.</span>
-                    </h1>
-                </div>
-
-                <div class="space-y-4">
-                    <p class="text-lg md:text-xl text-zinc-300">
-                        I'm <span class="font-bold text-white">Mario Preciado</span>, a Bay Area based photographer.
-                    </p>
-                    <p class="text-zinc-500 leading-relaxed max-w-md mx-auto md:mx-0 text-sm md:text-base">
-                        My photography consists of live music, street, fashion, portraiture, art culture and community. 
-                        My focus is expressing the style and vibrant colors that I believe help reflect the atmosphere of these subjects and events.
-                    </p>
-                    <p class="text-zinc-400 text-sm italic">
-                        I look forward to working with you.
-                    </p>
-                </div>
-
-                <!-- Category Tags -->
-                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-                    <span class="category-tag">LIVE MUSIC</span>
-                    <span class="category-tag">STREET</span>
-                    <span class="category-tag">FASHION</span>
-                    <span class="category-tag">PORTRAITURE</span>
-                    <span class="category-tag">COMMUNITY</span>
-                </div>
-
-                <!-- Social Links -->
-                <div class="flex gap-4 justify-center md:justify-start pt-2">
-                    <a href="https://www.instagram.com/mariopreciado.art"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="social-icon"
-                       aria-label="Mario Preciado on Instagram">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                        </svg>
-                    </a>
-                    <a href="mailto:marioopreciadoo@gmail.com"
-                       class="social-icon"
-                       aria-label="Send email to Mario Preciado">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+      <div class="about__stack">
+        <div class="strip__item reveal" style="--i:0">
+          <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_007-320.avif 320w, /assets/images/opt/portfolio_007-480.avif 480w, /assets/images/opt/portfolio_007-960.avif 960w, /assets/images/opt/portfolio_007-1280.avif 1280w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_007-320.webp 320w, /assets/images/opt/portfolio_007-480.webp 480w, /assets/images/opt/portfolio_007-960.webp 960w, /assets/images/opt/portfolio_007-1280.webp 1280w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_007-480.webp" width="1280" height="1707" alt="Lone performer silhouetted against a giant glowing orange orb backdrop in a red-washed room." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
         </div>
-    </section>
-
-    <!-- Featured Capture Section -->
-    <section id="featured" aria-label="Featured Capture" class="py-16 px-4 md:px-12">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex items-center gap-2 mb-8">
-                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Featured Capture</p>
-            </div>
-
-            <div class="featured-capture">
-                <img src="assets/images/hero-001.webp"
-                     alt="Live performance — vocalist in red dress, Bay Area"
-                     class="featured-capture__img"
-                     loading="lazy"
-                     decoding="async">
-
-                <div class="featured-capture__overlay">
-                    <span class="featured-capture__meta">Mario Preciado &nbsp;·&nbsp; Featured &nbsp;·&nbsp; 2024</span>
-
-                    <div class="featured-capture__content">
-                        <span class="featured-capture__tag">Live Music</span>
-                        <h2 class="featured-capture__title">
-                            <em class="neon-pink">live moments &amp; visuals.</em>
-                        </h2>
-                        <p class="featured-capture__sub">Bay Area, CA</p>
-                    </div>
-                </div>
-            </div>
+        <div class="strip__item reveal" style="--i:1">
+          <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_009-320.avif 320w, /assets/images/opt/portfolio_009-480.avif 480w, /assets/images/opt/portfolio_009-654.avif 654w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_009-320.webp 320w, /assets/images/opt/portfolio_009-480.webp 480w, /assets/images/opt/portfolio_009-654.webp 654w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_009-480.webp" width="654" height="854" alt="Guitarist in a black cowboy hat and fringed jacket playing against a fiery orange backdrop." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
         </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" aria-label="Portfolio gallery" class="py-20 px-4 md:px-12">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex items-center gap-2 mb-12">
-                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Selected Work</p>
-            </div>
-            
-            <h2 class="text-3xl md:text-5xl font-bold mb-12">Recent <span class="neon-pink italic">Captures</span></h2>
-            
-            <!-- Masonry Grid -->
-            <div class="masonry-grid" id="portfolio-grid" role="list" aria-label="Portfolio images">
-                <!-- Images will be populated by JS -->
-            </div>
+        <div class="strip__item reveal" style="--i:2">
+          <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBgCdASoYABIAPwFysVIrJqSiqAqpYCAJbACdMtU8LoLzZ6AP//iYAB4aoTce1midx1wOuVHoD8FrmEIgAP50i7jCaV2r3gR5f2+kXlIIdpNOHOk9IluOe/VCgcuTd9O4qfDx1eylYVot1l3wy0VSyiDCTA8bWxt6qCHg9Y0Y6rIWlOBoMfbRNbWiBkm9HUfzLOrvIVqdey/lwuhkc7Rg5om4Glpt+S0RvXyYvgTpaVtO1IYORiAA)">
+            <picture>
+              <source type="image/avif" srcset="/assets/images/opt/portfolio_010-320.avif 320w, /assets/images/opt/portfolio_010-480.avif 480w, /assets/images/opt/portfolio_010-848.avif 848w" sizes="(min-width: 768px) 20vw, 26vw">
+              <source type="image/webp" srcset="/assets/images/opt/portfolio_010-320.webp 320w, /assets/images/opt/portfolio_010-480.webp 480w, /assets/images/opt/portfolio_010-848.webp 848w" sizes="(min-width: 768px) 20vw, 26vw">
+              <img class="frame__img" src="/assets/images/opt/portfolio_010-480.webp" width="848" height="636" alt="Long-haired guitarist in a wide-brimmed hat singing at the microphone under warm amber light." decoding="async" loading="lazy">
+            </picture>
+            <span class="frame__veil" aria-hidden="true"></span>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Instagram Feed Section -->
-    <section id="instagram" aria-label="Instagram feed" class="py-20 px-4 md:px-12 border-t border-zinc-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex items-center gap-2 mb-8">
-                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Live from Instagram</p>
-            </div>
+  <section id="contact" class="contact" aria-label="Contact">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Contact</p>
+      <h2 class="sec-title reveal">Let's work<br><em>together</em></h2>
+    </header>
 
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold">From the <span class="neon-pink italic">Feed</span></h2>
-                <a href="https://www.instagram.com/mariopreciado.art?igsh=NTc4MTIwNjQ2YQ=="
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-[#ff10f0] transition-colors"
-                   aria-label="Follow @mariopreciado.art on Instagram (opens in a new tab)">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                    @mariopreciado.art
-                </a>
-            </div>
+    <div class="contact__grid">
+      <div class="contact__aside reveal">
+        <p class="contact__pitch">Available for live music, editorial, portrait and event work. Tell me about your project and I’ll get back to you.</p>
+        <dl class="contact__list mono">
+          <div><dt>Email</dt><dd><a href="mailto:marioopreciadoo@gmail.com">marioopreciadoo@gmail.com</a></dd></div>
+          <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer">@mariopreciado.art</a></dd></div>
+          <div><dt>Based</dt><dd>San Francisco Bay Area</dd></div>
+        </dl>
+      </div>
 
-            <!--
-                Instagram Grid — 4 cols desktop / 2 cols mobile / 1 col small.
-                Pending real images: the live 12-post pull was blocked by an Instagram
-                rate limit at build time. Once cleared, run the instaloader pull, convert
-                to assets/images/instagram/insta_001.webp … insta_012.webp, and replace the
-                CTA panel below with the grid markup, e.g.:
+      <form id="contact-form" class="form reveal" action="https://formspree.io/f/xanyvgkj" method="POST" novalidate>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="form__gotcha">
 
-                <div class="instagram-grid" role="list" aria-label="Latest Instagram posts from @mariopreciado.art">
-                    <a class="instagram-item" role="listitem"
-                       href="https://www.instagram.com/p/SHORTCODE/"
-                       target="_blank" rel="noopener noreferrer"
-                       aria-label="View Instagram post on @mariopreciado.art (opens in a new tab)">
-                        <img src="assets/images/instagram/insta_001.webp" loading="lazy" decoding="async"
-                             width="600" height="600" alt="Instagram post from @mariopreciado.art">
-                        <svg class="instagram-item__icon" ... aria-hidden="true">…</svg>
-                    </a>
-                    … ×12 …
-                </div>
-            -->
-            <a href="https://www.instagram.com/mariopreciado.art?igsh=NTc4MTIwNjQ2YQ=="
-               target="_blank"
-               rel="noopener noreferrer"
-               class="instagram-cta"
-               aria-label="Follow @mariopreciado.art on Instagram to see the latest posts (opens in a new tab)">
-                <svg class="instagram-cta__icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                <span class="instagram-cta__title">Follow <span class="neon-pink">@mariopreciado.art</span></span>
-                <span class="instagram-cta__subtitle">Catch the latest moments &amp; visuals straight from the feed</span>
-            </a>
+        <div class="field">
+          <label for="name" class="mono">Name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" placeholder="Your name">
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" aria-label="Contact" class="py-20 px-4 md:px-12 border-t border-zinc-900">
-        <div class="max-w-2xl mx-auto">
-            <div class="flex items-center justify-center gap-2 mb-6">
-                <span class="w-2 h-2 bg-[#ff10f0] rounded-full"></span>
-                <p class="text-zinc-500 text-xs uppercase tracking-[0.3em]">Get in Touch</p>
-            </div>
-            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-center">Let's Create <span class="neon-pink italic">Together</span></h2>
-            <p class="text-zinc-500 mb-10 max-w-lg mx-auto text-center">
-                Available for bookings in the Bay Area and beyond. Let's capture your next event.
-            </p>
-
-            <form
-                id="contact-form"
-                action="https://formspree.io/f/xanyvgkj"
-                method="POST"
-                class="contact-form"
-                novalidate>
-
-                <!-- Honeypot — hidden from real users, bots fill it -->
-                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="contact-honeypot">
-
-                <div class="contact-form__row">
-                    <div class="contact-form__field">
-                        <label for="contact-name" class="contact-form__label">Name</label>
-                        <input
-                            type="text"
-                            id="contact-name"
-                            name="name"
-                            class="contact-form__input"
-                            placeholder="Your name"
-                            required
-                            autocomplete="name">
-                    </div>
-                    <div class="contact-form__field">
-                        <label for="contact-email" class="contact-form__label">Email</label>
-                        <input
-                            type="email"
-                            id="contact-email"
-                            name="email"
-                            class="contact-form__input"
-                            placeholder="your@email.com"
-                            required
-                            autocomplete="email">
-                    </div>
-                </div>
-
-                <div class="contact-form__field">
-                    <label for="contact-subject" class="contact-form__label">Subject</label>
-                    <input
-                        type="text"
-                        id="contact-subject"
-                        name="subject"
-                        class="contact-form__input"
-                        placeholder="Booking inquiry, collaboration…"
-                        required>
-                </div>
-
-                <div class="contact-form__field">
-                    <label for="contact-message" class="contact-form__label">Message</label>
-                    <textarea
-                        id="contact-message"
-                        name="message"
-                        class="contact-form__input contact-form__textarea"
-                        placeholder="Tell me about your project or event…"
-                        required
-                        rows="5"></textarea>
-                </div>
-
-                <button type="submit" class="contact-form__submit" id="contact-submit">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                    <span id="contact-submit-label">Send Message</span>
-                </button>
-
-                <p id="contact-success" class="contact-form__success" role="status" hidden>
-                    Message sent — I'll be in touch soon.
-                </p>
-                <p id="contact-error" class="contact-form__error" role="alert" hidden>
-                    Something went wrong. Please try again or email me directly.
-                </p>
-            </form>
+        <div class="field">
+          <label for="email" class="mono">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
         </div>
-    </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-8 px-4 md:px-12 border-t border-zinc-900">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-zinc-600 text-xs tracking-wider">© 2026 MARIO PRECIADO PHOTOGRAPHY</p>
-            <div class="flex gap-4">
-                <a href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram" class="text-zinc-600 hover:text-[#ff10f0] transition-colors">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                </a>
-            </div>
+        <div class="field">
+          <label for="subject" class="mono">Subject</label>
+          <input id="subject" name="subject" type="text" placeholder="Live show, portrait session, editorial…">
         </div>
-    </footer>
+        <div class="field">
+          <label for="message" class="mono">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Dates, venue, what you have in mind…"></textarea>
+        </div>
 
-    <script src="js/main.js" defer></script>
+        <button type="submit" class="btn btn--block"><span class="form__label">Send message</span><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></button>
+
+        <p id="form-ok" class="form__msg form__msg--ok mono" role="status" hidden>Thanks — your message is through. I’ll be in touch shortly.</p>
+        <p id="form-err" class="form__msg form__msg--err mono" role="alert" hidden>Something went wrong sending that. Please email me directly at marioopreciadoo@gmail.com.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="mono">&copy; <span id="year">2026</span> Mario Preciado Photography</p>
+  <p class="mono foot__made">San Francisco Bay Area</p>
+  <a class="foot__ig" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+</footer>
+
 </body>
 </html>

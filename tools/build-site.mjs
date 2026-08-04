@@ -23,7 +23,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { SITE, COPY, META, SEQUENCE, HOME_SEQUENCE, HERO, SIGNAL, ABOUT_STRIP, slugify } from './lib/content.mjs';
+import { SITE, COPY, META, GELS, RIG, SEQUENCE, HOME_SEQUENCE, HERO, SIGNAL, ABOUT_STRIP, gel, slugify } from './lib/content.mjs';
 import { page, personSchema, esc, ICON_ARROW, ICON_ARROW_L, ICON_CHEVRON } from './lib/shell.mjs';
 import { media, picture, sequence, SIZES, indent, abs } from './lib/media.mjs';
 
@@ -37,6 +37,18 @@ const eyebrow = (text, idx) =>
 
 const secTitle = ([plain, accent]) =>
   `<h2 class="sec-title reveal">${esc(plain)}<br><em>${esc(accent)}</em></h2>`;
+
+/**
+ * Serialise a section's lighting cue onto the section itself.
+ *
+ * The alternative is a lookup table in JS keyed by section id, which is the
+ * same data written twice and guaranteed to drift the first time a section is
+ * renamed. This way content.mjs stays the only place the cue sheet exists.
+ */
+const rigCue = (key) => {
+  const r = RIG[key];
+  return r ? ` data-ch="${r.ch}" data-gel="${esc(r.gel)}" data-k="${r.k}" data-hue="${r.hue}"` : '';
+};
 
 function ticker() {
   const run = (hidden) =>
@@ -67,7 +79,7 @@ function brand() {
 function hero(images) {
   const e = images[HERO];
   const [a, b, c] = COPY.hero.title;
-  return `  <section id="home" class="hero" aria-label="Introduction">
+  return `  <section id="home" class="hero" aria-label="Introduction"${rigCue('home')}>
     <div class="hero__media parallax" data-parallax="0.18">
 ${indent(media(e, META[HERO], { sizes: SIZES.hero, eager: true, className: 'hero__img' }, 'frame__media--fill'), 6)}
       <div class="hero__scrim" aria-hidden="true"></div>
@@ -94,7 +106,7 @@ ${indent(media(e, META[HERO], { sizes: SIZES.hero, eager: true, className: 'hero
 function signal(images) {
   const e = images[SIGNAL];
   const [a, b] = COPY.signal.title;
-  return `  <section id="signal" class="signal" aria-label="Featured capture">
+  return `  <section id="signal" class="signal" aria-label="Featured capture"${rigCue('signal')}>
     <div class="signal__media parallax" data-parallax="0.12">
 ${indent(media(e, META[SIGNAL], { sizes: SIZES.hero, className: 'signal__img' }, 'frame__media--fill'), 6)}
       <div class="signal__scrim" aria-hidden="true"></div>
@@ -102,8 +114,63 @@ ${indent(media(e, META[SIGNAL], { sizes: SIZES.hero, className: 'signal__img' },
     <div class="signal__body">
       ${eyebrow(COPY.signal.eyebrow, '03')}
       <h2 class="signal__title">${esc(a)}<br><em>${esc(b)}</em></h2>
-      <p class="signal__meta mono">${esc(META[SIGNAL].title)} &nbsp;·&nbsp; Bay Area, CA</p>
+      <p class="signal__meta mono">${esc(META[SIGNAL].title)} &nbsp;·&nbsp; ${esc(gel(META[SIGNAL].light[0]).label)} &nbsp;·&nbsp; Bay Area, CA</p>
     </div>
+  </section>`;
+}
+
+/**
+ * Six services in a bordered grid. Each cell is a channel strip: index, name,
+ * a subject line, and one sentence. No prices — see COPY.services.
+ */
+function services() {
+  const c = COPY.services;
+  const items = c.items
+    .map(
+      (s, i) => `        <li class="svc reveal" style="--i:${i}">
+          <span class="svc__no mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+          <h3 class="svc__name">${esc(s.name)}</h3>
+          <p class="svc__tag mono">${esc(s.tag)}</p>
+          <p class="svc__line">${esc(s.line)}</p>
+        </li>`
+    )
+    .join('\n');
+
+  return `  <section id="services" class="services" aria-label="Services"${rigCue('services')}>
+    <header class="sec-head">
+      ${eyebrow(c.eyebrow, '04')}
+      ${secTitle(c.title)}
+      <p class="sec-note mono reveal">${esc(c.note)}</p>
+    </header>
+
+    <ul class="svc-grid">
+${items}
+    </ul>
+  </section>`;
+}
+
+/** Four steps, drawn as a signal chain across the page. */
+function processBlock() {
+  const c = COPY.process;
+  const steps = c.steps
+    .map(
+      (s, i) => `        <li class="step reveal" style="--i:${i}">
+          <span class="step__no mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+          <h3 class="step__name">${esc(s.name)}</h3>
+          <p class="step__line">${esc(s.line)}</p>
+        </li>`
+    )
+    .join('\n');
+
+  return `  <section id="process" class="process" aria-label="Process"${rigCue('process')}>
+    <header class="sec-head">
+      ${eyebrow(c.eyebrow, '05')}
+      ${secTitle(c.title)}
+    </header>
+
+    <ol class="step-chain">
+${steps}
+    </ol>
   </section>`;
 }
 
@@ -127,9 +194,9 @@ function aboutBlock(images, { full = false } = {}) {
     .map((s) => `          <li><span class="stats__n">${esc(s.n)}</span><span class="stats__k mono">${esc(s.k)}</span></li>`)
     .join('\n');
 
-  return `  <section id="about" class="about" aria-label="About ${SITE.name}">
+  return `  <section id="about" class="about" aria-label="About ${SITE.name}"${rigCue('about')}>
     <header class="sec-head">
-      ${eyebrow(COPY.about.eyebrow, '04')}
+      ${eyebrow(COPY.about.eyebrow, '06')}
       ${full ? secTitle(COPY.about.title) : ''}
     </header>
 
@@ -164,9 +231,9 @@ ${indent(strip, 8)}
 
 function contactBlock() {
   const f = COPY.contact;
-  return `  <section id="contact" class="contact" aria-label="Contact">
+  return `  <section id="contact" class="contact" aria-label="Contact"${rigCue('contact')}>
     <header class="sec-head">
-      ${eyebrow(f.eyebrow, '05')}
+      ${eyebrow(f.eyebrow, '07')}
       ${secTitle(f.title)}
     </header>
 
@@ -211,12 +278,22 @@ function contactBlock() {
 
 // ── pages ────────────────────────────────────────────────────────────────────
 
+/**
+ * Section order is the argument the page makes.
+ *
+ * The work comes before anything else that isn't the hero, because a visitor
+ * deciding whether to hire a photographer is deciding on the photographs. The
+ * brand mark used to sit at position two and delayed them; it now falls after
+ * the grid as a scene break, where it reads as punctuation rather than a
+ * toll gate. Services and process answer "can you do my thing" and "what
+ * happens if I email you" — the two questions a portfolio usually leaves
+ * hanging — and both sit between the work and the ask.
+ */
 function homePage(images) {
   const main = [
     hero(images),
-    brand(),
     ticker(),
-    `  <section id="work" class="work" aria-label="Selected work">
+    `  <section id="work" class="work" aria-label="Selected work"${rigCue('work')}>
     <header class="sec-head">
       ${eyebrow(COPY.work.eyebrow, '02')}
       ${secTitle(COPY.work.title)}
@@ -231,7 +308,10 @@ ${indent(sequence(HOME_SEQUENCE, images), 6)}
       <a class="btn" href="/work/"><span>See all work</span>${ICON_ARROW}</a>
     </div>
   </section>`,
+    brand(),
     signal(images),
+    services(),
+    processBlock(),
     aboutBlock(images),
     contactBlock(),
   ].join('\n\n');
@@ -248,19 +328,60 @@ ${indent(sequence(HOME_SEQUENCE, images), 6)}
       srcset: e.variants.map((v) => `${abs(v.avif)} ${v.w}w`).join(', '),
       sizes: SIZES.hero,
     },
+    gel: RIG.home.hue,
+    intro: true,
+    hasLightbox: true,
     main,
   });
 }
 
+/**
+ * The gel filter — a radio group, and CSS-only at its core.
+ *
+ * `:has()` on the section plus `[data-light~="…"]` does the whole filter with
+ * one rule per gel and no script. That is not a graceful degradation, it is the
+ * actual mechanism: with JavaScript disabled the filter still works. JS only
+ * adds the animated re-layout and the URL state on top.
+ *
+ * A radio group is also the correct semantics for single-select — better than
+ * a row of buttons with aria-pressed, which is what this wanted to be first.
+ * The inputs are clipped rather than display:none so they stay focusable.
+ *
+ * Counts are tallied from the sequence itself, so they can never disagree with
+ * what is actually on the page.
+ */
+function filterBar(order) {
+  const tally = (key) => order.filter((n) => META[n].light.includes(key)).length;
+  const chip = (key, label, n, on) =>
+    `        <input type="radio" name="light" id="f-${key}" class="filter__in" value="${key}"${on ? ' checked' : ''}>
+        <label class="filter__chip" for="f-${key}"><span class="filter__label">${esc(label)}</span><span class="filter__n mono">${String(n).padStart(2, '0')}</span></label>`;
+
+  const chips = [
+    chip('all', 'All', order.length, true),
+    ...GELS.filter((g) => tally(g.key) > 0).map((g) => chip(g.key, g.label, tally(g.key), false)),
+  ].join('\n');
+
+  return `    <fieldset class="filter">
+      <legend class="filter__legend mono">Filter by light</legend>
+      <div class="filter__chips">
+${chips}
+      </div>
+    </fieldset>
+    <p class="filter__status sr-only" role="status"></p>`;
+}
+
 function workIndexPage(images) {
-  const main = `  <section class="work work--index" aria-label="All work">
+  const order = SEQUENCE.flatMap((r) => r.frames);
+  const main = `  <section class="work work--index" aria-label="All work"${rigCue('work')}>
     <header class="sec-head sec-head--page">
       ${eyebrow(COPY.work.eyebrow, '02')}
       ${secTitle(COPY.work.indexTitle)}
       <p class="sec-note mono reveal">${esc(COPY.work.indexNote)}</p>
     </header>
 
-    <div class="work__seq">
+${filterBar(order)}
+
+    <div class="work__seq" id="archive">
 ${indent(sequence(SEQUENCE, images), 6)}
     </div>
   </section>
@@ -273,6 +394,8 @@ ${contactCta()}`;
     canonical: '/work/',
     ogImage: '/assets/images/portfolio_003.webp',
     jsonLd: personSchema(),
+    gel: RIG.work.hue,
+    hasLightbox: true,
     main,
   });
 }
@@ -301,7 +424,7 @@ function framePage(name, images, order) {
     </a>`;
   };
 
-  const main = `  <article class="solo" aria-labelledby="solo-title">
+  const main = `  <article class="solo" aria-labelledby="solo-title" data-name="${name}">
     <header class="solo__head">
       ${eyebrow(`Frame ${String(i + 1).padStart(2, '0')} / ${String(order.length).padStart(2, '0')}`)}
       <h1 class="solo__title" id="solo-title">${esc(meta.title)}</h1>
@@ -315,7 +438,8 @@ ${indent(media(entry, meta, { sizes: SIZES.solo, eager: true, className: 'solo__
       <p class="solo__caption">${esc(meta.alt)}</p>
 
       <dl class="solo__meta mono">
-        <div><dt>Subject</dt><dd>Live Music</dd></div>
+        <div><dt>Subject</dt><dd>${esc(meta.discipline)}</dd></div>
+        <div><dt>Light</dt><dd>${esc(meta.light.map((k) => gel(k).label).join(' · '))}</dd></div>
         <div><dt>Location</dt><dd>Bay Area, CA</dd></div>
         <div><dt>Orientation</dt><dd>${entry.orientation}</dd></div>
         <div><dt>Photographer</dt><dd>${esc(SITE.name)}</dd></div>
@@ -357,6 +481,9 @@ ${contactCta()}`;
       srcset: entry.variants.map((v) => `${abs(v.avif)} ${v.w}w`).join(', '),
       sizes: SIZES.solo,
     },
+    // The room is already lit for this photograph before any script runs.
+    gel: gel(meta.light[0]).hue,
+    hasLightbox: true,
     main,
   });
 }
@@ -368,7 +495,9 @@ function aboutPage(images) {
     canonical: '/about/',
     ogImage: '/assets/images/portfolio_009.webp',
     jsonLd: personSchema(),
-    main: `${aboutBlock(images, { full: true })}\n\n${contactCta()}`,
+    main: `${aboutBlock(images, { full: true })}\n\n${services()}\n\n${contactCta()}`,
+    gel: RIG.about.hue,
+    hasLightbox: true,
   });
 }
 
@@ -378,7 +507,10 @@ function contactPage() {
     description: `Get in touch with ${SITE.name} for live music, editorial, portrait and event photography in the Bay Area.`,
     canonical: '/contact/',
     jsonLd: personSchema(),
-    main: contactBlock(),
+    // The process strip sits under the form on purpose: the question someone
+    // has with their hand on a contact form is "what happens after I send this".
+    main: `${contactBlock()}\n\n${processBlock()}`,
+    gel: RIG.contact.hue,
   });
 }
 
@@ -411,7 +543,18 @@ async function main() {
   written.push(await emit('about/index.html', aboutPage(images)));
   written.push(await emit('contact/index.html', contactPage()));
 
-  console.log(`\n  Site built — ${written.length} pages\n`);
+  // Built from the same list that was just written, so it can't list a page
+  // that doesn't exist or miss one that does.
+  const urls = written
+    .map((w) => `  <url><loc>${SITE.origin}/${w.replace(/index\.html$/, '')}</loc></url>`)
+    .join('\n');
+  await emit(
+    'sitemap.xml',
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+  );
+  await emit('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE.origin}/sitemap.xml\n`);
+
+  console.log(`\n  Site built — ${written.length} pages + sitemap.xml, robots.txt\n`);
   for (const w of written) console.log(`    /${w.replace(/index\.html$/, '')}`);
   console.log(`\n  ${order.length} frames · one page each · shared chrome from tools/lib/shell.mjs\n`);
 }

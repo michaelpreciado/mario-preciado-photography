@@ -64,15 +64,13 @@
 <script type="module" src="/js/main.js"></script>
 </head>
 
-<body>
+<body style="--gel:78deg">
 
-<div id="boot" class="boot" aria-hidden="true" hidden>
-  <div class="boot__inner">
-    <p class="boot__word" data-text="MARIO PRECIADO">MARIO PRECIADO</p>
-    <div class="boot__bar"><span class="boot__fill"></span></div>
-    <p class="boot__status">Loading</p>
-  </div>
-  <button class="boot__skip" type="button">Skip</button>
+<div class="rig" aria-hidden="true">
+  <span class="rig__wheel rig__wheel--a"></span>
+  <span class="rig__wheel rig__wheel--b"></span>
+  <span class="rig__wheel rig__wheel--c"></span>
+  <span class="rig__haze"></span>
 </div>
 
 <div class="hud" aria-hidden="true">
@@ -81,6 +79,11 @@
   <span class="hud__corner hud__corner--bl"></span>
   <span class="hud__corner hud__corner--br"></span>
   <div class="hud__progress"><span class="hud__progress-fill"></span></div>
+  <div class="hud__rail">
+    <span class="hud__ticks"></span>
+    <span class="hud__ch mono">CH <b class="hud__ch-n">01</b> <i>·</i> <b class="hud__ch-gel">LIQUID</b> <i>·</i> <b class="hud__ch-k">3200K</b></span>
+  </div>
+  <div class="hud__meter"><span class="hud__meter-fill"></span></div>
 </div>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -107,9 +110,9 @@
 </header>
 
 <main id="main">
-  <section id="about" class="about" aria-label="About Mario Preciado">
+  <section id="about" class="about" aria-label="About Mario Preciado" data-ch="06" data-gel="Green" data-k="4400K" data-hue="78">
     <header class="sec-head">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>About the artist</p>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">06</span>About the artist</p>
       <h2 class="sec-title reveal">Behind the<br><em>lens</em></h2>
     </header>
 
@@ -174,6 +177,53 @@
     </div>
   </section>
 
+  <section id="services" class="services" aria-label="Services" data-ch="04" data-gel="Violet" data-k="6500K" data-hue="-60">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>Services</p>
+      <h2 class="sec-title reveal">What I<br><em>shoot</em></h2>
+      <p class="sec-note mono reveal">Rates and availability by inquiry — send the date and the room.</p>
+    </header>
+
+    <ul class="svc-grid">
+        <li class="svc reveal" style="--i:0">
+          <span class="svc__no mono" aria-hidden="true">01</span>
+          <h3 class="svc__name">Live Music</h3>
+          <p class="svc__tag mono">Venues · festivals · tours</p>
+          <p class="svc__line">Full sets shot from the pit and the floor. Low light is the point, not the problem.</p>
+        </li>
+        <li class="svc reveal" style="--i:1">
+          <span class="svc__no mono" aria-hidden="true">02</span>
+          <h3 class="svc__name">Portraiture</h3>
+          <p class="svc__tag mono">Artists · bands · press</p>
+          <p class="svc__line">Character-driven portraits, on location or in the room you already play in.</p>
+        </li>
+        <li class="svc reveal" style="--i:2">
+          <span class="svc__no mono" aria-hidden="true">03</span>
+          <h3 class="svc__name">Editorial</h3>
+          <p class="svc__tag mono">Features · profiles</p>
+          <p class="svc__line">Story-led shoots for features and profiles, built around the piece being written.</p>
+        </li>
+        <li class="svc reveal" style="--i:3">
+          <span class="svc__no mono" aria-hidden="true">04</span>
+          <h3 class="svc__name">Fashion</h3>
+          <p class="svc__tag mono">Lookbooks · styled shoots</p>
+          <p class="svc__line">Styled work with the same colour-forward eye that runs through the live sets.</p>
+        </li>
+        <li class="svc reveal" style="--i:4">
+          <span class="svc__no mono" aria-hidden="true">05</span>
+          <h3 class="svc__name">Art Culture</h3>
+          <p class="svc__tag mono">Openings · installations</p>
+          <p class="svc__line">Coverage of shows, openings and the scenes that grow around them.</p>
+        </li>
+        <li class="svc reveal" style="--i:5">
+          <span class="svc__no mono" aria-hidden="true">06</span>
+          <h3 class="svc__name">Community</h3>
+          <p class="svc__tag mono">Events · gatherings</p>
+          <p class="svc__line">The crowd, the room and everything happening off the stage.</p>
+        </li>
+    </ul>
+  </section>
+
   <section class="cta" aria-label="Work with Mario">
     <div class="cta__inner reveal">
       <h2 class="cta__title">Have a show<br><em>coming up?</em></h2>
@@ -187,6 +237,14 @@
   <p class="mono foot__made">San Francisco Bay Area</p>
   <a class="foot__ig" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
 </footer>
+
+<dialog id="lb" class="lb" aria-label="Full screen frame">
+  <div class="lb__stage"></div>
+  <p class="lb__meta mono" role="status" aria-live="polite"></p>
+  <button class="lb__nav lb__nav--prev" type="button" aria-label="Previous frame"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M14 7H6V5H4v2H2v2h2v2h2V9h8V7z"/></svg></button>
+  <button class="lb__nav lb__nav--next" type="button" aria-label="Next frame"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></button>
+  <button class="lb__close" type="button" aria-label="Close"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 2h2v2H3V2zm2 2h2v2H5V4zm2 2h2v2H7V6zm2-2h2v2H9V4zm2-2h2v2h-2V2zM9 8h2v2H9V8zm2 2h2v2h-2v-2zm2 2h2v2h-2v-2zM7 8h2v2H7V8zm-2 2h2v2H5v-2zm-2 2h2v2H3v-2zM1 14h2v2H1v-2zm12 0h2v2h-2v-2zM1 0h2v2H1V0zm12 0h2v2h-2V0z"/></svg></button>
+</dialog>
 
 </body>
 </html>

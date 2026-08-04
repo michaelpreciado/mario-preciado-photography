@@ -9,18 +9,56 @@
 
 const mq = (q) => window.matchMedia(q);
 
+const REDUCED = mq('(prefers-reduced-motion: reduce)');
+const RICH = mq('(min-width: 64rem) and (hover: hover) and (pointer: fine)');
+const TOUCH = mq('(hover: none)');
+
 export const env = {
-  /** Honour the OS setting for every effect, everywhere. */
-  reduced: mq('(prefers-reduced-motion: reduce)').matches,
+  /**
+   * Honour the OS setting for every effect, everywhere.
+   *
+   * Getters, not values read once at module load. Someone can turn reduced
+   * motion on mid-session — often precisely because a page is making them
+   * uncomfortable — and a snapshot taken at load would ignore them until they
+   * reloaded. The debug panel prints these, so it always reports live state.
+   */
+  get reduced() { return REDUCED.matches; },
 
   /** Desktop with a real pointer — the only place heavy chrome is allowed. */
-  rich: mq('(min-width: 64rem) and (hover: hover) and (pointer: fine)').matches,
+  get rich() { return RICH.matches; },
 
   /** No hover means metadata can never live behind a hover state. */
-  touch: mq('(hover: none)').matches,
+  get touch() { return TOUCH.matches; },
 
   debug: new URLSearchParams(location.search).has('debug'),
 };
+
+/**
+ * Scroll lock, reference counted.
+ *
+ * Three things now want to freeze the page: the intro overlay, the mobile nav
+ * drawer, and the lightbox. Each writing document.body.style.overflow directly
+ * means whichever unlocks first unlocks for all of them — close the lightbox
+ * you opened from behind an open drawer and the page scrolls under it. A depth
+ * counter is the whole fix.
+ */
+let locks = 0;
+
+export function lockScroll() {
+  if (locks === 0) document.body.style.overflow = 'hidden';
+  locks += 1;
+}
+
+export function unlockScroll() {
+  locks = Math.max(0, locks - 1);
+  if (locks === 0) document.body.style.overflow = '';
+}
+
+/** Escape hatch for error paths that must guarantee a scrollable page. */
+export function resetScrollLock() {
+  locks = 0;
+  document.body.style.overflow = '';
+}
 
 /**
  * sessionStorage throws outright in some privacy modes rather than failing

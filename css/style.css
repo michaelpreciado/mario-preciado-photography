@@ -19,23 +19,32 @@
      02  tokens
      03  reset + base
      04  utilities        mono · eyebrow · sprite · btn · glitch · reveal
-     05  chrome           hud · scanlines · cursor · skip-link
-     06  boot
+     05  chrome           hud · truss · scanlines · cursor · skip-link
+     06  boot             projector intro
      07  nav
      08  hero
      09  ticker
      10  section heads
-     11  work             row · frame
+     11  work             row · frame · brackets · zoom
      12  signal
      13  about
      14  contact
      15  footer
-     16  keyframes
-     17  responsive
-     18  reduced motion
-     19  debug
-     20  pages            work index · single frame · cta
-     21  photographic effects   grain · parallax
+     17  keyframes
+     18  responsive
+     19  reduced motion
+     20  debug
+     21  pages            work index · single frame · cta
+     22  photographic effects   grain · parallax
+     23  rig              the projection layer
+     24  services · process
+     25  filter           gel selection on /work/
+     26  lightbox
+     27  view transitions
+
+   (Section 16 does not exist — the numbering skipped it long before this pass
+   and the banners below are the authority. Renumbering five hundred lines to
+   close a gap would churn every line of a diff for nothing.)
    ═══════════════════════════════════════════════════════════════════════ */
 
 
@@ -97,7 +106,12 @@
   /* text */
   --text-1: #f4f4f5;
   --text-2: #a1a1aa;   /* was #71717a — 4.35:1, failed AA for body copy */
-  --text-3: #71717a;   /* large text only */
+  /* Raised from #71717a (4.35:1). The projection layer in §23 lifts the black
+     ground slightly, and at the old value the small mono labels using this
+     token landed around 3.4:1 — under the AA floor. At #83838d it measures
+     5.28:1 on #000 and holds ~4.2:1 through the wash. The two changes are a
+     pair: do not turn the rig's opacity up without re-measuring this. */
+  --text-3: #83838d;
 
   /* accents */
   --mag: #ff10f0;
@@ -236,6 +250,21 @@ button { background: none; border: none; cursor: pointer; }
 
 
 /* ── 04 · utilities ──────────────────────────────────────────────────────── */
+
+/* Announced, never shown. Clipped rather than display:none or visibility:hidden,
+   both of which take the element out of the accessibility tree — which would
+   defeat the entire point of a live region. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 .mono {
   font-family: var(--f-mono);
@@ -422,6 +451,65 @@ button { background: none; border: none; cursor: pointer; }
   background: var(--ui);
 }
 
+/* The truss. The HUD frame stops being a plain hairline and becomes the rig it
+   is pretending to be: measured ticks along the top edge, the current lighting
+   channel spelled out beside them, and a level meter down the left that tracks
+   position on the page.
+
+   All of it is decorative and marked aria-hidden at the container: every value
+   here restates something the page already communicates — which section you
+   are in, how far down you have scrolled. Announcing it would be noise. */
+.hud__rail {
+  position: absolute;
+  top: 6px;
+  left: 26px;
+  right: 26px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  overflow: hidden;
+}
+
+/* Ticks are one repeating gradient, not thirty elements. */
+.hud__ticks {
+  flex: 1;
+  height: 5px;
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 14px);
+  opacity: 0.8;
+}
+
+.hud__ch {
+  flex: none;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text-3);
+  white-space: nowrap;
+  display: none;               /* desktop-only, enabled in the gate below */
+}
+.hud__ch b { font-weight: 500; color: var(--ui); }
+.hud__ch i { font-style: normal; opacity: 0.4; }
+
+/* Level meter. Same quantised --progress the top bar uses, so the two can
+   never disagree, and the same scaleY-not-height reasoning. */
+.hud__meter {
+  position: absolute;
+  left: -1px;
+  top: 26px;
+  bottom: 26px;
+  width: var(--b-pixel);
+  display: none;               /* desktop-only, enabled in the gate below */
+  background: var(--line-1);
+}
+.hud__meter-fill {
+  display: block;
+  height: 100%;
+  transform: scaleY(var(--progress, 0));
+  transform-origin: top center;
+  will-change: transform;
+  background: linear-gradient(180deg, var(--ui), var(--mag));
+}
+
 .scanlines {
   position: fixed;
   inset: 0;
@@ -477,19 +565,60 @@ button { background: none; border: none; cursor: pointer; }
 
 /* ── 06 · boot ───────────────────────────────────────────────────────────── */
 
+/* The projector intro. Three beats — the lamp strikes, the focus pulls, the
+   signal locks — then a shutter opens onto the page.
+   Once per session, home page only, never under reduced motion. */
+
 .boot {
   position: fixed;
   inset: 0;
   z-index: var(--z-boot);
   display: grid;
   place-items: center;
-  background: var(--ink-0);
-  transition: opacity var(--d-mid) var(--ez-out);
+  /* Transparent: the two shutter panels below are what actually cover the
+     page, so the exit can be a transform rather than a fade of a full-viewport
+     paint. */
+  background: transparent;
 }
 .boot[hidden] { display: none; }
-.boot.is-done { opacity: 0; pointer-events: none; }
+.boot.is-done { pointer-events: none; }
 
-.boot__inner { width: min(22rem, 74vw); text-align: center; }
+/* The two halves of the blackout. They meet at the centre line and part like a
+   shutter — transform only, entirely on the compositor. Chosen over a
+   clip-path iris, which reads much the same and repaints every frame. */
+.boot__shutter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background: var(--ink-0);
+  transition: transform 620ms var(--ez-out);
+}
+.boot__shutter--t { top: 0; }
+.boot__shutter--b { bottom: 0; }
+.boot.is-done .boot__shutter--t { transform: translateY(-100%); }
+.boot.is-done .boot__shutter--b { transform: translateY(100%); }
+
+/* Beat one: the lamp. An off-centre elliptical glow ramping in on opacity
+   alone — no filter: brightness(), which would be a full-screen paint. */
+.boot__lamp {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(60% 42% at 50% 46%, rgba(255, 176, 32, 0.30), transparent 70%),
+    radial-gradient(38% 26% at 50% 46%, rgba(255, 245, 220, 0.22), transparent 72%);
+  opacity: 0;
+  animation: lamp-strike 900ms var(--ez-out) forwards;
+}
+@keyframes lamp-strike {
+  0%   { opacity: 0; }
+  38%  { opacity: 0.35; }   /* the flicker as an arc lamp catches */
+  46%  { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+.boot__inner { position: relative; z-index: 2; width: min(22rem, 74vw); text-align: center; }
 
 .boot__word {
   position: relative;
@@ -499,14 +628,40 @@ button { background: none; border: none; cursor: pointer; }
   color: var(--text-1);
   margin-bottom: var(--s-5);
 }
-.boot__word::before,
+
+/* Beat two: the focus pull. A blurred, oversized ghost of the wordmark
+   resolving down onto the sharp one. blur() is affordable here and nowhere
+   else on the page because the box is a single line of text, not the viewport.
+   letter-spacing is deliberately not animated — that is layout on every
+   frame. */
+.boot__word::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--text-1);
+  filter: blur(10px);
+  transform: scale(1.35);
+  opacity: 0;
+  animation: focus-pull 760ms var(--ez-out) 180ms forwards;
+}
+@keyframes focus-pull {
+  0%   { opacity: 0.9; filter: blur(10px); transform: scale(1.35); }
+  100% { opacity: 0;   filter: blur(0);    transform: scale(1); }
+}
+
+/* Beat three: signal lock. One RGB split, stepped — a machine part, so
+   stepped easing is exactly right here. */
 .boot__word::after {
   content: attr(data-text);
   position: absolute;
   inset: 0;
+  color: var(--mag);
+  opacity: 0;
 }
-.boot__word::before { color: var(--mag); animation: rgb-split-a 700ms var(--ez-step4) infinite alternate; }
-.boot__word::after { color: var(--ui); animation: rgb-split-b 700ms var(--ez-step4) infinite alternate; }
+.boot.is-locking .boot__word::after {
+  opacity: 1;
+  animation: rgb-split-a 260ms var(--ez-step4) 2 alternate;
+}
 
 .boot__bar {
   height: 10px;
@@ -946,6 +1101,11 @@ button { background: none; border: none; cursor: pointer; }
   position: relative;
   aspect-ratio: var(--ar, 1);
   overflow: hidden;
+  /* Opaque black under the LQIP. The projection layer (§23) washes the page in
+     colour, and a photograph sitting directly on that wash reads with a cast
+     that isn't in the file. Every frame gets a hard black matte so the work is
+     seen against the ground it was edited against, whatever the room is doing. */
+  background-color: var(--ink-0);
   background-size: cover;
   background-position: center;
   /* The LQIP rides here as a background: it holds the box (no CLS) and renders
@@ -998,29 +1158,69 @@ button { background: none; border: none; cursor: pointer; }
 /* Once faded it is removed from the compositor entirely. */
 .js .frame__media.is-retired .frame__veil { display: none; }
 
-/* Corner brackets on every frame — static, no motion cost. */
+/* Corner brackets. These used to appear only on hover; they now draw in as the
+   frame reveals and stay, because the border system is a large part of what
+   makes the grid read as designed rather than defaulted.
+
+   The wipe is a clip-path on the PSEUDO-ELEMENT. Never on .reveal itself —
+   clip-path on a reveal's hidden state is what once hid all fourteen
+   photographs by stopping the IntersectionObserver from ever seeing them
+   intersect (see §04). A pseudo-element is not observed, so it is safe here. */
 .frame__media::before,
 .frame__media::after {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border: var(--b-pixel) solid var(--mag);
-  opacity: 0;
-  transition: opacity var(--d-fast);
+  width: 14px;
+  height: 14px;
+  border: var(--b-pixel) solid var(--mag-dim);
   z-index: 2;
+  clip-path: inset(0 0 0 0);
+  transition: border-color var(--d-fast), clip-path var(--d-slow) var(--ez-out);
 }
 .frame__media::before { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
 .frame__media::after { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
 
+/* Retracted until the frame arrives, then drawn. Gated on .js for the same
+   reason .reveal is: without script nothing would ever un-hide them. */
+.js .reveal:not(.is-in) .frame__media::before { clip-path: inset(0 100% 100% 0); }
+.js .reveal:not(.is-in) .frame__media::after { clip-path: inset(100% 0 0 100%); }
+
 .frame:focus-visible .frame__media::before,
-.frame:focus-visible .frame__media::after { opacity: 1; }
+.frame:focus-visible .frame__media::after { border-color: var(--mag); }
 
 @media (hover: hover) and (pointer: fine) {
   .frame:hover .frame__img { transform: scale(1.03); }
   .frame:hover .frame__media { border-color: var(--mag-dim); }
   .frame:hover .frame__media::before,
-  .frame:hover .frame__media::after { opacity: 1; }
+  .frame:hover .frame__media::after { border-color: var(--mag); }
+}
+
+/* Lightbox trigger. A sibling of .frame__link, never inside it — a <button>
+   may not nest in an <a>, and the two click targets would fight. Injected by
+   js/lightbox.js rather than emitted by the build, so a visitor without
+   scripting never meets a control that cannot work. */
+.frame__zoom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--text-2);
+  background: rgba(0, 0, 0, 0.55);
+  border: var(--b-hair) solid var(--line-2);
+  transition: opacity var(--d-fast), color var(--d-fast), border-color var(--d-fast);
+}
+.frame__zoom .sprite { width: 14px; height: 14px; fill: currentColor; }
+.frame__zoom:hover { color: var(--ink-0); background: var(--mag); border-color: var(--mag); }
+
+/* No hover on touch, so it is simply always there, dimmed. */
+@media (hover: hover) and (pointer: fine) {
+  .frame__zoom { opacity: 0; }
+  .frame:hover .frame__zoom,
+  .frame__zoom:focus-visible { opacity: 1; }
 }
 
 /* On touch there is no hover, so metadata is always visible — never hide
@@ -1334,9 +1534,37 @@ button { background: none; border: none; cursor: pointer; }
 /* Desktop-only chrome. Never authored into the base and switched off — it only
    ever exists inside this gate, so phones never parse a rule they can't use. */
 @media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+  .hud__ch { display: block; }
+  .hud__meter { display: block; }
+
   @media (prefers-reduced-motion: no-preference) {
     .scanlines { display: block; }
     .grain { display: block; }
+  }
+}
+
+/* Services and process. One column on a phone; the services grid goes to two
+   and then three, and the process chain lays its four steps out as a signal
+   chain running left to right. */
+@media (min-width: 48rem) {
+  .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  .step-chain { grid-template-columns: repeat(2, 1fr); }
+  .services, .process { padding-block: var(--s-16); }
+}
+
+@media (min-width: 64rem) {
+  .svc-grid { grid-template-columns: repeat(3, 1fr); }
+  .step-chain { grid-template-columns: repeat(4, 1fr); }
+
+  /* The chain now runs horizontally, so the connector moves to the trailing
+     edge of each step rather than its underside. */
+  .step:not(:last-child)::before {
+    left: auto;
+    right: 0;
+    top: var(--s-6);
+    bottom: var(--s-6);
+    width: var(--b-hair);
+    height: auto;
   }
 }
 
@@ -1389,6 +1617,23 @@ button { background: none; border: none; cursor: pointer; }
 
   .brand__stack:hover .record,
   .brand__stack .record:hover { transform: none; }
+
+  /* Brackets are simply drawn, never wiped in. §11 is authored above this
+     block, so plain source order is enough to win here. */
+  .js .reveal:not(.is-in) .frame__media::before,
+  .js .reveal:not(.is-in) .frame__media::after { clip-path: inset(0); }
+
+  /* The intro is removed outright before it paints (js/intro.js bails on the
+     reduced flag), so these are belt and braces for a mid-session OS change. */
+  .boot__lamp,
+  .boot__word::before,
+  .boot__word::after { animation: none; opacity: 0; }
+  .boot__shutter { transition: none; }
+
+  /* NOTE: the rig, the gel burst and the lightbox are switched off at the very
+     bottom of this file instead of here. They are authored in §23–§26, below
+     this block, so a rule written at this point in the cascade would lose to
+     them on source order — which is exactly what happened first time. */
 }
 
 
@@ -1604,3 +1849,406 @@ button { background: none; border: none; cursor: pointer; }
    transform stays a single composited property. */
 .parallax { will-change: transform; }
 .parallax > .frame__media--fill { transform: translate3d(0, var(--py, 0px), 0) scale(1.12); }
+
+
+/* ── 23 · rig ────────────────────────────────────────────────────────────────
+   The projection layer — the room everything else sits in.
+
+   These photographs were shot under oil-wheel projectors, gels and haze, and
+   the interface is that rig rather than a decoration bolted onto it. Three
+   wheels drift behind the page; scrolling into a section is a lighting cue and
+   rotates all of them together (see RIG in tools/lib/content.mjs).
+
+   The source is a 72×72 PNG, 1.2 KB, drawn once by a script from the same six
+   hues that run through the work. It is deliberately a raster and not a stack
+   of CSS radial-gradients: a raster has an intrinsic size, so the browser
+   decodes 72×72 once and the compositor bilinearly upscales it to fill the
+   viewport. The upscale IS the blur, and it costs nothing. A CSS gradient has
+   no intrinsic size and would be rasterised at whatever the post-transform
+   device size happens to be — the same trap `filter: blur()` sets, arrived at
+   by accident.
+
+   This is the house pattern, not a new one: .frame__veil (§11) upscales a 24px
+   LQIP for exactly this reason, and .grain (§22) tiles one small turbulence
+   raster for exactly this reason.
+
+   The gel change is `filter: hue-rotate()` transitioning on a single composited
+   quad — a GPU colour matrix, free per frame, and smoothly interpolable, which
+   is precisely how a gel change should feel. */
+
+.rig {
+  position: fixed;
+  inset: 0;
+  /* Behind in-flow content but above body's opaque black ground. Safe because
+     .rig is a direct child of <body> and nothing above it makes a stacking
+     context. */
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  /* Capped deliberately. Above roughly this value the wash lifts the black
+     ground enough to pull --text-3 (documented at 4.35:1 in §02) under the AA
+     floor. The token was raised a step to buy headroom; this cap is the other
+     half of that trade and should not be turned up without re-measuring. */
+  opacity: 0.18;
+}
+
+.rig__wheel {
+  position: absolute;
+  width: 92vmax;
+  height: 92vmax;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIBAMAAACnw650AAAAMFBMVEULCRAvFjsjRUVpE1BEQIGgDZFAinFzSs/cDc+uOjpBe6VPy6RiXEjTkidQoN2WbjmL3Gt9AAAACXBIWXMAAAPoAAAD6AG1e1JrAAAEE0lEQVR42n2WMWsqSxTHd/0E7iYfYHcQqzSysRBsNPsihNclgsKtJGyRBG4j+AkEe0mxcB82VhaWaVJdzRMuDFi/4pI+hWVAUPb9z5mZ3TU38RgCMT9//7MzZ9a1rC+qiLKOl23bDuo4VnSYOSpTHpR9+D7eOfijEYaNhnOg0p/Mwk5PQ6bsg0/mKTAh12lOT54gCCqasm3ytJTKyZiTIFBUkdPA9PuDfj9spKtgawbFFKcNUJClFGVV2+12lVzFYsqQysSxqE11zSpQYas10CptIlG7rSlq3kHXA6VK4yCisOEQv0hFcRoamDybRZ0RXhoyLaFMHCCIhqPRiFyKamWmhqPTSEQ1VE19YqKWOgpi6sRxzj+asABI08wQcZWTP02q75ExcVPn6RLoq+O+O6MsrlI5x84drtMBNCLTiRMYUyuLq/ICGFNQqZ+HN4d7xz3lTKCWyxfePBqVRvGPuA6Yer0u5c1NHxXmty5/ddfjpQT17180maFjdiUHddrduLbdJpNv30LFmKnnITCL2e1OJglqJy/Ci0Z+LtFUR4naj2CIWsu/LxpO7hjwqHSY6Xbj7X7/+poksl5x/PQIK6g95J/HePsbBWonHTc7demID1kU/0fUHpDvu+l9pUhnpapm/DGe/PObC5CLONvOn7prdaRqSkR5cuH7wi3YH07mdbU2meyViSAhXN/X21IJsqptM0gKLp/ONP3LMPV1kjO9lEpgCELYeExUBUcgqJs46rxJOwNX0UKvcY1vFc6J81PmTNElKmzCZY1jUPGYDglKrhMDvUd3M9QtXFZMVeMwx5UpZJjptNkUVk1TxPg+IEUlSTRTNQ21KR4vHRctnp3JJHmlsASi+XyzAZVCcbCgNVlQXrLH6/2dGaJumxr6QesrFjCtE67v0YyZzRvyjElKWS5H0cODlMSsV3ezN4agMtBOLlYR1Uqu8ZLy4W6mmLe3FJpI2YtUSS6Y5huTp6DJTtL/71kl5dlCXhoGcZdqnbY7ibTnp2dgDwvhuuLFxLGpVuOWVtH9M+rpKVqJhS/E5VUGXVmYgfiXJEhRUW8hPF+UrvI90VwuJVp65kKeEAWXoE22BPTlU88g5GFVbVeEs1kG0dfYT9MSikyWJ1KIdlh9k4kzY6KmQHHeTK3ltEkHz3ZE+dBkFxiaz+dqVPhYCZEzCc+zbKXieWoqqPjR5BUKohkygyFXkCVAZVcHE+SlUgjX9LakIXwujUPfYOj6SqXbMMSEC31vKcAUpRdHJuoTGB9PfWfxqKl7ZiJjt9UpF276kCE0xbvi6VuSYtIbGZrqqXFKGXK5rpt/OkJemeey1xOFrx60oGKq1zOr8lkV0FW5TIznfQl5+lqEd/QJTTPeMcpTrsLxB8ICmvc+F/0PRbdFbrg31d8AAAAASUVORK5CYII=") center / cover no-repeat;
+  filter: hue-rotate(var(--gel, 0deg));
+  /* Slower than any other transition on the site. A lighting board fades gels;
+     it does not snap them. */
+  transition: filter 1600ms var(--ez-in-out);
+  will-change: transform;
+}
+
+/* Three wheels at different scales, speeds and directions, so the field never
+   repeats a pose. `translate` / `rotate` / `scale` as independent properties
+   rather than one `transform`, so each keyframe track stays trivially
+   interpolable and entirely on the compositor. */
+.rig__wheel--a { top: -22%; left: -18%; opacity: 0.70; animation: wheel-a 71s linear infinite; }
+.rig__wheel--b { top: -8%; right: -26%; left: auto; opacity: 0.55; animation: wheel-b 97s linear infinite; }
+.rig__wheel--c { bottom: -30%; top: auto; left: 8%; opacity: 0.48; animation: wheel-c 83s linear infinite; }
+
+@keyframes wheel-a {
+  0%   { translate: 0 0;       rotate: 0deg;   scale: 1; }
+  50%  { translate: 7% 5%;     rotate: 180deg; scale: 1.22; }
+  100% { translate: 0 0;       rotate: 360deg; scale: 1; }
+}
+@keyframes wheel-b {
+  0%   { translate: 0 0;       rotate: 360deg; scale: 1.1; }
+  50%  { translate: -8% 7%;    rotate: 180deg; scale: 0.9; }
+  100% { translate: 0 0;       rotate: 0deg;   scale: 1.1; }
+}
+@keyframes wheel-c {
+  0%   { translate: 0 0;       rotate: 0deg;   scale: 0.95; }
+  50%  { translate: 6% -6%;    rotate: -180deg; scale: 1.25; }
+  100% { translate: 0 0;       rotate: -360deg; scale: 0.95; }
+}
+
+/* Haze. A single soft vertical gradient that keeps the middle of the viewport —
+   where the type lives — darker than the edges, so the wash never competes with
+   reading. Static, so it costs one raster for the life of the page. */
+.rig__haze {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 50%, transparent 0%, var(--ink-0) 78%);
+  opacity: 0.55;
+}
+
+/* One-shot RGB split on a section heading as its cue fires.
+
+   Deliberately NOT the .glitch mechanism from §04: that renders two copies via
+   `content: attr(data-text)`, and .sec-title contains "<br><em>" which an
+   attribute string cannot reproduce. A text-shadow keyframe inherits through
+   the markup instead, repaints only the text box, and needs no markup change.
+   steps(4) is legitimate here — display type in the chrome, not a photograph. */
+@keyframes gel-burst {
+  0%   { text-shadow: -4px 0 var(--mag), 4px 0 var(--sky); }
+  100% { text-shadow: 0 0 transparent, 0 0 transparent; }
+}
+.is-gelled { animation: gel-burst 420ms var(--ez-step4) 1; }
+
+
+/* ── 24 · services · process ────────────────────────────────────────────────
+   The commercial half of the page. A portfolio that answers "what do you
+   shoot" and "what happens if I email you" converts; one that shows only
+   photographs and a form leaves both hanging. */
+
+.services, .process { padding: var(--s-12) var(--gutter); max-width: var(--maxw); margin-inline: auto; }
+
+.svc-grid, .step-chain {
+  list-style: none;
+  display: grid;
+  gap: var(--b-hair);
+  margin-top: var(--s-8);
+  /* The gap IS the rule. One background behind a hairline-gapped grid draws
+     every divider with no border bookkeeping and no double lines at the seams. */
+  background: var(--line-1);
+  border: var(--b-hair) solid var(--line-1);
+}
+
+.svc, .step {
+  position: relative;
+  background: var(--ink-0);
+  padding: var(--s-6) var(--s-5) var(--s-8);
+  transition: background var(--d-mid) var(--ez-out);
+}
+
+.svc__no, .step__no {
+  color: var(--ui);
+  display: block;
+  margin-bottom: var(--s-4);
+}
+
+.svc__name, .step__name {
+  font-family: var(--f-display);
+  font-size: var(--t-md);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.svc__tag { color: var(--text-3); margin-top: var(--s-2); }
+.svc__line, .step__line { color: var(--text-2); font-size: var(--t-sm); margin-top: var(--s-4); line-height: 1.65; }
+
+/* Corner pip that lights on hover — the cell reads as a channel strip on a
+   desk rather than a card. */
+.svc::after, .step::after {
+  content: '';
+  position: absolute;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  width: 6px;
+  height: 6px;
+  background: var(--line-2);
+  transition: background var(--d-fast) var(--ez-out);
+}
+.svc:hover, .step:hover { background: var(--ink-2); }
+.svc:hover::after { background: var(--mag); }
+.step:hover::after { background: var(--amb); }
+
+/* The chain. A hairline running between the steps, drawn only where there is a
+   next step to reach — the last cell has nothing to point at. */
+.step-chain { counter-reset: step; }
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  background: var(--line-2);
+  left: var(--s-5);
+  right: var(--s-5);
+  bottom: 0;
+  height: var(--b-hair);
+}
+
+
+/* ── 25 · filter ─────────────────────────────────────────────────────────────
+   Gel selection on /work/.
+
+   The mechanism is CSS: a radio group plus :has() plus [data-light~="…"].
+   That is not a fallback — with JavaScript disabled the filter genuinely
+   works. js/filter.js only adds the animated re-layout and the URL state.
+
+   A radio group is also the honest semantics for single-select. This started
+   as buttons with aria-pressed, which is a worse reimplementation of a control
+   the platform already ships. */
+
+.filter { border: 0; margin: var(--s-8) 0 0; }
+.filter__legend { color: var(--text-3); padding: 0; margin-bottom: var(--s-4); }
+
+.filter__chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+/* Clipped, not display:none — a hidden radio must stay focusable or the group
+   becomes unreachable by keyboard. */
+.filter__in {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.filter__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  cursor: pointer;
+  border: var(--b-hair) solid var(--line-2);
+  font-family: var(--f-pixel);
+  font-size: var(--t-2xs);
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  background: var(--ink-0);
+  transition: color var(--d-fast), border-color var(--d-fast), background var(--d-fast);
+}
+.filter__chip:hover { color: var(--text-1); border-color: var(--ui); }
+.filter__n { color: var(--text-3); font-size: var(--t-2xs); }
+
+.filter__in:checked + .filter__chip {
+  color: var(--ink-0);
+  background: var(--ui);
+  border-color: var(--ui);
+}
+.filter__in:checked + .filter__chip .filter__n { color: var(--ink-0); opacity: 0.7; }
+
+/* The radio is clipped, so the focus ring has to be drawn on its label. */
+.filter__in:focus-visible + .filter__chip {
+  outline: var(--b-pixel) solid var(--ui);
+  outline-offset: 2px;
+}
+
+/* One rule per gel. `~=` matches a single token inside data-light, which is
+   what lets a frame lit by two gels appear under both chips with no extra CSS
+   and no duplicated markup. */
+.work--index:has(#f-liquid:checked) .frame:not([data-light~="liquid"]),
+.work--index:has(#f-red:checked)    .frame:not([data-light~="red"]),
+.work--index:has(#f-amber:checked)  .frame:not([data-light~="amber"]),
+.work--index:has(#f-green:checked)  .frame:not([data-light~="green"]),
+.work--index:has(#f-crowd:checked)  .frame:not([data-light~="crowd"]) { display: none; }
+
+/* While a gel is selected the archive drops its editorial rhythm for a uniform
+   grid. The rows are hand-tuned unequal pairs and offset triptychs (§18); hide
+   one frame out of a duo and what's left is a photograph beside a hole. A flat
+   grid is also the only shape a re-layout can animate honestly — every frame
+   keeps its own aspect-ratio and only changes size, so nothing is ever scaled
+   non-uniformly. `display: contents` promotes the frames out of their rows and
+   straight into the grid without touching the generated markup. */
+.work--index:not(:has(#f-all:checked)) .work__seq {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--s-6);
+  align-items: start;
+}
+.work--index:not(:has(#f-all:checked)) .row { display: contents; }
+.work--index:not(:has(#f-all:checked)) .frame { margin: 0 !important; }
+
+
+/* ── 26 · lightbox ───────────────────────────────────────────────────────────
+   A native <dialog>. showModal() brings the focus trap, Escape, the inert
+   background and the top layer with it, and each of those is a thing that goes
+   quietly wrong when hand-rolled.
+
+   The stage is filled by cloning the grid's own <picture>, so the full AVIF and
+   WebP ladder is reused rather than shipped twice — and the already-decoded
+   small variant paints instantly as its own placeholder while a larger rung
+   streams in behind it. Same idea as .frame__veil, different problem. */
+
+.lb {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100svh;
+  max-height: 100svh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-1);
+  overflow: hidden;
+}
+/* Solid, never backdrop-filter. A full-viewport blur is the most expensive
+   thing that can be put on a phone, and the ground behind is already black. */
+.lb::backdrop { background: rgba(0, 0, 0, 0.94); }
+
+.lb__stage {
+  position: absolute;
+  inset: 0;
+  padding: calc(var(--hud-inset) + var(--s-8)) var(--s-5) calc(var(--hud-inset-b) + var(--s-10));
+  touch-action: pan-y;
+}
+
+/* The picture fills the stage and object-fit does the letterboxing.
+   Intrinsic sizing cannot be used here: an <img> carrying a w-descriptor
+   srcset takes its natural size from `sizes` after density correction, so
+   leaving it to size itself renders the photograph at exactly the width we
+   asked the network for — which on a 1440px viewport was a 826px image
+   floating in a 900px-tall black frame. Filling the box and letterboxing is
+   the only way the viewer actually uses the screen. */
+.lb__stage > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lb__stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Drag feedback during a swipe. Transform only; the photograph is never
+   filtered, tinted or distorted, only moved. */
+.lb__stage { transform: translate3d(var(--dx, 0px), 0, 0); }
+.lb.is-settling .lb__stage { transition: transform var(--d-mid) var(--ez-out); }
+
+.lb__meta {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--hud-inset-b) + var(--s-4));
+  transform: translateX(-50%);
+  color: var(--text-2);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.lb__nav, .lb__close {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--text-2);
+  border: var(--b-hair) solid var(--line-2);
+  background: rgba(0, 0, 0, 0.6);
+  transition: color var(--d-fast), border-color var(--d-fast);
+}
+.lb__nav:hover, .lb__close:hover { color: var(--text-1); border-color: var(--mag); }
+.lb__nav--prev { left: var(--s-3); top: 50%; margin-top: -24px; }
+.lb__nav--next { right: var(--s-3); top: 50%; margin-top: -24px; }
+.lb__close { right: var(--s-3); top: calc(var(--hud-inset) + var(--s-3)); }
+.lb__nav .sprite, .lb__close .sprite { width: 16px; height: 16px; fill: currentColor; }
+
+
+/* ── 27 · view transitions ───────────────────────────────────────────────────
+   Clicking a photograph morphs that exact frame into the full-frame page.
+
+   The whole opt-in sits inside a no-preference query, so under reduced motion
+   no snapshot is ever taken — cheaper than animating and then overriding the
+   animation, and it responds to an OS change mid-session, which the JS
+   capability flags cannot.
+
+   This works at all only because .frame__media and .frame__media--solo both
+   carry `aspect-ratio: var(--ar)`. The two boxes are the same shape at
+   different sizes, so the morph is a pure uniform scale. If the solo box ever
+   gains a fixed ratio, this starts stretching photographs and must be removed.
+
+   Note what is NOT named here: .nav. A view-transition-name makes an element a
+   containing block for fixed-position descendants — the identical mechanism
+   documented in §07 that collapsed the mobile drawer when backdrop-filter was
+   put on .nav. The chrome is pixel-identical across pages and position:fixed,
+   so the default root cross-fade already leaves it looking static. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  .is-solo .solo__stage .frame__media { view-transition-name: mp-frame; }
+
+  ::view-transition-group(mp-frame) {
+    animation-duration: 420ms;
+    animation-timing-function: var(--ez-out);
+  }
+  /* Never a stepped easing on this group. It is a photograph in motion, and
+     steps() on a photograph reads as a dropped framerate, not as style. */
+  ::view-transition-old(mp-frame),
+  ::view-transition-new(mp-frame) { animation-duration: 420ms; }
+}
+
+
+/* ── 28 · reduced motion, continued ──────────────────────────────────────────
+   The off switches for §23–§27.
+
+   These cannot live in §19 with the rest of them. CSS resolves ties by source
+   order, and §19 is authored above the sections it would be switching off — a
+   `.rig__wheel { animation: none }` written up there loses to
+   `.rig__wheel--a { animation: wheel-a … }` down here, at identical
+   specificity. Putting them last is the fix; !important would also work and
+   would be the worse habit to start. */
+
+@media (prefers-reduced-motion: reduce) {
+  /* The rig holds its pose. The wash stays — it is the site's colour, not an
+     animation — and the gel still changes between sections, because a colour
+     fade is not motion and removing it would remove information. */
+  .rig__wheel { animation: none; translate: none; rotate: none; scale: 1; }
+
+  /* No cue burst on section headings. */
+  .is-gelled { animation: none; }
+
+  /* The lightbox still opens, still walks the set, still swipes. It just
+     doesn't slide while doing it. */
+  .lb.is-settling .lb__stage { transition: none; }
+  .lb__stage { transform: none; }
+}

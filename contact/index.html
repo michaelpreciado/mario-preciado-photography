@@ -64,15 +64,13 @@
 <script type="module" src="/js/main.js"></script>
 </head>
 
-<body>
+<body style="--gel:128deg">
 
-<div id="boot" class="boot" aria-hidden="true" hidden>
-  <div class="boot__inner">
-    <p class="boot__word" data-text="MARIO PRECIADO">MARIO PRECIADO</p>
-    <div class="boot__bar"><span class="boot__fill"></span></div>
-    <p class="boot__status">Loading</p>
-  </div>
-  <button class="boot__skip" type="button">Skip</button>
+<div class="rig" aria-hidden="true">
+  <span class="rig__wheel rig__wheel--a"></span>
+  <span class="rig__wheel rig__wheel--b"></span>
+  <span class="rig__wheel rig__wheel--c"></span>
+  <span class="rig__haze"></span>
 </div>
 
 <div class="hud" aria-hidden="true">
@@ -81,6 +79,11 @@
   <span class="hud__corner hud__corner--bl"></span>
   <span class="hud__corner hud__corner--br"></span>
   <div class="hud__progress"><span class="hud__progress-fill"></span></div>
+  <div class="hud__rail">
+    <span class="hud__ticks"></span>
+    <span class="hud__ch mono">CH <b class="hud__ch-n">01</b> <i>·</i> <b class="hud__ch-gel">LIQUID</b> <i>·</i> <b class="hud__ch-k">3200K</b></span>
+  </div>
+  <div class="hud__meter"><span class="hud__meter-fill"></span></div>
 </div>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -107,9 +110,9 @@
 </header>
 
 <main id="main">
-  <section id="contact" class="contact" aria-label="Contact">
+  <section id="contact" class="contact" aria-label="Contact" data-ch="07" data-gel="Red" data-k="2200K" data-hue="128">
     <header class="sec-head">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Contact</p>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">07</span>Contact</p>
       <h2 class="sec-title reveal">Let's work<br><em>together</em></h2>
     </header>
 
@@ -149,6 +152,36 @@
         <p id="form-err" class="form__msg form__msg--err mono" role="alert" hidden>Something went wrong sending that. Please email me directly at marioopreciadoo@gmail.com.</p>
       </form>
     </div>
+  </section>
+
+  <section id="process" class="process" aria-label="Process" data-ch="05" data-gel="Cyan" data-k="7200K" data-hue="-95">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Process</p>
+      <h2 class="sec-title reveal">How it<br><em>works</em></h2>
+    </header>
+
+    <ol class="step-chain">
+        <li class="step reveal" style="--i:0">
+          <span class="step__no mono" aria-hidden="true">01</span>
+          <h3 class="step__name">Enquiry</h3>
+          <p class="step__line">Send the date, the venue and what you need. I come back with availability and a quote.</p>
+        </li>
+        <li class="step reveal" style="--i:1">
+          <span class="step__no mono" aria-hidden="true">02</span>
+          <h3 class="step__name">Brief</h3>
+          <p class="step__line">We lock the scope — set times, access, how many frames, and where the images will run.</p>
+        </li>
+        <li class="step reveal" style="--i:2">
+          <span class="step__no mono" aria-hidden="true">03</span>
+          <h3 class="step__name">The shoot</h3>
+          <p class="step__line">I work light and stay out of the way. Bay Area as standard, available to travel.</p>
+        </li>
+        <li class="step reveal" style="--i:3">
+          <span class="step__no mono" aria-hidden="true">04</span>
+          <h3 class="step__name">Delivery</h3>
+          <p class="step__line">A selected, edited gallery. Additional frames and rush turnaround on request.</p>
+        </li>
+    </ol>
   </section>
 </main>
 

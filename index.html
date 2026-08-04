@@ -65,15 +65,25 @@
 <script type="module" src="/js/main.js"></script>
 </head>
 
-<body>
+<body style="--gel:-32deg">
 
-<div id="boot" class="boot" aria-hidden="true" hidden>
-  <div class="boot__inner">
+<div id="boot" class="boot" role="dialog" aria-label="Intro sequence" hidden>
+  <span class="boot__lamp" aria-hidden="true"></span>
+  <div class="boot__inner" aria-hidden="true">
     <p class="boot__word" data-text="MARIO PRECIADO">MARIO PRECIADO</p>
     <div class="boot__bar"><span class="boot__fill"></span></div>
-    <p class="boot__status">Loading</p>
+    <p class="boot__status mono">Warming projector</p>
   </div>
-  <button class="boot__skip" type="button">Skip</button>
+  <button class="boot__skip" type="button">Skip intro</button>
+  <span class="boot__shutter boot__shutter--t" aria-hidden="true"></span>
+  <span class="boot__shutter boot__shutter--b" aria-hidden="true"></span>
+</div>
+
+<div class="rig" aria-hidden="true">
+  <span class="rig__wheel rig__wheel--a"></span>
+  <span class="rig__wheel rig__wheel--b"></span>
+  <span class="rig__wheel rig__wheel--c"></span>
+  <span class="rig__haze"></span>
 </div>
 
 <div class="hud" aria-hidden="true">
@@ -82,6 +92,11 @@
   <span class="hud__corner hud__corner--bl"></span>
   <span class="hud__corner hud__corner--br"></span>
   <div class="hud__progress"><span class="hud__progress-fill"></span></div>
+  <div class="hud__rail">
+    <span class="hud__ticks"></span>
+    <span class="hud__ch mono">CH <b class="hud__ch-n">01</b> <i>·</i> <b class="hud__ch-gel">LIQUID</b> <i>·</i> <b class="hud__ch-k">3200K</b></span>
+  </div>
+  <div class="hud__meter"><span class="hud__meter-fill"></span></div>
 </div>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -108,7 +123,7 @@
 </header>
 
 <main id="main">
-  <section id="home" class="hero" aria-label="Introduction">
+  <section id="home" class="hero" aria-label="Introduction" data-ch="01" data-gel="Liquid" data-k="3200K" data-hue="-32">
     <div class="hero__media parallax" data-parallax="0.18">
       <div class="frame__media frame__media--fill" style="--ar:0.7503;background-image:url(data:image/webp;base64,UklGRhoBAABXRUJQVlA4IA4BAAAQBwCdASoYACAAPwFmqU6rJSOiMAgBYCAJbACdMoR/d9M58GW2yPPi6aBvJ4FCh2d1e8XT+7POZ+pjIow8k+9mAAD+7qGOMg1pD/rZooejT5tKbRYwnjFFZFz6yF8MirPiz5+XAz47y9J/1U4pDs/gmIKf1cRyIKKKx0xrqflevs1lRUHdtoVfZ/0F3gnm5qpaZ4jCo9S9A02ZwneG1RZUbVKKavIKP+/7X/P2NKL32bLop/mfp/0qZ0s7+3uTxALYFNU/VqTHLMkUeaC2SQriSLg1/EPJBgGHAss2zZ7V8XRIDvGjTNHRPcNrJpBq4aVqO9e3I8IJp7DPNSeyN7ZxJ94Z23M8wkzXyRLiYAA=)">
         <picture>
@@ -138,16 +153,6 @@
     </a>
   </section>
 
-  <section class="brand" aria-label="Mario Preciado">
-    <div class="brand__stack" aria-hidden="true">
-      <span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span>
-    </div>
-    <div class="brand__caption">
-      <p class="brand__name">Mario Preciado</p>
-      <p class="brand__role mono">Photographer &nbsp;·&nbsp; San Francisco Bay Area</p>
-    </div>
-  </section>
-
   <div class="ticker">
     <div class="ticker__track">
       <ul class="ticker__run">
@@ -162,7 +167,7 @@
     </div>
   </div>
 
-  <section id="work" class="work" aria-label="Selected work">
+  <section id="work" class="work" aria-label="Selected work" data-ch="02" data-gel="Magenta" data-k="5600K" data-hue="0">
     <header class="sec-head">
       <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">02</span>Selected Work</p>
       <h2 class="sec-title reveal">Recent<br><em>Captures</em></h2>
@@ -171,7 +176,7 @@
 
     <div class="work__seq">
       <div class="row row--full">
-        <figure class="frame frame--full reveal" data-idx="1" data-name="portfolio_003">
+        <figure class="frame frame--full reveal" data-idx="1" data-name="portfolio_003" data-light="crowd" data-title="Crowd Motion">
           <a class="frame__link" href="/work/crowd-motion/" aria-label="Crowd Motion — open frame">
             <div class="frame__media" style="--ar:1.3333;background-image:url(data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABIAPwFysFIrJqSiqAqpYCAJYgAAL4egUmJ8gmkaeWzd9PAA/u8+RrxBqMAx3aWCizz/YoxTUdZ9QiCgF2MZDYAeKanSR2GJFq279SoK/5eUg01tA2uerZN7ovyjdoJBC4IxfaYAAA==)">
               <picture>
@@ -184,13 +189,13 @@
             <figcaption class="frame__cap">
               <span class="frame__no mono">01</span>
               <span class="frame__title">Crowd Motion</span>
-              <span class="frame__cat mono">Live Music</span>
+              <span class="frame__cat mono">Community</span>
             </figcaption>
           </a>
         </figure>
       </div>
       <div class="row row--duo">
-        <figure class="frame frame--lead reveal" data-idx="2" data-name="portfolio_001">
+        <figure class="frame frame--lead reveal" data-idx="2" data-name="portfolio_001" data-light="liquid" data-title="Liquid Light">
           <a class="frame__link" href="/work/liquid-light/" aria-label="Liquid Light — open frame">
             <div class="frame__media" style="--ar:0.7668;background-image:url(data:image/webp;base64,UklGRh4BAABXRUJQVlA4IBIBAAAQBgCdASoYAB8APwFmqk6rJSOiMAgBYCAJbACdMu0A/vM5PGYwv+yUwMWhCeRFmw6X6b3C7JWZ6AAA/uQ2z+R/TXEd8aiMih3WlHmsO7w9jwA6htp+D10kl8IjxSbQ3tU4MUzB3v9wdF7y6I83EAWNfSkbqKOCBIPuc+/D1P4AsoDfPhkOCJ9nqFQCv38cnT3RDGaqr+J2frs/hY8x/ZkX6G+OrA/ltHM4ZeYkztarvvzHE57dSK2edDj/g2yo6tEQ4H/2J+IfI1CNFCdO2C4TP1sLfuZ7RLIQhvYhJL8SMIQnDCQAPq7hrzQoky4ie561ckz1Q2s4vNdITqD/QxLFi9rY2vM7eX0InKdjsyhGWPAA)">
               <picture>
@@ -207,7 +212,7 @@
             </figcaption>
           </a>
         </figure>
-        <figure class="frame frame--sub reveal" data-idx="3" data-name="portfolio_007">
+        <figure class="frame frame--sub reveal" data-idx="3" data-name="portfolio_007" data-light="amber red" data-title="Solar">
           <a class="frame__link" href="/work/solar/" aria-label="Solar — open frame">
             <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAADwBQCdASoYACAAPu1gqU6ppaQiN/qoATAdiWwAnTKEeYEQAHG14ioywgQu6wPfP9tksPlWpndYAAD+6Le36XP8ebhb/3SslbwYxEbt5/G6H+rtsLm3RoaHQsVgIzMd/JIe+fGr3P4DRheHq76HEVEdPBH3ou9vV4CjetJHvseWPDQ0O6GsVYbuXOT0UsgO8eQXgv9nFY6a1/PJ/QUQTrCZogd0j2UajSINp7oGjJgAAA==)">
               <picture>
@@ -226,7 +231,7 @@
         </figure>
       </div>
       <div class="row row--trio">
-        <figure class="frame frame--trio reveal" data-idx="4" data-name="portfolio_009">
+        <figure class="frame frame--trio reveal" data-idx="4" data-name="portfolio_009" data-light="amber" data-title="Raw Energy">
           <a class="frame__link" href="/work/raw-energy/" aria-label="Raw Energy — open frame">
             <div class="frame__media" style="--ar:0.7658;background-image:url(data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBQCdASoYAB8APvViqU6qpaQiMAwBUB6JbACdMoRwABo0rx2EDnFXxCT7u4OCCp6Bg5VavDOlkAD+0MKg6yz572H8RNBUymkIUiSO8kpFyvgpaTxoKr5ORN3mOkpK4/4cxTRnqlZLDRp0k/Pqgq/M/tedwnuPqEL1fQC6HeM0mSXXWh1ZlLR+qvaY4u3eH1glw+6xSs0fPKylNhabkGJkl5WQVddkVXPZzr0gGSBRyaSRAoCxVcEwKmduxUfULt8Tcvj5fhHupi6hH+HX6t8TG35k/K6mEiGLAIDBtstXN5+SB1mRhYfYLqCEEAAA)">
               <picture>
@@ -243,7 +248,7 @@
             </figcaption>
           </a>
         </figure>
-        <figure class="frame frame--trio reveal" data-idx="5" data-name="portfolio_011">
+        <figure class="frame frame--trio reveal" data-idx="5" data-name="portfolio_011" data-light="green" data-title="Green Room">
           <a class="frame__link" href="/work/green-room/" aria-label="Green Room — open frame">
             <div class="frame__media" style="--ar:0.6674;background-image:url(data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwBACdASoYACQAPwF0sFKrJqSjpWzJYCAJQBWGaFi10sLlwTpIqxW1C0o2bGNrjgAA/vDWy59BF7mAOgas+YPpEYFijgs0aW+U+ygiJZW1NT4QlCDpZsgDKSJdWEwRAHNWDmuPbR2njSFYi92pqw66zipQu0UV8pii+v6Cy6hHy3qYohIHsZSjZAA=)">
               <picture>
@@ -260,7 +265,7 @@
             </figcaption>
           </a>
         </figure>
-        <figure class="frame frame--trio reveal" data-idx="6" data-name="portfolio_005">
+        <figure class="frame frame--trio reveal" data-idx="6" data-name="portfolio_005" data-light="green liquid" data-title="Lead Vocalist">
           <a class="frame__link" href="/work/lead-vocalist/" aria-label="Lead Vocalist — open frame">
             <div class="frame__media" style="--ar:0.7499;background-image:url(data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAACwBACdASoYACAAPwF4s1OrJySiqAgBYCAJYgDImFaav+i1NyCHBO8Tz0kvtxGAAP766d8IaWGKwZHHd7FmjGAMwVKxGF+MMwF9DFSav2v+CWjL1gbH+dYQD5m9ifFlOTAZF4iE9MEcIn73cL8/I4jAGUlXe4Rd5TjpKoIcsvrO4SAA)">
               <picture>
@@ -285,7 +290,17 @@
     </div>
   </section>
 
-  <section id="signal" class="signal" aria-label="Featured capture">
+  <section class="brand" aria-label="Mario Preciado">
+    <div class="brand__stack" aria-hidden="true">
+      <span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span><span class="record"></span>
+    </div>
+    <div class="brand__caption">
+      <p class="brand__name">Mario Preciado</p>
+      <p class="brand__role mono">Photographer &nbsp;·&nbsp; San Francisco Bay Area</p>
+    </div>
+  </section>
+
+  <section id="signal" class="signal" aria-label="Featured capture" data-ch="03" data-gel="Amber" data-k="2900K" data-hue="46">
     <div class="signal__media parallax" data-parallax="0.12">
       <div class="frame__media frame__media--fill" style="--ar:0.7155;background-image:url(data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAACwBgCdASoYACIAPwF4sFOrJyQipWsxYCAJZACxG71MMDkg25Mi/HDHG3uqUNOyFLtbq03nCKM5dCHEPdERgAD+8NGU3SewpUuCf44f8qz0voGgMjo1lLW7zzxLv70it20QEV7KxZM0We7EZn1qastcPoTkzUnicWN4XAm6TcOilkyo649EPgLgTFDnZXnHsxAQ5+pxaF9BQb6uC016r2E0OF0Rd4H+mmvSDkrHUWwXdSXrGDvMWI/KAuL5ahuQuyb547Z7w1PA8FR8gAA=)">
         <picture>
@@ -300,13 +315,90 @@
     <div class="signal__body">
       <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">03</span>Featured</p>
       <h2 class="signal__title">On<br><em>stage</em></h2>
-      <p class="signal__meta mono">Amber Hour &nbsp;·&nbsp; Bay Area, CA</p>
+      <p class="signal__meta mono">Amber Hour &nbsp;·&nbsp; Amber Hour &nbsp;·&nbsp; Bay Area, CA</p>
     </div>
   </section>
 
-  <section id="about" class="about" aria-label="About Mario Preciado">
+  <section id="services" class="services" aria-label="Services" data-ch="04" data-gel="Violet" data-k="6500K" data-hue="-60">
     <header class="sec-head">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>About the artist</p>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">04</span>Services</p>
+      <h2 class="sec-title reveal">What I<br><em>shoot</em></h2>
+      <p class="sec-note mono reveal">Rates and availability by inquiry — send the date and the room.</p>
+    </header>
+
+    <ul class="svc-grid">
+        <li class="svc reveal" style="--i:0">
+          <span class="svc__no mono" aria-hidden="true">01</span>
+          <h3 class="svc__name">Live Music</h3>
+          <p class="svc__tag mono">Venues · festivals · tours</p>
+          <p class="svc__line">Full sets shot from the pit and the floor. Low light is the point, not the problem.</p>
+        </li>
+        <li class="svc reveal" style="--i:1">
+          <span class="svc__no mono" aria-hidden="true">02</span>
+          <h3 class="svc__name">Portraiture</h3>
+          <p class="svc__tag mono">Artists · bands · press</p>
+          <p class="svc__line">Character-driven portraits, on location or in the room you already play in.</p>
+        </li>
+        <li class="svc reveal" style="--i:2">
+          <span class="svc__no mono" aria-hidden="true">03</span>
+          <h3 class="svc__name">Editorial</h3>
+          <p class="svc__tag mono">Features · profiles</p>
+          <p class="svc__line">Story-led shoots for features and profiles, built around the piece being written.</p>
+        </li>
+        <li class="svc reveal" style="--i:3">
+          <span class="svc__no mono" aria-hidden="true">04</span>
+          <h3 class="svc__name">Fashion</h3>
+          <p class="svc__tag mono">Lookbooks · styled shoots</p>
+          <p class="svc__line">Styled work with the same colour-forward eye that runs through the live sets.</p>
+        </li>
+        <li class="svc reveal" style="--i:4">
+          <span class="svc__no mono" aria-hidden="true">05</span>
+          <h3 class="svc__name">Art Culture</h3>
+          <p class="svc__tag mono">Openings · installations</p>
+          <p class="svc__line">Coverage of shows, openings and the scenes that grow around them.</p>
+        </li>
+        <li class="svc reveal" style="--i:5">
+          <span class="svc__no mono" aria-hidden="true">06</span>
+          <h3 class="svc__name">Community</h3>
+          <p class="svc__tag mono">Events · gatherings</p>
+          <p class="svc__line">The crowd, the room and everything happening off the stage.</p>
+        </li>
+    </ul>
+  </section>
+
+  <section id="process" class="process" aria-label="Process" data-ch="05" data-gel="Cyan" data-k="7200K" data-hue="-95">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Process</p>
+      <h2 class="sec-title reveal">How it<br><em>works</em></h2>
+    </header>
+
+    <ol class="step-chain">
+        <li class="step reveal" style="--i:0">
+          <span class="step__no mono" aria-hidden="true">01</span>
+          <h3 class="step__name">Enquiry</h3>
+          <p class="step__line">Send the date, the venue and what you need. I come back with availability and a quote.</p>
+        </li>
+        <li class="step reveal" style="--i:1">
+          <span class="step__no mono" aria-hidden="true">02</span>
+          <h3 class="step__name">Brief</h3>
+          <p class="step__line">We lock the scope — set times, access, how many frames, and where the images will run.</p>
+        </li>
+        <li class="step reveal" style="--i:2">
+          <span class="step__no mono" aria-hidden="true">03</span>
+          <h3 class="step__name">The shoot</h3>
+          <p class="step__line">I work light and stay out of the way. Bay Area as standard, available to travel.</p>
+        </li>
+        <li class="step reveal" style="--i:3">
+          <span class="step__no mono" aria-hidden="true">04</span>
+          <h3 class="step__name">Delivery</h3>
+          <p class="step__line">A selected, edited gallery. Additional frames and rush turnaround on request.</p>
+        </li>
+    </ol>
+  </section>
+
+  <section id="about" class="about" aria-label="About Mario Preciado" data-ch="06" data-gel="Green" data-k="4400K" data-hue="78">
+    <header class="sec-head">
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">06</span>About the artist</p>
       
     </header>
 
@@ -371,9 +463,9 @@
     </div>
   </section>
 
-  <section id="contact" class="contact" aria-label="Contact">
+  <section id="contact" class="contact" aria-label="Contact" data-ch="07" data-gel="Red" data-k="2200K" data-hue="128">
     <header class="sec-head">
-      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">05</span>Contact</p>
+      <p class="eyebrow"><span class="eyebrow__idx" aria-hidden="true">07</span>Contact</p>
       <h2 class="sec-title reveal">Let's work<br><em>together</em></h2>
     </header>
 
@@ -421,6 +513,14 @@
   <p class="mono foot__made">San Francisco Bay Area</p>
   <a class="foot__ig" href="https://www.instagram.com/mariopreciado.art" target="_blank" rel="noopener noreferrer" aria-label="Mario Preciado on Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
 </footer>
+
+<dialog id="lb" class="lb" aria-label="Full screen frame">
+  <div class="lb__stage"></div>
+  <p class="lb__meta mono" role="status" aria-live="polite"></p>
+  <button class="lb__nav lb__nav--prev" type="button" aria-label="Previous frame"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M14 7H6V5H4v2H2v2h2v2h2V9h8V7z"/></svg></button>
+  <button class="lb__nav lb__nav--next" type="button" aria-label="Next frame"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 7h8V5h2v2h2v2h-2v2h-2V9H2V7z"/></svg></button>
+  <button class="lb__close" type="button" aria-label="Close"><svg class="sprite" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 2h2v2H3V2zm2 2h2v2H5V4zm2 2h2v2H7V6zm2-2h2v2H9V4zm2-2h2v2h-2V2zM9 8h2v2H9V8zm2 2h2v2h-2v-2zm2 2h2v2h-2v-2zM7 8h2v2H7V8zm-2 2h2v2H5v-2zm-2 2h2v2H3v-2zM1 14h2v2H1v-2zm12 0h2v2h-2v-2zM1 0h2v2H1V0zm12 0h2v2h-2V0z"/></svg></button>
+</dialog>
 
 </body>
 </html>

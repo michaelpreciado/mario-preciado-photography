@@ -1,74 +1,55 @@
 /**
  * chrome.js — the persistent machine around the photographs.
- * Boot sequence, nav, scroll progress, reticle cursor.
+ * Nav, scroll progress, reticle cursor, and the shared section observer.
  */
 
-import { env, store, onScroll, imageReady, wait } from './env.js';
+import { env, onScroll, lockScroll, unlockScroll } from './env.js';
 import { set } from './debug.js';
 
-const BOOT_KEY = 'mp:booted';
-const BOOT_MIN = 600;   // desktop floor
-const BOOT_MIN_SM = 400;
-const BOOT_MAX = 900;
-
 /**
- * First visit only, and never at the cost of the page.
+ * One IntersectionObserver for "which section am I in", shared by everything
+ * that needs to know.
  *
- * The floor matters: the bar tracks the hero image decoding, and on a repeat
- * or warm-cache load that resolves in ~0ms, which makes the bar snap straight
- * to 100% and read as broken. Racing decode against a minimum duration keeps
- * it feeling deliberate. The ceiling matters more — a slow connection must
- * never leave someone staring at a progress bar, so it resolves regardless.
+ * Two things want this now — the nav's current-section highlight and the
+ * lighting rig's gel change — and a second observer over the same elements
+ * with the same margins would be pure duplication. Subscribers are called with
+ * the section element itself rather than its id, because the rig reads its cue
+ * from data attributes and not every section on the site has an id.
+ *
+ * This also quietly fixes a limit in the old version: it used to observe only
+ * sections that had a matching in-page nav anchor, which meant nothing fired
+ * at all on /work/, /about/ or any frame page.
  */
-export async function initBoot() {
-  const boot = document.getElementById('boot');
-  if (!boot) return;
+const sectionSubs = [];
+let sectionIO = null;
+let currentSection = null;
 
-  const seen = store.get(BOOT_KEY);
-  // Reduced motion skips it outright. `?debug` always replays it.
-  if (env.reduced || (seen && !env.debug)) {
-    boot.remove();
-    return;
-  }
+export function observeSections(fn) {
+  sectionSubs.push(fn);
+  if (sectionIO) return;
 
-  boot.hidden = false;
-  document.body.style.overflow = 'hidden';
+  const targets = [...document.querySelectorAll('main > section, main > article')];
+  if (!targets.length) return;
 
-  const fill = boot.querySelector('.boot__fill');
-  const status = boot.querySelector('.boot__status');
-  const skip = boot.querySelector('.boot__skip');
-  const hero = document.querySelector('.hero__img');
+  sectionIO = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || entry.target === currentSection) continue;
+        currentSection = entry.target;
+        // One subscriber throwing must not stop the others.
+        for (const sub of sectionSubs) {
+          try {
+            sub(entry.target);
+          } catch (err) {
+            console.error('[mp] section subscriber failed:', err);
+          }
+        }
+      }
+    },
+    { rootMargin: '-45% 0px -45% 0px' }
+  );
 
-  let done = false;
-  const finish = () => {
-    if (done) return;
-    done = true;
-    store.set(BOOT_KEY, '1');
-    if (status) status.textContent = 'Ready';
-    if (fill) fill.style.setProperty('--boot-progress', 1);
-    boot.classList.add('is-done');
-    document.body.style.overflow = '';
-    setTimeout(() => boot.remove(), 420);
-  };
-
-  skip?.addEventListener('click', finish);
-  addEventListener('keydown', finish, { once: true });
-
-  // Quantised so the bar ticks in 8-bit steps rather than sliding.
-  let p = 0;
-  const timer = setInterval(() => {
-    p = Math.min(0.92, p + 0.08);
-    fill?.style.setProperty('--boot-progress', Math.round(p * 8) / 8);
-  }, 90);
-
-  const floor = innerWidth < 768 ? BOOT_MIN_SM : BOOT_MIN;
-  await Promise.race([
-    Promise.all([imageReady(hero), wait(floor)]),
-    wait(BOOT_MAX),
-  ]);
-
-  clearInterval(timer);
-  finish();
+  targets.forEach((t) => sectionIO.observe(t));
 }
 
 /** Sticky background, current-section indicator, mobile drawer. */
@@ -90,18 +71,32 @@ export function initNav() {
   });
 
   // ── mobile drawer ──
+  // Scroll lock goes through the shared counter in env.js. Writing
+  // body.style.overflow directly here is what let the lightbox unlock the page
+  // out from under an open drawer.
+  let drawerLocked = false;
+
   const close = () => {
     links?.classList.remove('is-open');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.setAttribute('aria-label', 'Open menu');
-    document.body.style.overflow = '';
+    if (drawerLocked) {
+      drawerLocked = false;
+      unlockScroll();
+    }
   };
 
   toggle?.addEventListener('click', () => {
     const open = links.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (open && !drawerLocked) {
+      drawerLocked = true;
+      lockScroll();
+    } else if (!open && drawerLocked) {
+      drawerLocked = false;
+      unlockScroll();
+    }
   });
 
   links?.addEventListener('click', (e) => {
@@ -121,34 +116,20 @@ export function initNav() {
   // SyntaxError — the current page is marked server-side with aria-current
   // instead.
   const anchors = [...(links?.querySelectorAll('a[href^="#"]') ?? [])];
-  const sections = anchors
-    .map((a) => document.querySelector(a.getAttribute('href')))
-    .filter(Boolean);
 
-  if (!sections.length) return;
+  observeSections((section) => {
+    const id = section.id;
+    if (id) anchors.forEach((a) => a.classList.toggle('is-current', a.getAttribute('href') === `#${id}`));
 
-  let current = '';
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const id = entry.target.id;
-        if (id === current) continue;
-        current = id;
-        anchors.forEach((a) => a.classList.toggle('is-current', a.getAttribute('href') === `#${id}`));
-        // One glitch burst on section change — a state change you can feel,
-        // not an animation that runs forever.
-        if (!env.reduced && mark) {
-          mark.classList.remove('is-glitching');
-          void mark.offsetWidth;   // restart the animation
-          mark.classList.add('is-glitching');
-        }
-        set('section', id);
-      }
-    },
-    { rootMargin: '-45% 0px -45% 0px' }
-  );
-  sections.forEach((s) => io.observe(s));
+    // One glitch burst on section change — a state change you can feel, not an
+    // animation that runs forever.
+    if (!env.reduced && mark) {
+      mark.classList.remove('is-glitching');
+      void mark.offsetWidth;   // restart the animation
+      mark.classList.add('is-glitching');
+    }
+    set('section', id || section.className.split(' ')[0]);
+  });
 }
 
 /**
@@ -164,8 +145,11 @@ export function initNav() {
  *    of frames need no style invalidation at all.
  */
 export function initProgress() {
-  const fill = document.querySelector('.hud__progress-fill');
-  if (!fill) return;
+  // Written on the HUD rather than on each fill: the top bar and the left
+  // level meter both read `var(--progress)` and inherit it, so one property
+  // write drives both and they cannot drift out of step with each other.
+  const hud = document.querySelector('.hud');
+  if (!hud) return;
 
   let max = 0;
   let last = -1;
@@ -178,7 +162,7 @@ export function initProgress() {
     const step = max > 0 ? Math.round((scrollY / max) * 32) / 32 : 0;
     if (step === last) return;
     last = step;
-    fill.style.setProperty('--progress', step);
+    hud.style.setProperty('--progress', step);
   };
 
   measure();

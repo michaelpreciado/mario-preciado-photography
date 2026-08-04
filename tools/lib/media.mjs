@@ -77,18 +77,31 @@ export function media(entry, meta, opts, extraClass = '') {
   ].join('\n');
 }
 
-/** A gallery frame that links through to its own page. */
+/**
+ * A gallery frame that links through to its own page.
+ *
+ * The whole tile stays one anchor: middle-click, open-in-new-tab and a
+ * JS-less visit all keep working, and it gives the view transition a single
+ * unambiguous element to morph. The lightbox button is injected as a sibling
+ * of this anchor at runtime by js/lightbox.js — it cannot be baked in here,
+ * because a <button> may not nest inside an <a>, and because a control that
+ * needs JS should not exist in markup served to someone without it.
+ *
+ * `data-light` is space-separated so the filter can match it with the `~=`
+ * attribute selector — that is what makes a multi-gel frame appear under more
+ * than one chip with no extra CSS. `data-name` is the manifest key.
+ */
 export function frame(name, entry, { sizes, size, index }) {
   const meta = META[name];
   const slug = slugify(meta.title);
   return [
-    `<figure class="frame frame--${size} reveal" data-idx="${index}" data-name="${name}">`,
+    `<figure class="frame frame--${size} reveal" data-idx="${index}" data-name="${name}" data-light="${meta.light.join(' ')}" data-title="${esc(meta.title)}">`,
     `  <a class="frame__link" href="/work/${slug}/" aria-label="${esc(meta.title)} — open frame">`,
     indent(media(entry, meta, { sizes }), 4),
     `    <figcaption class="frame__cap">`,
     `      <span class="frame__no mono">${String(index).padStart(2, '0')}</span>`,
     `      <span class="frame__title">${esc(meta.title)}</span>`,
-    `      <span class="frame__cat mono">Live Music</span>`,
+    `      <span class="frame__cat mono">${esc(meta.discipline)}</span>`,
     `    </figcaption>`,
     `  </a>`,
     `</figure>`,

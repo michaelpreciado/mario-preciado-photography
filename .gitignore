@@ -3,3 +3,7 @@ node_modules/
 
 # Session memory — untracked in main repo, lives in jarvis profile instead
 memory/
+
+# Operating system metadata
+.DS_Store
+Thumbs.db

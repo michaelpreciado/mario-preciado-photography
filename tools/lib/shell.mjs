@@ -154,6 +154,7 @@ ${links}
 }
 
 const footer = () => `<footer class="foot">
+  <p class="foot__mega" aria-hidden="true">${SITE.name}</p>
   <p class="mono">&copy; <span id="year">2026</span> ${SITE.name} Photography</p>
   <p class="mono foot__made">${SITE.location}</p>
   <a class="foot__ig" href="${SITE.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${SITE.name} on Instagram">${ICON_INSTAGRAM}</a>

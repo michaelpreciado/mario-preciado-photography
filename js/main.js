@@ -22,6 +22,7 @@ import { initLightbox } from './lightbox.js';
 import { initFilter } from './filter.js';
 import { initTransitions } from './transitions.js';
 import { initIntro } from './intro.js';
+import { initGlow } from './glow.js';
 import { initForm } from './form.js';
 import { resetScrollLock } from './env.js';
 
@@ -39,6 +40,7 @@ function boot() {
     initRig,
     initProgress,
     initCursor,
+    initGlow,
     initParallax,
     initReveals,
     initImages,

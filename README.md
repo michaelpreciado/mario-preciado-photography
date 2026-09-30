@@ -112,6 +112,13 @@ glass nav with an active-link tube, and a cropped gradient wordmark closing the 
 so the white display type reads solid. Every glow sits on the ground, never over a photograph, and all of
 it is off under `prefers-reduced-motion`.
 
+**Psychedelia (§30).** The violet UI accent is now a phase, not a colour: one registered angle (`--psy`)
+turns the wheel every 24s and rebuilds `--ui` in OKLCH at fixed lightness, so every label, index, edge and
+focus ring flows through the spectrum while holding ~10:1 on black. Ticker separators and nav indices are
+phase-offset so colour travels across them, the rainbow buttons and spectrum name scroll, and the projection
+layer drifts round the wheel. Magenta stays fixed as the brand anchor. Stepped to 5 updates/s to keep the
+whole-page restyle cheap; held at the original violet under reduced motion.
+
 ---
 
 ## 🚀 Pipeline Workflow

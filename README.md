@@ -102,6 +102,16 @@ pseudo-elements would stretch one into the other's shape.
 Contrast is measured, not guessed, and the numbers are recorded in the token
 block. Never layer two accents on each other — magenta on amber is 1.13:1.
 
+### v4 — "Afterglow"
+
+Same palette, now lit. One additive stylesheet section (`§29`, delete it to get v3 back) plus `js/glow.js`:
+neon-tube magenta type that flickers on as its section arrives, a pink pool under the hero headline,
+lamps and a neon rule on every section head, outlined display numerals on the service/process cells with a
+pointer-following spotlight, alternating solid/outline ticker, sheen + bloom buttons, framed hover lift,
+glass nav with an active-link tube, and a cropped gradient wordmark closing the footer. Scanlines were thinned
+so the white display type reads solid. Every glow sits on the ground, never over a photograph, and all of
+it is off under `prefers-reduced-motion`.
+
 ---
 
 ## 🚀 Pipeline Workflow

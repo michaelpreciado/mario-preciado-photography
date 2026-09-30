@@ -2252,3 +2252,211 @@ button { background: none; border: none; cursor: pointer; }
   .lb.is-settling .lb__stage { transition: none; }
   .lb__stage { transform: none; }
 }
+
+
+/* ── 29 · afterglow ──────────────────────────────────────────────────────────
+   v4. The palette does not change — black ground, magenta display type, violet
+   UI — it gets lit. Everything here is additive and sits last so it wins ties
+   by source order; deleting this section returns the v3 look exactly.
+
+   Three ideas, each obeying the house rule that no effect touches a photograph:
+     1. Neon   Magenta type is a tube, not a fill: hot core, tight halo, wide
+               bloom. It flickers on once as its section arrives.
+     2. Light  Pools of colour pick out the ground behind headings and follow
+               the pointer. They live on the black matte, never over a frame.
+     3. Metal  Cards, buttons and the footer get edges — gradient hairlines,
+               a sheen on press targets, a cropped wordmark to close the page.
+
+   Contrast is unchanged: glows are shadows on the ground, not text colour. */
+
+:root {
+  --neon: 0 0 6px rgba(255, 16, 240, 0.65), 0 0 26px rgba(255, 16, 240, 0.45), 0 0 90px rgba(255, 16, 240, 0.28);
+  --edge: linear-gradient(90deg, var(--mag), var(--ui) 40%, transparent 100%);
+}
+
+::selection { background: var(--mag); color: var(--ink-0); }
+html { scrollbar-color: var(--line-2) var(--ink-0); scrollbar-width: thin; }
+
+/* 1 · neon ─────────────────────────────────────────────────────────────── */
+
+.hero__title em,
+.sec-title em,
+.solo__title em,
+.signal__title em { text-shadow: var(--neon); }
+
+@keyframes neon-on {
+  0%, 8%   { opacity: 0.25; text-shadow: none; }
+  10%      { opacity: 1; text-shadow: var(--neon); }
+  16%      { opacity: 0.35; text-shadow: none; }
+  24%      { opacity: 1; text-shadow: var(--neon); }
+  30%      { opacity: 0.6; }
+  38%, 100% { opacity: 1; text-shadow: var(--neon); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js .sec-title.is-in em { animation: neon-on 1100ms steps(1, end) 120ms both; }
+}
+
+/* The scanline overlay was cutting white display type into stripes. Still
+   there — it is the machine — but thin enough that the headlines read solid. */
+.scanlines { background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0, 0, 0, 0.07) 2px 3px); }
+
+/* 2 · light ────────────────────────────────────────────────────────────── */
+
+/* Hero: a magenta pool under the headline and a cold violet kiss top-right, so
+   the type sits in light instead of on a dark gradient. */
+.hero__scrim {
+  background:
+    radial-gradient(60% 55% at 12% 100%, rgba(255, 16, 240, 0.30), transparent 70%),
+    radial-gradient(45% 45% at 100% 0%, rgba(120, 80, 255, 0.22), transparent 70%),
+    linear-gradient(to top, var(--ink-0) 2%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.18) 70%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.6), transparent 60%);
+}
+
+/* Section heads get a lamp and a tube. The lamp fills the dead right half of
+   the header with colour; the tube rules the head off from the work. */
+.sec-head { position: relative; padding-bottom: var(--s-6); margin-bottom: var(--s-6); }
+.sec-head::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  right: 0;
+  width: min(70%, 44rem);
+  aspect-ratio: 1.6;
+  background: radial-gradient(closest-side, rgba(255, 16, 240, 0.16), rgba(120, 80, 255, 0.07) 55%, transparent 100%);
+  pointer-events: none;
+}
+.sec-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--edge);
+  box-shadow: 0 0 14px rgba(255, 16, 240, 0.5);
+  opacity: 0.8;
+}
+
+/* The pointer lamp. Injected by js/glow.js; sits at z -1 after .rig, so it
+   lights the ground and is painted over by every photograph's black matte. */
+.spot {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 16, 240, 0.09), transparent 65%);
+}
+
+/* 3 · metal ────────────────────────────────────────────────────────────── */
+
+.nav.is-stuck::before { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(18px) saturate(1.5); }
+.nav.is-stuck { border-image: var(--edge) 1; }
+.nav__links a { position: relative; padding-block: var(--s-2); }
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--mag);
+  box-shadow: 0 0 10px var(--mag);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--d-mid) var(--ez-out);
+}
+.nav__links a:hover::after,
+.nav__links a.is-current::after { transform: scaleX(1); }
+.nav__links a.is-current { text-shadow: 0 0 14px var(--mag-dim); }
+.nav__links.is-open a::after { display: none; }
+
+/* Ticker: alternating solid and outline, so it reads as a run of type rather
+   than a list. */
+.ticker { background: linear-gradient(180deg, var(--ink-1), var(--ink-0)); }
+.ticker__run li { font-size: clamp(1.5rem, 4.4vw, 3.25rem); }
+.ticker__run li:nth-child(even) { color: transparent; -webkit-text-stroke: 1.5px var(--text-1); }
+
+/* Buttons: hard magenta offset plus a bloom, and a sheen that sweeps across on
+   hover. Transform-only, so it costs nothing. */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 4px 4px 0 var(--mag-dim), 0 0 36px -8px rgba(255, 16, 240, 0.55);
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.btn:hover::before { transform: translateX(120%); transition: transform 700ms var(--ez-out); }
+.btn--ghost { box-shadow: none; }
+.btn--ghost::before { display: none; }
+.btn--ghost:hover { box-shadow: 0 0 28px -8px rgba(255, 16, 240, 0.6), inset 0 0 18px -10px var(--mag); }
+
+/* Service and process cells: outlined display numerals, and a spotlight that
+   follows the pointer inside the cell (--mx/--my set per cell by glow.js). */
+.svc__no, .step__no {
+  font-family: var(--f-display);
+  font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ui);
+  transition: color var(--d-mid) var(--ez-out), -webkit-text-stroke-color var(--d-mid);
+}
+.svc:hover .svc__no { color: var(--mag); -webkit-text-stroke-color: var(--mag); text-shadow: 0 0 24px var(--mag-dim); }
+.step:hover .step__no { color: var(--amb); -webkit-text-stroke-color: var(--amb); }
+.svc, .step { box-shadow: inset 0 1px 0 transparent; transition: background var(--d-mid) var(--ez-out), box-shadow var(--d-mid); }
+@media (hover: hover) and (pointer: fine) {
+  .svc:hover, .step:hover {
+    background:
+      radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 16, 240, 0.16), transparent 65%),
+      var(--ink-1);
+    box-shadow: inset 0 1px 0 var(--mag-dim);
+  }
+}
+
+/* Frames: lift and light on hover, and the matte catches the glow. */
+.frame__media { transition: border-color var(--d-mid), box-shadow var(--d-slow) var(--ez-out), transform var(--d-slow) var(--ez-out); }
+@media (hover: hover) and (pointer: fine) {
+  .frame:hover .frame__media {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px var(--mag-dim), 0 30px 80px -28px rgba(255, 16, 240, 0.6);
+  }
+}
+.frame__no { text-shadow: 0 0 12px var(--ui-dim); }
+
+/* About panel and form: edge and focus light. */
+.panel { box-shadow: 0 30px 80px -40px rgba(255, 16, 240, 0.35); border-image: linear-gradient(135deg, var(--mag-dim), var(--line-2) 35%, var(--line-2) 65%, var(--ui-dim)) 1; }
+.field input:focus, .field textarea:focus { border-color: var(--ui); box-shadow: 0 0 0 1px var(--ui-dim), 0 0 40px -10px rgba(255, 16, 240, 0.5); }
+
+/* Footer: a cropped wordmark closes the page. Fades to the ground so it reads
+   as a neon sign seen through haze, never as a competing headline. */
+.foot { position: relative; overflow: hidden; padding-top: var(--s-8); border-top: var(--b-hair) solid; border-image: var(--edge) 1; }
+.foot__mega {
+  flex: 0 0 100%;
+  order: -1;
+  font-family: var(--f-display);
+  /* Anton runs ~6.05em for this name; dividing the container by 6.15 fills it edge to edge. */
+  font-size: calc((100vw - 2 * var(--gutter)) / 6.15);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(180deg, rgba(255, 16, 240, 0.95) 0%, rgba(255, 16, 240, 0.25) 60%, transparent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px rgba(255, 92, 245, 0.55);
+  margin-bottom: var(--s-6);
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover::before { transition: none; }
+  .frame:hover .frame__media { transform: none; }
+  .spot { display: none; }
+}
